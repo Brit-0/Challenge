@@ -64,7 +64,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SkinColor: {r: 1, g: 0.7675078, b: 0.0047169924, a: 0}
+    - _SkinColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6127583391983189830
 MonoBehaviour:
