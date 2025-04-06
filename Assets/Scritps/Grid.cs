@@ -61,11 +61,11 @@ public class Grid
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
-            return gridArray[x, y];
+            return gridArray[x, y]; //1 = Tem torre
         }
         else
         {
-            return -1;
+            return -1; //Não está no GRID
         }
     }
 

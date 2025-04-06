@@ -15,6 +15,5 @@ public class TowerData : ScriptableObject
 
     public Sprite icon;
     public GameObject towerPf;
-    private int currentHealth;
 
 }

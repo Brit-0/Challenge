@@ -13,25 +13,22 @@ public class TowerManager : MonoBehaviour
 {
     public static TowerManager current;
 
+    public static TowerLogic selected;
+
     private GameObject preview;
     private TowerData previewData;
     public static bool placeMode;
 
     public Grid grid;
     private Vector2 mPos;
-    public float cellSize;
-
-    [SerializeField] private GameObject player;
-    [SerializeField] private Button tOsssosButton, tPedraButton;
+    [SerializeField] private float cellSize;
 
     public static bool canPlace = true, isColliding, isOnGrid, hasTower;
-
-    [SerializeField] private List<GameObject> towersPfs;
 
     void Awake()
     {
         current = this;
-        grid = new Grid(13, 9, cellSize, new Vector2(-32, -22));
+        grid = new Grid(13, 9, cellSize, new Vector2(-8, -4));
     }
 
     void Update()
@@ -54,14 +51,21 @@ public class TowerManager : MonoBehaviour
                 canPlace = true;
                 preview.GetComponent<SpriteRenderer>().color = Color.white.WithAlpha(0.3f);
             }
+
             if (Input.GetMouseButtonDown(0) && canPlace)
             {
-                PlaceTower(mPos);
+                PlaceTower(mPos);  
             }
             else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
             {
                 ExitPlaceMode();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) && selected != null)
+        {
+            selected.ToggleMenu();
+            selected = null;
         }
     }
 
@@ -99,6 +103,7 @@ public class TowerManager : MonoBehaviour
         canPlace = false;
         grid.SetValue(mPos, 1);
     }
+
 
     private Vector3 ValidateWorldGridPosition(Vector3 position)
     {

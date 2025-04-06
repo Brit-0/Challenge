@@ -17,9 +17,6 @@ MonoBehaviour:
   attackRange: 0
   attackSpeed: 0
   towerDamage: 0
-  maxHealth: 0
+  maxHealth: 100
   icon: {fileID: 21300000, guid: 49ba0c798d715e543924f3545bd083ff, type: 3}
-  towerColor:
-    serializedVersion: 2
-    rgba: 4294967040
   towerPf: {fileID: 6962123556943333845, guid: eb4467ae72d03674b9b9d23205c6b740, type: 3}
