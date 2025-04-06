@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 437151774763286543}
   - component: {fileID: 5637789207826279361}
   - component: {fileID: 7463749709566143306}
+  - component: {fileID: 6275661100211734945}
   m_Layer: 0
-  m_Name: Torre de Pedra
+  m_Name: Torre de Pedras
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,3 +159,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6275661100211734945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6962123556943333845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f82043b775b3b8542ba9fd9ca523eae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -14,7 +14,6 @@ public class TowerData : ScriptableObject
     public int maxHealth;
 
     public Sprite icon;
-    public Color32 towerColor;
     public GameObject towerPf;
     private int currentHealth;
 
