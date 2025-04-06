@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99b2c33365e48b43922bf1c671e9618, type: 3}
+  m_Name: TowerData_TorreDePedras
+  m_EditorClassIdentifier: 
+  towerName: ' towe'
+  recipe: 210
+  attackRange: 0
+  attackSpeed: 0
+  towerDamage: 0
+  maxHealth: 0
+  icon: {fileID: 0}
+  towerColor:
+    serializedVersion: 2
+    rgba: 0
+  towerPf: {fileID: 6962123556943333845, guid: 32da81f578bd1314aa9ccc71932ec2d8, type: 3}
