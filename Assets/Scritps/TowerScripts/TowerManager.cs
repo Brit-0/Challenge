@@ -44,12 +44,19 @@ public class TowerManager : MonoBehaviour
             if (!isOnGrid || isColliding || hasTower) // Não está no grid, nem está colidindo ou já possui uma torre no local
             {
                 canPlace = false;
-                preview.GetComponent<SpriteRenderer>().color = Color.red.WithAlpha(0.3f);
+                if (hasTower)
+                {
+                    preview.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                else
+                {
+                    preview.GetComponent<SpriteRenderer>().color = Color.red.WithAlpha(.3f);
+                }
             }
             else
             {
                 canPlace = true;
-                preview.GetComponent<SpriteRenderer>().color = Color.white.WithAlpha(0.3f);
+                preview.GetComponent<SpriteRenderer>().color = Color.white.WithAlpha(.3f);
             }
 
             if (Input.GetMouseButtonDown(0) && canPlace)
