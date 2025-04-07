@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.EventSystems.EventTrigger;
 using Random = UnityEngine.Random;
 
 public class TowerLogic : MonoBehaviour, IPointerClickHandler
@@ -14,14 +18,71 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject buttons;
     [SerializeField] private SpriteRenderer _renderer;
 
+    public bool active;
 
-    private int currentHealth;
+    [SerializeField] private float detectionRadius;
+    [SerializeField] private Collider2D[] enemiesInRange;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private Transform shootPoint;
     [SerializeField] private int towerLvl = 1, maxLvl;
+    private int currentHealth;
+    private float distance, closestDistance;
+    private GameObject closestEnemy;
+    
 
 
     private void Start()
     {
         currentHealth = towerData.maxHealth;
+    }
+
+    private void Update()
+    {
+        if (active)
+        {
+            enemiesInRange = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayer);
+
+            if (closestEnemy != null)
+            {
+                closestDistance = Vector2.Distance(transform.position, closestEnemy.transform.position);
+            }
+
+            if (enemiesInRange.Length > 0)
+            {
+                foreach (Collider2D enemy in enemiesInRange)
+                {
+                    distance = Vector2.Distance(transform.position, enemy.transform.position);
+
+                    if (closestEnemy == null || distance < closestDistance)
+                    {
+                        closestEnemy = enemy.gameObject;
+                    }
+
+                    print(closestEnemy.name);
+                }
+            }
+            else
+            {
+                closestEnemy = null;
+                closestDistance = 0;
+            }
+        }    
+
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow.WithAlpha(.1f);
+        Gizmos.DrawSphere(transform.position, detectionRadius);
+    }
+
+    IEnumerator Active()
+    {
+        yield return new WaitForSecondsRealtime(towerData.shootCooldown);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -51,19 +112,22 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
             buttons.SetActive(false);
             TowerManager.selected = null;
         }
-        
     }
 
     public void UpgradeTower()
     {
         towerLvl++;
         animator.SetTrigger("LevelUp");
-        _renderer.material.SetTexture("_MainTexture", _renderer.sprite.texture);
 
         if (towerLvl == maxLvl)
         {
             ToggleMenu();
         }
+    }
+
+    public void UpdateTexture()
+    {
+        _renderer.material.SetTexture("_MainTexture", _renderer.sprite.texture);
     }
 
     public void SetRandomSkin()

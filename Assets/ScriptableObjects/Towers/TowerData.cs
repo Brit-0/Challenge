@@ -14,6 +14,7 @@ public class TowerData : ScriptableObject
     public float attackSpeed;
     public int towerDamage;
     public int maxHealth;
+    public float shootCooldown;
 
     public Sprite icon;
     public GameObject towerPf;
