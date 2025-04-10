@@ -43,7 +43,7 @@ public class PlayerInventory : MonoBehaviour
             print("Agora possui a torre " + referenceData.towerName + "!");
         }
 
-        InventoryManager.current.UpdateInventory();
+        InventoryUIManager.current.UpdateInventory();
     }
 
     public void RemoveTower(TowerData referenceData)
@@ -59,7 +59,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
 
-        InventoryManager.current.UpdateInventory();
+        InventoryUIManager.current.UpdateInventory();
     }
 
 

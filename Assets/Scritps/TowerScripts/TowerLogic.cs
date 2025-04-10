@@ -15,32 +15,39 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] private TowerData towerData;
     [SerializeField] private Animator animator;
-    [SerializeField] private GameObject buttons;
+    [SerializeField] private GameObject menu;
     [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private Transform[] shootPoints = new Transform[3];
+    [SerializeField] private List<Transform> activeShootPoints;
+    [SerializeField] private GameObject detectionCircle, circleMask;
 
     public bool active;
 
-    [SerializeField] private float detectionRadius;
     [SerializeField] private Collider2D[] enemiesInRange;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private Transform shootPoint;
     [SerializeField] private int towerLvl = 1, maxLvl;
-    private int currentHealth;
+    private int currentHealth, damage;
     private float distance, closestDistance;
-    private GameObject closestEnemy;
-    
 
+    private GameObject closestEnemy;
+
+    private void Awake()
+    {
+        damage = towerData.towerDamage;
+    }
 
     private void Start()
     {
         currentHealth = towerData.maxHealth;
+        activeShootPoints.Add(shootPoints[0]);
+        SetCircleSize();
     }
 
     private void Update()
     {
         if (active)
         {
-            enemiesInRange = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayer);
+            enemiesInRange = Physics2D.OverlapCircleAll(transform.position, towerData.detectionRadius, enemyLayer);
 
             if (closestEnemy != null)
             {
@@ -58,7 +65,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
                         closestEnemy = enemy.gameObject;
                     }
 
-                    print(closestEnemy.name);
+                    //print(closestEnemy.name);
                 }
             }
             else
@@ -74,15 +81,45 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void OnDrawGizmosSelected()
+    /*
+    private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow.WithAlpha(.1f);
-        Gizmos.DrawSphere(transform.position, detectionRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, towerData.detectionRadius);
+    }
+    */
+
+    private void SetCircleSize()
+    {
+        detectionCircle.transform.localScale = new Vector3(towerData.detectionRadius, towerData.detectionRadius, towerData.detectionRadius) * 20;
+        circleMask.transform.localScale = (new Vector3(towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f));
     }
 
-    IEnumerator Active()
+    public IEnumerator Active()
     {
-        yield return new WaitForSecondsRealtime(towerData.shootCooldown);
+        yield return new WaitForSecondsRealtime(.1f);
+        active = true;
+        print("Torre ativa!");
+
+        while (active)
+        {
+            yield return new WaitForSecondsRealtime(towerData.shootCooldown);
+            if (closestEnemy)
+            {
+                Shoot();
+            }
+        }
+    }
+
+    private void Shoot()
+    {
+
+        foreach (Transform point in activeShootPoints)
+        {
+            GameObject projectile = Instantiate(towerData.projectilePf, point.position, Quaternion.identity);
+            projectile.GetComponent<ProjectileLogic>().SetData(towerData, closestEnemy);
+        }
+        
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -95,7 +132,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     public void ToggleMenu()
     {
-        if (TowerManager.placeMode) return;
+        if (TowerManager.placeMode || !active) return;
 
         if (TowerManager.selected != this && towerLvl < 4)
         {
@@ -104,12 +141,12 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
                 TowerManager.selected.ToggleMenu();
             }
 
-            buttons.SetActive(true);
+            menu.SetActive(true);
             TowerManager.selected = this;
         }
         else
         {
-            buttons.SetActive(false);
+            menu.SetActive(false);
             TowerManager.selected = null;
         }
     }
@@ -122,6 +159,10 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         if (towerLvl == maxLvl)
         {
             ToggleMenu();
+        }
+        else
+        {
+            activeShootPoints.Add(shootPoints[towerLvl - 1]);
         }
     }
 

@@ -6,9 +6,9 @@ using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryUIManager : MonoBehaviour
 {
-    public static InventoryManager current;
+    public static InventoryUIManager current;
 
     //Referências UI
     [SerializeField] private TextMeshProUGUI pedraLbl, madeiraLbl, ossoLbl;

@@ -107,6 +107,8 @@ public class TowerManager : MonoBehaviour
         preview.GetComponent<SpriteRenderer>().color = Color.white;
         preview.GetComponent<Collider2D>().isTrigger = false;
 
+        preview.GetComponent<TowerLogic>().StartCoroutine("Active");
+
         canPlace = false;
         grid.SetValue(mPos, 1);
     }

@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: Torre de Ossos
   recipe: 112
+  upgradeMaterial: 
+  upgradeCost: 0
   attackRange: 0
   attackSpeed: 0
   towerDamage: 0
   maxHealth: 100
+  detectionRadius: 2
+  shootCooldown: 2
+  projectileSpeed: 3
   icon: {fileID: 21300000, guid: 49ba0c798d715e543924f3545bd083ff, type: 3}
   towerPf: {fileID: 6962123556943333845, guid: eb4467ae72d03674b9b9d23205c6b740, type: 3}
+  projectilePf: {fileID: 7611479179195949724, guid: 2f15a204adbd2c04aa94c5e7e607e245, type: 3}
