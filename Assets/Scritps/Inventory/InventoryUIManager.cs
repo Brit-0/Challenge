@@ -12,8 +12,6 @@ public class InventoryUIManager : MonoBehaviour
 
     //Referências UI
     [SerializeField] private TextMeshProUGUI pedraLbl, madeiraLbl, ossoLbl;
-    [SerializeField] private RectTransform craftingTab;
-    [SerializeField] private Button openCraftButton;
     [SerializeField] private GameObject slotPf;
     [SerializeField] private GameObject towerInventoryBar;
 
@@ -30,20 +28,6 @@ public class InventoryUIManager : MonoBehaviour
         pedraLbl.text = "Pedras: " + PlayerInventory.current.ownedMaterials[0];
         madeiraLbl.text = "Madeiras: " + PlayerInventory.current.ownedMaterials[1];
         ossoLbl.text = "Ossos: " + PlayerInventory.current.ownedMaterials[2];
-    }
-
-    public void ToggleCraftingTab()
-    {
-        if (craftingTab.gameObject.activeInHierarchy)
-        {
-            craftingTab.gameObject.SetActive(false);
-            openCraftButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            craftingTab.gameObject.SetActive(true);
-            openCraftButton.gameObject.SetActive(false);
-        }
     }
 
     public void UpdateInventory()

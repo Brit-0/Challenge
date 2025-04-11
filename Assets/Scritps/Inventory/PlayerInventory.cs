@@ -32,7 +32,7 @@ public class PlayerInventory : MonoBehaviour
         {
             value.AddToStack();
 
-            print("Agora possui " + value.stackSize + " da " + referenceData.towerName + "!");
+            //print("Agora possui " + value.stackSize + " da " + referenceData.towerName + "!");
         }
         else
         {
@@ -40,7 +40,7 @@ public class PlayerInventory : MonoBehaviour
             ownedTowers.Add(newTower);
             towerDictionary.Add(referenceData, newTower);
 
-            print("Agora possui a torre " + referenceData.towerName + "!");
+            //print("Agora possui a torre " + referenceData.towerName + "!");
         }
 
         InventoryUIManager.current.UpdateInventory();
