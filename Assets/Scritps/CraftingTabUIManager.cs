@@ -62,8 +62,6 @@ public class CraftingTabUIManager : MonoBehaviour
         button.sizeDelta = buttonOldScale;
     }
 
-
-
     private void Update()
     {
         //BOTÕES DE CRAFT

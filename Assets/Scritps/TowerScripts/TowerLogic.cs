@@ -97,9 +97,10 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator Active()
     {
-        yield return new WaitForSecondsRealtime(.1f);
+        animator.SetTrigger("Click");
+        yield return new WaitForSeconds(.1f);
         active = true;
-        print("Torre ativa!");
+        //print("Torre ativa!");
 
         while (active)
         {
@@ -118,7 +119,6 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
             GameObject projectile = Instantiate(towerData.projectilePf, point.position, Quaternion.identity);
             projectile.GetComponent<ProjectileLogic>().SetData(towerData, closestEnemy);
         }
-        
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -137,11 +137,11 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         {
             if (TowerManager.selected != null)
             {
-                TowerManager.selected.ToggleMenu();
+                TowerManager.selected.ToggleMenu(); //Fechar menu da outra torre selecionada
             }
-
+            animator.SetTrigger("Click");
             menu.SetActive(true);
-            TowerManager.selected = this;
+            TowerManager.selected = this; //Definir essa como a torre selecionada
         }
         else
         {

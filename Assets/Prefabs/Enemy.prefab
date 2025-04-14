@@ -113,7 +113,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &2307985627390581292
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -173,4 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 50
-  rb: {fileID: 0}
+  moveSpeed: 1
+  rb: {fileID: 8542476081621885556}
