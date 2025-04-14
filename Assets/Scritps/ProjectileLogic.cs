@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,11 +20,26 @@ public class ProjectileLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (targetEnemy)
+        {
             rb.MovePosition(rb.position + ((Vector2)targetEnemy.transform.position - rb.position).normalized * towerData.projectileSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }   
+    }
 
-            if (Vector2.Distance(rb.position, targetEnemy.transform.position) < .2f)
-            {
-                Destroy(gameObject);
-            }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Tower") || collision.CompareTag("Projectile")) return;
+        
+        if (collision.CompareTag("Enemy"))
+        {
+            collision.GetComponent<Enemy>().TakeDamage(towerData.towerDamage);
+        }
+
+        Destroy(gameObject);
     }
 }

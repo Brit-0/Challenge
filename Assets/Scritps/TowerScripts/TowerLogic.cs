@@ -15,7 +15,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] private TowerData towerData;
     [SerializeField] private Animator animator;
-    [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject menu, upgradeButton;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private Transform[] shootPoints = new Transform[3];
     [SerializeField] private List<Transform> activeShootPoints;
@@ -113,7 +113,6 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     private void Shoot()
     {
-
         foreach (Transform point in activeShootPoints)
         {
             GameObject projectile = Instantiate(towerData.projectilePf, point.position, Quaternion.identity);
@@ -134,7 +133,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     {
         if (TowerManager.placeMode || !active) return;
 
-        if (TowerManager.selected != this && towerLvl < 4)
+        if (TowerManager.selected != this)
         {
             if (TowerManager.selected != null)
             {
@@ -158,7 +157,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
         if (towerLvl == maxLvl)
         {
-            ToggleMenu();
+            upgradeButton.SetActive(false);
         }
         else
         {
@@ -182,7 +181,8 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("Tower"))
+
+        if (!collision.CompareTag("Tower") && !active)
         {
             TowerManager.isColliding = true;
         }
@@ -190,7 +190,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("Tower"))
+        if (!collision.CompareTag("Tower") && !active)
         {
             TowerManager.isColliding = false;
         }

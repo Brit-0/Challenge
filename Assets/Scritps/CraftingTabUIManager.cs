@@ -18,12 +18,14 @@ public class CraftingTabUIManager : MonoBehaviour
     {
         if (craftingTab.gameObject.activeInHierarchy)
         {
+            TowerManager.isTabOpened = false;
             craftingTab.gameObject.SetActive(false);
             openCraftButton.gameObject.SetActive(true);
             //CloseAnimation();
         }
         else
         {
+            TowerManager.isTabOpened = true;
             craftingTab.gameObject.SetActive(true);
             openCraftButton.gameObject.SetActive(false);
         }

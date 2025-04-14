@@ -23,7 +23,7 @@ public class TowerManager : MonoBehaviour
     private Vector2 mPos;
     [SerializeField] private float cellSize;
 
-    public static bool canPlace = true, isColliding, isOnGrid, hasTower;
+    public static bool canPlace = true, isColliding, isOnGrid, hasTower, isTabOpened;
 
     void Awake()
     {
@@ -41,22 +41,22 @@ public class TowerManager : MonoBehaviour
             isOnGrid = grid.GetValue(preview.transform.position) != -1;
             hasTower = grid.GetValue(preview.transform.position) == 1;
 
-            if (!isOnGrid || isColliding || hasTower) // Não está no grid, nem está colidindo ou já possui uma torre no local
+            if (!isOnGrid || isColliding || hasTower || isTabOpened) // Não está no grid, nem está colidindo ou já possui uma torre no local
             {
                 canPlace = false;
                 if (hasTower)
                 {
-                    preview.GetComponent<SpriteRenderer>().color = Color.red;
+                    preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
                 }
                 else
                 {
-                    preview.GetComponent<SpriteRenderer>().color = Color.red.WithAlpha(.3f);
+                    preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
                 }
             }
             else
             {
                 canPlace = true;
-                preview.GetComponent<SpriteRenderer>().color = Color.white.WithAlpha(.3f);
+                preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.black);
             }
 
             if (Input.GetMouseButtonDown(0) && canPlace)
@@ -83,8 +83,6 @@ public class TowerManager : MonoBehaviour
         preview = Instantiate(tower.data.towerPf);
         previewData = tower.data;
 
-        preview.GetComponent<SpriteRenderer>().color.WithAlpha(0.3f);
-
         placeMode = true;
     }
 
@@ -104,7 +102,7 @@ public class TowerManager : MonoBehaviour
         PlayerInventory.current.RemoveTower(previewData);
 
         preview.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-        preview.GetComponent<SpriteRenderer>().color = Color.white;
+        preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.black);
         preview.GetComponent<Collider2D>().isTrigger = false;
 
         preview.GetComponent<TowerLogic>().StartCoroutine("Active");

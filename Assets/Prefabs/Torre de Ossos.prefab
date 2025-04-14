@@ -189,7 +189,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -465,7 +465,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -792,7 +792,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 49ba0c798d715e543924f3545bd083ff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1860f20721f6fdd4297c29af44c96b1a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -911,6 +911,7 @@ MonoBehaviour:
   towerData: {fileID: 11400000, guid: bf9f48aca59313a4ca7a338dbcb20966, type: 2}
   animator: {fileID: 3968608645019671484}
   menu: {fileID: 1885702761481289205}
+  upgradeButton: {fileID: 1037541120582738607}
   _renderer: {fileID: 437151774763286543}
   shootPoints:
   - {fileID: 626266270639840109}
