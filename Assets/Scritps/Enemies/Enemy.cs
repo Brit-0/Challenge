@@ -6,12 +6,15 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] protected int currentHealth, maxHealth;
     [SerializeField] protected float moveSpeed;
+    [SerializeField] protected Animator animator;
+    protected bool canPlayHitAnim = true;
     protected Vector2 movePoint;
 
     [SerializeField] Rigidbody2D rb;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
     }
     private void Update()
@@ -33,16 +36,27 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (canPlayHitAnim)
+        {
+            animator.SetTrigger("Hit");
+            canPlayHitAnim = false;
+        }
+
         currentHealth -= damage;
         
         if (currentHealth <= 0)
         {
-            Die();
+            animator.SetTrigger("Die");
         }
     }
 
     protected void Die()
     {
         Destroy(gameObject);
+    }
+
+    protected void HitAnimDebounce()
+    {
+        canPlayHitAnim = true;
     }
 }

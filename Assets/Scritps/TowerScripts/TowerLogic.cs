@@ -153,7 +153,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     public void UpgradeTower()
     {
         towerLvl++;
-        animator.SetTrigger("LevelUp");
+        animator.SetInteger("Level", towerLvl);
 
         if (towerLvl == maxLvl)
         {
