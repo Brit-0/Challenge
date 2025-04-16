@@ -13,10 +13,12 @@ using Random = UnityEngine.Random;
 public class TowerLogic : MonoBehaviour, IPointerClickHandler
 {
 
-    [SerializeField] private TowerData towerData;
-    [SerializeField] private Animator animator;
-    [SerializeField] private GameObject menu, upgradeButton;
     [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private Animator animator;
+    [SerializeField] private ParticleSystem ps;
+
+    [SerializeField] private TowerData towerData;
+    [SerializeField] private GameObject menu, upgradeButton;
     [SerializeField] private Transform[] shootPoints = new Transform[3];
     [SerializeField] private List<Transform> activeShootPoints;
     [SerializeField] private GameObject detectionCircle, circleMask;
@@ -153,6 +155,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     public void UpgradeTower()
     {
         towerLvl++;
+        ps.Play();
         animator.SetInteger("Level", towerLvl);
 
         if (towerLvl == maxLvl)
