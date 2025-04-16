@@ -7,7 +7,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected int currentHealth, maxHealth;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected Animator animator;
-    protected bool canPlayHitAnim = true;
+    [SerializeField] protected SpriteRenderer sr;
+    [SerializeField] protected float flashTime;
+    protected bool flashing = true;
+    protected float elapsedTime;
     protected Vector2 movePoint;
 
     [SerializeField] Rigidbody2D rb;
@@ -36,12 +39,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (canPlayHitAnim)
-        {
-            animator.SetTrigger("Hit");
-            canPlayHitAnim = false;
-        }
-
+        StartCoroutine("DamageFlash");
+ 
         currentHealth -= damage;
         
         if (currentHealth <= 0)
@@ -55,8 +54,21 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected void HitAnimDebounce()
+    protected IEnumerator DamageFlash()
     {
-        canPlayHitAnim = true;
+        if (!flashing)
+        {
+            elapsedTime = 0;
+        }
+        flashing = true;
+        while (elapsedTime < flashTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            sr.material.SetFloat("_FlashAmount", Mathf.Lerp(1f, 0f, (elapsedTime / flashTime)));
+
+            yield return null; 
+        }
+        flashing = false;
     }
 }

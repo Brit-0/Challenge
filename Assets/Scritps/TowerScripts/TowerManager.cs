@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
 using TreeEditor;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.PackageManager;
@@ -18,6 +19,7 @@ public class TowerManager : MonoBehaviour
     private GameObject preview;
     private TowerData previewData;
     public static bool placeMode;
+    private GameObject currentCard;
 
     public Grid grid;
     private Vector2 mPos;
@@ -69,16 +71,19 @@ public class TowerManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) && selected != null)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) && selected != null)
         {
             selected.ToggleMenu();
             selected = null;
         }
     }
 
-    public void EnterPlaceMode(InventoryTower tower)
+    public void EnterPlaceMode(InventoryTower tower, GameObject card)
     {
         if (placeMode) return;
+
+        currentCard = card;
+        currentCard.GetComponent<Animator>().SetBool("Selected", true);
 
         preview = Instantiate(tower.data.towerPf);
         previewData = tower.data;
@@ -89,6 +94,8 @@ public class TowerManager : MonoBehaviour
     public void ExitPlaceMode()
     {
         if (!placeMode) return;
+
+        currentCard.GetComponent<Animator>().SetBool("Selected", false);
 
         Destroy(preview);
 

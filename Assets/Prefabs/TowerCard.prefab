@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7452277164175569856}
   - component: {fileID: 1813169587831560349}
+  - component: {fileID: 1415204010005675139}
   - component: {fileID: -6129052230442922909}
   m_Layer: 5
   m_Name: TowerCard
@@ -161,7 +162,7 @@ RectTransform:
   m_GameObject: {fileID: 1291212834996996816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8408939, y: 1.0512943, z: 0.25958523}
+  m_LocalScale: {x: 0.8934498, y: 1.0512943, z: 0.25958523}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 289157872690684175}
@@ -171,7 +172,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -30.7594, y: -44.302002}
-  m_SizeDelta: {x: 63.4147, y: 73.0555}
+  m_SizeDelta: {x: 68.22, y: 73.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1813169587831560349
 CanvasRenderer:
@@ -181,6 +182,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291212834996996816}
   m_CullTransparentMesh: 1
+--- !u!95 &1415204010005675139
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291212834996996816}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c5803ba0e1e2d694ba7e0407ffafc499, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-6129052230442922909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,8 +388,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31.6, y: 35.8}
-  m_SizeDelta: {x: 23.86, y: 18.22}
+  m_AnchoredPosition: {x: 30.7, y: 35.36}
+  m_SizeDelta: {x: 20.39, y: 17.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4454148645263415994
 CanvasRenderer:
@@ -504,7 +526,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}

@@ -107,9 +107,10 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         while (active)
         {
             yield return new WaitForSecondsRealtime(towerData.shootCooldown);
+
             if (closestEnemy)
             {
-                Shoot();
+                Shoot();     
             }
         }
     }
