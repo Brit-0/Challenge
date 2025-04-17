@@ -5798,7 +5798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82043b775b3b8542ba9fd9ca523eae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 437151774763286543}
+  sr: {fileID: 437151774763286543}
   animator: {fileID: 3968608645019671484}
   ps: {fileID: 8485228942524799133}
   towerData: {fileID: 11400000, guid: bf9f48aca59313a4ca7a338dbcb20966, type: 2}

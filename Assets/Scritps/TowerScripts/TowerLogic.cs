@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 public class TowerLogic : MonoBehaviour, IPointerClickHandler
 {
 
-    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Animator animator;
     [SerializeField] private ParticleSystem ps;
 
@@ -36,12 +36,13 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     private void Awake()
     {
         damage = towerData.towerDamage;
+        currentHealth = towerData.maxHealth;
+        activeShootPoints.Add(shootPoints[0]);
     }
 
     private void Start()
     {
-        currentHealth = towerData.maxHealth;
-        activeShootPoints.Add(shootPoints[0]);
+        sr.material.SetFloat("_PlaceAlpha", .3f);
         SetCircleSize();
     }
 
@@ -99,6 +100,8 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator Active()
     {
+        sr.material.SetFloat("_PlaceAlpha", 1);
+        sr.material.SetColor("_PlaceColor", Color.black);
         animator.SetTrigger("Click");
         yield return new WaitForSeconds(.1f);
         active = true;
@@ -171,7 +174,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     public void UpdateTexture()
     {
-        _renderer.material.SetTexture("_MainTexture", _renderer.sprite.texture);
+        sr.material.SetTexture("_MainTexture", sr.sprite.texture);
     }
 
     public void SetRandomSkin()
@@ -179,8 +182,8 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         float randomH = Random.Range(1, 361) / 360f;
         float randomS = Random.Range(30, 101) / 100f;
         float randomV = Random.Range(40, 101) / 100f;
-        print("H: " + randomH + " S: " + randomS + " V: " + randomV);
-        _renderer.material.SetColor("_SkinColor", Color.HSVToRGB(randomH, randomS, randomV));
+        //print("H: " + randomH + " S: " + randomS + " V: " + randomV);
+        sr.material.SetColor("_SkinColor", Color.HSVToRGB(randomH, randomS, randomV));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

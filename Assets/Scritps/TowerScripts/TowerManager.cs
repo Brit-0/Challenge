@@ -46,13 +46,11 @@ public class TowerManager : MonoBehaviour
             if (!isOnGrid || isColliding || hasTower || isTabOpened) // Não está no grid, nem está colidindo ou já possui uma torre no local
             {
                 canPlace = false;
+                preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
+
                 if (hasTower)
                 {
-                    preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
-                }
-                else
-                {
-                    preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
+                    preview.GetComponent<SpriteRenderer>().material.SetFloat("_PlaceAlpha", .3f);
                 }
             }
             else
@@ -109,7 +107,6 @@ public class TowerManager : MonoBehaviour
         PlayerInventory.current.RemoveTower(previewData);
 
         preview.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-        preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.black);
         preview.GetComponent<Collider2D>().isTrigger = false;
 
         preview.GetComponent<TowerLogic>().StartCoroutine("Active");
