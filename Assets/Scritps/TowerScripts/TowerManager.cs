@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TMPro;
 using TreeEditor;
@@ -21,6 +22,8 @@ public class TowerManager : MonoBehaviour
     public static bool placeMode;
     private GameObject currentCard;
 
+    [SerializeField] List<GameObject> tabs;
+
     public Grid grid;
     private Vector2 mPos;
     [SerializeField] private float cellSize;
@@ -28,7 +31,7 @@ public class TowerManager : MonoBehaviour
     public static bool canPlace = true, isColliding, isOnGrid, hasTower, isTabOpened;
 
     void Awake()
-    {
+    { 
         current = this;
         grid = new Grid(13, 9, cellSize, new Vector2(-8, -4));
     }
@@ -37,42 +40,51 @@ public class TowerManager : MonoBehaviour
     {
         if (placeMode)
         {
-            mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            preview.transform.position = ValidateWorldGridPosition(mPos);
+            SetCanPlace(); //Definir se pode colocar
 
-            isOnGrid = grid.GetValue(preview.transform.position) != -1;
-            hasTower = grid.GetValue(preview.transform.position) == 1;
-
-            if (!isOnGrid || isColliding || hasTower || isTabOpened) // Não está no grid, nem está colidindo ou já possui uma torre no local
-            {
-                canPlace = false;
-                preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
-
-                if (hasTower)
-                {
-                    preview.GetComponent<SpriteRenderer>().material.SetFloat("_PlaceAlpha", .3f);
-                }
-            }
-            else
-            {
-                canPlace = true;
-                preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.black);
-            }
-
-            if (Input.GetMouseButtonDown(0) && canPlace)
+            if (Input.GetMouseButtonDown(0) && canPlace) //Colocar a torre
             {
                 PlaceTower(mPos);  
             }
-            else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
+            else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) //Sair do modo de preview
             {
                 ExitPlaceMode();
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) && selected != null)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) && selected != null) //Desselecionar todas as torres
         {
             selected.ToggleMenu();
             selected = null;
+        }
+    }
+
+    private void SetCanPlace()
+    {
+        mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        preview.transform.position = ValidateWorldGridPosition(mPos); //Snap para o grid
+
+        isOnGrid = grid.GetValue(preview.transform.position) != -1; //Define se está no grid
+        hasTower = grid.GetValue(preview.transform.position) == 1; //Define se tem torre na posição
+
+        if (!isOnGrid || isColliding || hasTower || isTabOpened) // Não está no grid, nem está colidindo ou já possui uma torre no local
+        {
+            canPlace = false;
+            preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
+        }
+        else
+        {
+            canPlace = true;
+            preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.black);
+        }
+
+        if (hasTower)
+        {
+            preview.GetComponent<SpriteRenderer>().material.SetFloat("_PlaceAlpha", 1f);
+        }
+        else
+        {
+            preview.GetComponent<SpriteRenderer>().material.SetFloat("_PlaceAlpha", .3f);
         }
     }
 
@@ -103,16 +115,11 @@ public class TowerManager : MonoBehaviour
     void PlaceTower(Vector2 constructionPoint)
     {
         placeMode = false;
-
-        PlayerInventory.current.RemoveTower(previewData);
-
-        preview.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-        preview.GetComponent<Collider2D>().isTrigger = false;
-
-        preview.GetComponent<TowerLogic>().StartCoroutine("Active");
-
         canPlace = false;
-        grid.SetValue(mPos, 1);
+        PlayerInventory.current.RemoveTower(previewData); //Remover torre do inventário
+        preview.GetComponent<TowerLogic>().StartCoroutine("SetActive"); //Inicializar torre
+
+        grid.SetValue(mPos, 1); //Definir no grid que existe torre nesse quadrado
     }
 
 

@@ -5,29 +5,29 @@ using UnityEngine.UI;
 
 public class CraftingTabUIManager : MonoBehaviour
 {
-
     [SerializeField] GameObject craftingTab;
     [SerializeField] Button openCraftButton;
-    [SerializeField] Animator animator;
+    [SerializeField] UITweener uiTweener;
 
     public void ToggleCraftingTab()
     {
         if (craftingTab.gameObject.activeInHierarchy)
         {
-            TowerManager.isTabOpened = false;
-            animator.SetTrigger("Close");
+            uiTweener.CloseTween("crafting");
         }
         else
         {
+            craftingTab.transform.localScale = Vector3.zero;
             TowerManager.isTabOpened = true;
             craftingTab.gameObject.SetActive(true);
             openCraftButton.gameObject.SetActive(false);
-            animator.SetTrigger("Open");
+            uiTweener.PopUpTween();
         }
     }
 
     public void CloseTab()
     {
+        TowerManager.isTabOpened = false;
         craftingTab.gameObject.SetActive(false);
         openCraftButton.gameObject.SetActive(true);
     }

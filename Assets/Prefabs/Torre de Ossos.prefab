@@ -5798,9 +5798,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82043b775b3b8542ba9fd9ca523eae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sr: {fileID: 437151774763286543}
-  animator: {fileID: 3968608645019671484}
   ps: {fileID: 8485228942524799133}
+  uiTweener: {fileID: 0}
   towerData: {fileID: 11400000, guid: bf9f48aca59313a4ca7a338dbcb20966, type: 2}
   menu: {fileID: 1885702761481289205}
   upgradeButton: {fileID: 1037541120582738607}

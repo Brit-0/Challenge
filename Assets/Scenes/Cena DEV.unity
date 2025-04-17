@@ -1017,7 +1017,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -62.650024, y: 25.15}
+  m_AnchoredPosition: {x: -62.649902, y: 25.15}
   m_SizeDelta: {x: 89.5, y: 71.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &490624420
@@ -1551,10 +1551,10 @@ GameObject:
   - component: {fileID: 644048997}
   - component: {fileID: 644048999}
   - component: {fileID: 644048998}
-  - component: {fileID: 644049002}
   - component: {fileID: 644049001}
   - component: {fileID: 644049000}
   - component: {fileID: 644049003}
+  - component: {fileID: 644049004}
   m_Layer: 5
   m_Name: SC_Check
   m_TagString: Untagged
@@ -1578,7 +1578,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.16, y: 0}
+  m_AnchoredPosition: {x: -0.97, y: 0}
   m_SizeDelta: {x: 0.06837, y: 0.21426}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &644048998
@@ -1662,7 +1662,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.06837, y: 0.21426}
+  m_Size: {x: 0.05402203, y: 0.21426}
   m_EdgeRadius: 0
 --- !u!50 &644049001
 Rigidbody2D:
@@ -1691,27 +1691,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &644049002
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 644048996}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d58aa9d6c4944c94080dd530bdd47e4f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &644049003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1724,10 +1703,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d880829851487ce459149e34ef3337a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 644049002}
+  skillCheck: {fileID: 1448731658}
   sc_check: {fileID: 644048997}
   sc_success: {fileID: 129405069}
+  uiTweener: {fileID: 644049004}
   successNeeded: 3
+--- !u!114 &644049004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644048996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a795a560342cdd1488417c101c9ebbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingTab: {fileID: 0}
+  rectTrans: {fileID: 644048997}
 --- !u!1 &688028084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2785,6 +2779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af83611a1b0d4034098d0a90fb9cac9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tabs:
+  - {fileID: 0}
   cellSize: 1
 --- !u!4 &1290126892
 Transform:
@@ -2812,7 +2808,6 @@ GameObject:
   - component: {fileID: 1448731662}
   - component: {fileID: 1448731661}
   - component: {fileID: 1448731660}
-  - component: {fileID: 1448731659}
   m_Layer: 5
   m_Name: SkillCheck
   m_TagString: Untagged
@@ -2820,23 +2815,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1448731659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448731658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &1448731660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2954,7 +2932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75.599976, y: -211.30005}
+  m_AnchoredPosition: {x: 75.6001, y: -211.30005}
   m_SizeDelta: {x: -1511.4268, y: -1332.2781}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1523426702
@@ -3389,14 +3367,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1626794498}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
+        m_TargetAssemblyTypeName: UITweener, Assembly-CSharp
+        m_MethodName: ClickTween
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.05
           m_StringArgument: Click
           m_BoolArgument: 0
         m_CallState: 2
@@ -3438,27 +3416,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626794493}
   m_CullTransparentMesh: 1
---- !u!95 &1626794498
-Animator:
-  serializedVersion: 5
+--- !u!114 &1626794498
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626794493}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dd0c7575cbd8888428a2f1e8887a9e1a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a795a560342cdd1488417c101c9ebbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingTab: {fileID: 0}
+  rectTrans: {fileID: 1626794494}
 --- !u!1 &1751769049
 GameObject:
   m_ObjectHideFlags: 3
@@ -6554,8 +6525,8 @@ GameObject:
   - component: {fileID: 2038659151}
   - component: {fileID: 2038659150}
   - component: {fileID: 2038659153}
-  - component: {fileID: 2038659155}
   - component: {fileID: 2038659154}
+  - component: {fileID: 2038659155}
   m_Layer: 5
   m_Name: CraftingTab
   m_TagString: Untagged
@@ -6652,28 +6623,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTab: {fileID: 2038659148}
   openCraftButton: {fileID: 490624420}
-  animator: {fileID: 2038659155}
---- !u!95 &2038659155
-Animator:
-  serializedVersion: 5
+  uiTweener: {fileID: 2038659155}
+--- !u!114 &2038659155
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038659148}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6b762ffdb5914ad48b6a89d4827d55b4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a795a560342cdd1488417c101c9ebbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingTab: {fileID: 2038659154}
+  rectTrans: {fileID: 2038659149}
 --- !u!1 &2086849182
 GameObject:
   m_ObjectHideFlags: 0
@@ -6870,7 +6834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -88.1001, y: -93.07605}
+  m_AnchoredPosition: {x: -88.1001, y: -93.07617}
   m_SizeDelta: {x: 62.75, y: 62.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2096952395

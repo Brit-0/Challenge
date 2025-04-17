@@ -12,9 +12,10 @@ using Random = UnityEngine.Random;
 
 public class TowerLogic : MonoBehaviour, IPointerClickHandler
 {
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+    private Animator animator;
 
-    [SerializeField] private SpriteRenderer sr;
-    [SerializeField] private Animator animator;
     [SerializeField] private ParticleSystem ps;
 
     [SerializeField] private TowerData towerData;
@@ -28,14 +29,18 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Collider2D[] enemiesInRange;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private int towerLvl = 1, maxLvl;
-    private int currentHealth, damage;
+    private int currentHealth;
     private float distance, closestDistance;
 
     private GameObject closestEnemy;
 
     private void Awake()
     {
-        damage = towerData.towerDamage;
+        //Set references
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+
         currentHealth = towerData.maxHealth;
         activeShootPoints.Add(shootPoints[0]);
     }
@@ -50,32 +55,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     {
         if (active)
         {
-            enemiesInRange = Physics2D.OverlapCircleAll(transform.position, towerData.detectionRadius, enemyLayer);
-
-            if (closestEnemy != null)
-            {
-                closestDistance = Vector2.Distance(transform.position, closestEnemy.transform.position);
-            }
-
-            if (enemiesInRange.Length > 0)
-            {
-                foreach (Collider2D enemy in enemiesInRange)
-                {
-                    distance = Vector2.Distance(transform.position, enemy.transform.position);
-
-                    if (closestEnemy == null || distance < closestDistance)
-                    {
-                        closestEnemy = enemy.gameObject;
-                    }
-
-                    //print(closestEnemy.name);
-                }
-            }
-            else
-            {
-                closestEnemy = null;
-                closestDistance = 0;
-            }
+            GetEnemiesInRange();
         }    
 
         if (currentHealth <= 0)
@@ -84,36 +64,62 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    /*
-    private void OnDrawGizmos()
+    private void GetEnemiesInRange()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, towerData.detectionRadius);
-    }
-    */
+        enemiesInRange = Physics2D.OverlapCircleAll(transform.position, towerData.detectionRadius, enemyLayer);
 
-    private void SetCircleSize()
-    {
-        detectionCircle.transform.localScale = new Vector3(towerData.detectionRadius, towerData.detectionRadius, towerData.detectionRadius) * 20;
-        circleMask.transform.localScale = (new Vector3(towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f));
+        if (closestEnemy != null)
+        {
+            closestDistance = Vector2.Distance(transform.position, closestEnemy.transform.position);
+        }
+
+        if (enemiesInRange.Length > 0)
+        {
+            foreach (Collider2D enemy in enemiesInRange)
+            {
+                distance = Vector2.Distance(transform.position, enemy.transform.position);
+
+                if (closestEnemy == null || distance < closestDistance)
+                {
+                    closestEnemy = enemy.gameObject;
+                }
+            }
+        }
+        else
+        {
+            closestEnemy = null;
+            closestDistance = 0;
+        }
     }
 
-    public IEnumerator Active()
+    public IEnumerator SetActive()
     {
+        //Travar posição e ativar colisão
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        GetComponent<Collider2D>().isTrigger = false;
+
+        //Arrumar Shader
         sr.material.SetFloat("_PlaceAlpha", 1);
         sr.material.SetColor("_PlaceColor", Color.black);
-        animator.SetTrigger("Click");
-        yield return new WaitForSeconds(.1f);
-        active = true;
-        //print("Torre ativa!");
 
+        //Animação de Colocar
+        animator.SetTrigger("Click");
+
+        yield return new WaitForSeconds(.1f);
+
+        active = true;
+        StartCoroutine("ActiveLoop"); //Começar loop ativo da torre
+    }
+
+    private IEnumerator ActiveLoop()
+    {
         while (active)
         {
             yield return new WaitForSecondsRealtime(towerData.shootCooldown);
 
             if (closestEnemy)
             {
-                Shoot();     
+                Shoot();
             }
         }
     }
@@ -172,11 +178,6 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void UpdateTexture()
-    {
-        sr.material.SetTexture("_MainTexture", sr.sprite.texture);
-    }
-
     public void SetRandomSkin()
     {
         float randomH = Random.Range(1, 361) / 360f;
@@ -185,11 +186,15 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         //print("H: " + randomH + " S: " + randomS + " V: " + randomV);
         sr.material.SetColor("_SkinColor", Color.HSVToRGB(randomH, randomS, randomV));
     }
+    private void SetCircleSize()
+    {
+        detectionCircle.transform.localScale = new Vector3(towerData.detectionRadius, towerData.detectionRadius, towerData.detectionRadius) * 20;
+        circleMask.transform.localScale = (new Vector3(towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f));
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (!collision.CompareTag("Tower") && !active)
+        if (!collision.CompareTag("Tower") && !active) //Se não for outra torre e não estiver ativo
         {
             TowerManager.isColliding = true;
         }
@@ -197,7 +202,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Tower") && !active)
+        if (!collision.CompareTag("Tower") && !active) //Se não for outra torre e não estiver ativo
         {
             TowerManager.isColliding = false;
         }
