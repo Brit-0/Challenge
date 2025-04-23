@@ -1,24 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    protected Rigidbody2D rb;
+
     [SerializeField] protected int currentHealth, maxHealth;
     [SerializeField] protected float moveSpeed;
+    protected float ogSpeed;
     [SerializeField] protected Animator animator;
     [SerializeField] protected SpriteRenderer sr;
     [SerializeField] protected float flashTime;
-    protected bool flashing = true;
-    protected float elapsedTime;
+    protected bool flashing = true, slowed;
+    protected float flashElapsedTime;
     protected Vector2 movePoint;
+    
 
-    [SerializeField] Rigidbody2D rb;
+    
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        ogSpeed = moveSpeed;
+    }
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
     }
     private void Update()
     {
@@ -49,6 +60,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public IEnumerator SlowEffect()
+    {
+        if (slowed)
+        {
+            moveSpeed = ogSpeed;
+            yield break;
+        }
+        slowed = true;
+        moveSpeed /= 2;
+        yield return new WaitForSecondsRealtime(2f);
+        moveSpeed *= 2;
+        slowed = false;
+    }
+
     protected void Die()
     {
         Destroy(gameObject);
@@ -58,17 +83,18 @@ public class Enemy : MonoBehaviour
     {
         if (!flashing)
         {
-            elapsedTime = 0;
+            flashElapsedTime = 0;
         }
+
         flashing = true;
-        while (elapsedTime < flashTime)
+
+        while (flashElapsedTime < flashTime)
         {
-            elapsedTime += Time.deltaTime;
-
-            sr.material.SetFloat("_FlashAmount", Mathf.Lerp(1f, 0f, (elapsedTime / flashTime)));
-
+            flashElapsedTime += Time.deltaTime;
+            sr.material.SetFloat("_FlashAmount", Mathf.Lerp(1f, 0f, (flashElapsedTime / flashTime)));
             yield return null; 
         }
+
         flashing = false;
     }
 }

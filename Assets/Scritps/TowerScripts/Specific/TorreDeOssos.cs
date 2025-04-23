@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Timeline;
+using UnityEngine;
+
+public class TorreDeOssos : TowerLogic
+{
+    protected override IEnumerator ActiveLoop()
+    {
+        return base.ActiveLoop();
+    }
+
+    protected override void Shoot()
+    {
+        foreach (Transform point in activeShootPoints)
+        {
+            GameObject projectile = Instantiate(towerData.projectilePf, point.position, Quaternion.identity);
+            projectile.GetComponent<ProjectileLogic>().SetData(towerData, closestEnemy, towerData.projType, towerData.projEffects);
+        }
+    }
+}

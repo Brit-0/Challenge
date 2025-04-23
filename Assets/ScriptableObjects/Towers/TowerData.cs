@@ -1,21 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "TowerData_", menuName = "ScriptableObjects/Create Tower", order = 1)]
 public class TowerData : ScriptableObject
 {
+    [Header("GENERAL INFO")]
     public string towerName;
-    public string recipe;
+    [Tooltip("Pedra / Madeira / Osso")] public string recipe;
     public string upgradeMaterial;
     public int upgradeCost;
+    [Header("STATS")]
     public int towerDamage;
     public int maxHealth;
+    public int maxLevel;
     public float detectionRadius;
     public float shootCooldown;
+    [Header("PROJECTILE SETTINGS")]
     public float projectileSpeed;
+    public ProjectileLogic.ProjetileType projType;
+    public ProjectileLogic.ProjectileEffect[] projEffects;
 
+    [Header("ASSETS")]
     public Sprite icon;
     public GameObject towerPf;
     public GameObject projectilePf;

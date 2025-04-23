@@ -16,23 +16,28 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     private SpriteRenderer sr;
     private Animator animator;
 
-    [SerializeField] private ParticleSystem ps;
-
-    [SerializeField] private TowerData towerData;
-    [SerializeField] private GameObject menu, upgradeButton;
-    [SerializeField] private Transform[] shootPoints = new Transform[3];
-    [SerializeField] private List<Transform> activeShootPoints;
-    [SerializeField] private GameObject detectionCircle, circleMask;
-
+    [Header("STATUS")]
     public bool active;
 
-    [SerializeField] private Collider2D[] enemiesInRange;
+    [Header("GENERIC SETTINGS")]
+    [SerializeField] private ParticleSystem ps;
+    [SerializeField] protected TowerData towerData;
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private int towerLvl = 1, maxLvl;
+
+    [Header("MENU SETTINGS")]
+    [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject upgradeButton;
+    [SerializeField] private GameObject detectionCircle, circleMask;
+
+    [Header("SHOOT POINTS")]
+    [SerializeField] private Transform[] shootPoints = new Transform[3];
+    [SerializeField] protected List<Transform> activeShootPoints;
+
+    private int towerLvl = 1;
+    private Collider2D[] enemiesInRange;
     private int currentHealth;
     private float distance, closestDistance;
-
-    private GameObject closestEnemy;
+    protected GameObject closestEnemy;
 
     private void Awake()
     {
@@ -111,7 +116,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         StartCoroutine("ActiveLoop"); //Começar loop ativo da torre
     }
 
-    private IEnumerator ActiveLoop()
+    protected virtual IEnumerator ActiveLoop()
     {
         while (active)
         {
@@ -124,13 +129,9 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void Shoot()
+    protected virtual void Shoot()
     {
-        foreach (Transform point in activeShootPoints)
-        {
-            GameObject projectile = Instantiate(towerData.projectilePf, point.position, Quaternion.identity);
-            projectile.GetComponent<ProjectileLogic>().SetData(towerData, closestEnemy);
-        }
+        
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -168,7 +169,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         ps.Play();
         animator.SetInteger("Level", towerLvl);
 
-        if (towerLvl == maxLvl)
+        if (towerLvl == towerData.maxLevel)
         {
             upgradeButton.SetActive(false);
         }
