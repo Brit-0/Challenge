@@ -6,6 +6,18 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum ProjetileType
+{
+    Follow,
+    Area
+};
+
+public enum ProjectileEffect
+{
+    Damage,
+    Slow
+};
+
 public class ProjectileLogic : MonoBehaviour
 {
 
@@ -16,18 +28,6 @@ public class ProjectileLogic : MonoBehaviour
     private GameObject targetEnemy;
     private ProjetileType type;
     private ProjectileEffect[] effects;
-
-    public enum ProjetileType
-    {
-        Follow,
-        Area
-    };
-
-    public enum ProjectileEffect
-    {
-        Damage,
-        Slow
-    };
 
     private void Start()
     {
@@ -69,7 +69,6 @@ public class ProjectileLogic : MonoBehaviour
 
                 break;
         }
-
     }
 
     private void DealEffect(Enemy enemy)
@@ -80,12 +79,13 @@ public class ProjectileLogic : MonoBehaviour
             {
                 case ProjectileEffect.Damage:
 
-                    enemy.TakeDamage(towerData.towerDamage);
+                    enemy.TakeDamage(towerData.damage);
 
                     break;
 
                 case ProjectileEffect.Slow:
 
+                    enemy.StopCoroutine("SlowEffect");
                     enemy.StartCoroutine("SlowEffect");
 
                     break;

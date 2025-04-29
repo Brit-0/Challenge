@@ -13,15 +13,15 @@ public class TowerData : ScriptableObject
     public string upgradeMaterial;
     public int upgradeCost;
     [Header("STATS")]
-    public int towerDamage;
+    public int damage;
     public int maxHealth;
     public int maxLevel;
     public float detectionRadius;
     public float shootCooldown;
     [Header("PROJECTILE SETTINGS")]
     public float projectileSpeed;
-    public ProjectileLogic.ProjetileType projType;
-    public ProjectileLogic.ProjectileEffect[] projEffects;
+    public ProjetileType projType;
+    public ProjectileEffect[] projEffects;
 
     [Header("ASSETS")]
     public Sprite icon;

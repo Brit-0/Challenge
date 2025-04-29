@@ -16,9 +16,9 @@ MonoBehaviour:
   recipe: 112
   upgradeMaterial: 
   upgradeCost: 0
-  towerDamage: 10
+  damage: 10
   maxHealth: 100
-  maxLevel: 0
+  maxLevel: 4
   detectionRadius: 2
   shootCooldown: 2
   projectileSpeed: 4

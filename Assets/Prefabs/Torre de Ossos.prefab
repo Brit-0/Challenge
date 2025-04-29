@@ -5813,8 +5813,6 @@ MonoBehaviour:
   - {fileID: 1510774742654860922}
   - {fileID: 5202194052191095751}
   activeShootPoints: []
-  projType: 0
-  projEffects: 01000000
 --- !u!1 &7302724444531149546
 GameObject:
   m_ObjectHideFlags: 0

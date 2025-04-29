@@ -13,13 +13,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] protected SpriteRenderer sr;
     [SerializeField] protected float flashTime;
-    protected bool flashing = true, slowed;
-    protected float flashElapsedTime;
+    protected bool isFlashing = true;
+    [SerializeField] protected float flashElapsedTime, slowElapsedTime;
     protected Vector2 movePoint;
     
-
-    
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -38,6 +35,7 @@ public class Enemy : MonoBehaviour
             movePoint = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
+
     private void FixedUpdate()
     {
         Move();
@@ -62,16 +60,16 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator SlowEffect()
     {
-        if (slowed)
+        slowElapsedTime = 0;
+
+        while (slowElapsedTime < 2)
         {
-            moveSpeed = ogSpeed;
-            yield break;
+            slowElapsedTime += Time.deltaTime;
+            moveSpeed = ogSpeed / 2;
+            yield return null;
         }
-        slowed = true;
-        moveSpeed /= 2;
-        yield return new WaitForSecondsRealtime(2f);
-        moveSpeed *= 2;
-        slowed = false;
+
+        moveSpeed = ogSpeed;
     }
 
     protected void Die()
@@ -81,12 +79,12 @@ public class Enemy : MonoBehaviour
 
     protected IEnumerator DamageFlash()
     {
-        if (!flashing)
+        if (!isFlashing)
         {
             flashElapsedTime = 0;
         }
 
-        flashing = true;
+        isFlashing = true;
 
         while (flashElapsedTime < flashTime)
         {
@@ -95,6 +93,6 @@ public class Enemy : MonoBehaviour
             yield return null; 
         }
 
-        flashing = false;
+        isFlashing = false;
     }
 }
