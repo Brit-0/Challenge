@@ -10,12 +10,10 @@ public class InventoryUIManager : MonoBehaviour
 {
     public static InventoryUIManager current;
 
-    //Referências UI
+    //REFERÊNCIAS UI
     [SerializeField] private TextMeshProUGUI pedraLbl, madeiraLbl, ossoLbl;
     [SerializeField] private GameObject slotPf;
     [SerializeField] private GameObject towerInventoryBar;
-
-    private PlayerInventory playerInventory;
 
     private void Awake()
     {

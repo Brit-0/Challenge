@@ -22,8 +22,6 @@ public class TowerManager : MonoBehaviour
     public static bool placeMode;
     private GameObject currentCard;
 
-    [SerializeField] List<GameObject> tabs;
-
     public Grid grid;
     private Vector2 mPos;
     [SerializeField] private float cellSize;

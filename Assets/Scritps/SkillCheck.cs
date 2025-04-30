@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
 public class SkillCheck : MonoBehaviour
@@ -7,6 +8,7 @@ public class SkillCheck : MonoBehaviour
     [SerializeField] GameObject skillCheck;
     [SerializeField] RectTransform sc_check, sc_success;
     [SerializeField] UITweener uiTweener;
+    [SerializeField] Animator animator;
 
     private float randomWidth, randomPosX;
     private bool success;
@@ -47,13 +49,21 @@ public class SkillCheck : MonoBehaviour
         if (success)
         {
             successCounter++;
+            animator.SetTrigger("Success");
             print("Successos: " + successCounter + "/" + successNeeded);
+        }
+        else
+        {
+            animator.SetTrigger("Failure");
         }
 
         yield return new WaitForSecondsRealtime(.5f);
 
         if (successCounter == successNeeded)
         {
+            ChestScript.currentChest.Open();
+            TipsUIManager.current.disableTip();
+            PlayerMovement.canMove = true;
             Destroy(skillCheck);
         }
 

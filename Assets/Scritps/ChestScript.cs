@@ -8,43 +8,54 @@ public class ChestScript : MonoBehaviour
 
     [SerializeField] private float proximityDetector = 1.3f;
     [SerializeField] private bool canInteract;
-    private bool isOpened;
+    [SerializeField] private GameObject skillCheck;
+    private bool isOpened, isChecking;
     public Animator animator;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public static ChestScript currentChest;
+  
     void Update()
     {
-
         if (Physics2D.OverlapCircle(transform.position, proximityDetector).gameObject.CompareTag("Player"))
         {
             canInteract = true;
+            if (!isChecking)
+            {
+                TipsUIManager.current.setTip("Aperte \"E\" para interagir com o baú");
+            }
         }
         else
         {
             canInteract = false;
+            if (!isChecking)
+            {
+                TipsUIManager.current.disableTip();
+            }
         }
 
         if (canInteract && !isOpened && Input.GetKeyDown(KeyCode.E))
         {
-            Open();
+            StartCheck();
         }
     }
 
-    void Open()
+    void StartCheck()
     {
-        isOpened = true;
-        animator.SetTrigger("isOpened");
+        isChecking = true;
+        skillCheck.SetActive(true);
+        TipsUIManager.current.setTip("Aperte \"E\" quando o indicador estiver na seção verde");
+        PlayerMovement.canMove = false;
+        currentChest = this;
+        //animator.SetTrigger("isOpened");
     }
 
-    private void OnDrawGizmos()
+    public void Open()
+    {
+        isOpened = true;
+    }
+
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 0, 255, .3f);
         Gizmos.DrawSphere(transform.position, proximityDetector);
-    }
+    }*/
 }
