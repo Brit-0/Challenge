@@ -19,8 +19,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
-        mPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        direction = mPos - (Vector2)transform.position;
-        GameObject newAttack = Instantiate(swordPivot, transform.position, Quaternion.LookRotation(direction));
+        mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        direction = (mPos - (Vector2)transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        GameObject newAttack = Instantiate(swordPivot, transform.position, Quaternion.identity);
+        newAttack.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
