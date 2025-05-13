@@ -1,31 +1,26 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Events;
 
 public class UITweener : MonoBehaviour
 {
-    [SerializeField] CraftingTabUIManager craftingTab;
-    [SerializeField] RectTransform rectTrans;
+    RectTransform rectTrans;
 
-    private void Callback(object tab)
+    //public UnityEvent closeTab; //DEFINIR NO INSPECTOR
+
+    private void Awake()
     {
-        if ((string)tab == "crafting")
-        {
-            craftingTab.CloseTab();
-        }
+        rectTrans = GetComponent<RectTransform>();
     }
 
-    public void CloseTween(string tab)
+    public void CloseTween()
     {
-        LeanTween.scale(rectTrans, Vector2.zero, .2f).setOnComplete(Callback).setOnCompleteParam(tab);
+        LeanTween.scale(rectTrans, Vector2.zero, .2f);
     }
 
-    public void PopUpTween()
+    public void PopUpTween(float scale)
     {
-        LeanTween.scale(rectTrans, new Vector3(.2f, .2f, .2f), .2f);
+        LeanTween.scale(rectTrans, new Vector3(scale, scale, scale), .2f);
     }
 
     public void ClickTween(float clickTime)

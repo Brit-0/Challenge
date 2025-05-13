@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.PlasticSCM.Editor.WebApi;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.UI;
 

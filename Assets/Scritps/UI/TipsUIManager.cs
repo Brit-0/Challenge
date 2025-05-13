@@ -19,14 +19,14 @@ public class TipsUIManager : MonoBehaviour
 
     public void setTip(string text)
     {
-        tipsPanel.GetComponent<Image>().color = tipsPanel.GetComponent<Image>().color.WithAlpha(.6f);
+        //tipsPanel.GetComponent<Image>().color.WithAlpha(.6f);
         tipsLbl.text = text;
         tipsLbl.gameObject.SetActive(true);
     }
 
     public void disableTip()
     {
-        tipsPanel.GetComponent<Image>().color = tipsPanel.GetComponent<Image>().color.WithAlpha(0f);
+        //tipsPanel.GetComponent<Image>().color.WithAlpha(0f);
         tipsLbl.gameObject.SetActive(false);
     }
 }

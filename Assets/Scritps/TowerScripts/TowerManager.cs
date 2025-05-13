@@ -1,15 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using TMPro;
-using TreeEditor;
-using Unity.Burst.Intrinsics;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TowerManager : MonoBehaviour
 {
@@ -26,7 +15,7 @@ public class TowerManager : MonoBehaviour
     private Vector2 mPos;
     [SerializeField] private float cellSize;
 
-    public static bool canPlace = true, isColliding, isOnGrid, hasTower, isTabOpened;
+    public static bool canPlace = true, isColliding, isOnGrid, hasTower;
 
     void Awake()
     { 
@@ -65,7 +54,7 @@ public class TowerManager : MonoBehaviour
         isOnGrid = grid.GetValue(preview.transform.position) != -1; //Define se está no grid
         hasTower = grid.GetValue(preview.transform.position) == 1; //Define se tem torre na posição
 
-        if (!isOnGrid || isColliding || hasTower || isTabOpened) // Não está no grid, nem está colidindo ou já possui uma torre no local
+        if (!isOnGrid || isColliding || hasTower || UIHandler.isTabOpened) // Não está no grid, nem está colidindo ou já possui uma torre no local
         {
             canPlace = false;
             preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
