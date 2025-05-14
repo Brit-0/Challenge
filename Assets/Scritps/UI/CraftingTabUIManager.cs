@@ -7,14 +7,13 @@ using UnityEngine.UI;
 
 public class CraftingTabUIManager : UIHandler
 {
-    [SerializeField] GameObject craftingTab;
     [SerializeField] Button openCraftButton;
     private UITweener uiTweener;
 
     public void OnClick()
     {
         uiTweener = GetComponent<UITweener>();
-        ToggleTab(craftingTab, true, .2f, uiTweener, true);
+        ToggleTab(gameObject, true, 1, uiTweener, true);
     }
     
     protected override bool ToggleTab(GameObject obj, bool hasPopUp = false, float scale = 0, UITweener uITweener = null, bool blockMovement = false)

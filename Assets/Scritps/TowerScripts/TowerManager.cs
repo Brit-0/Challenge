@@ -9,7 +9,6 @@ public class TowerManager : MonoBehaviour
     private GameObject preview;
     private TowerData previewData;
     public static bool placeMode;
-    private GameObject currentCard;
 
     public Grid grid;
     private Vector2 mPos;
@@ -79,9 +78,6 @@ public class TowerManager : MonoBehaviour
     {
         if (placeMode) return;
 
-        currentCard = card;
-        currentCard.GetComponent<Animator>().SetBool("Selected", true);
-
         preview = Instantiate(tower.data.towerPf);
         previewData = tower.data;
 
@@ -91,8 +87,6 @@ public class TowerManager : MonoBehaviour
     public void ExitPlaceMode()
     {
         if (!placeMode) return;
-
-        currentCard.GetComponent<Animator>().SetBool("Selected", false);
 
         Destroy(preview);
 
