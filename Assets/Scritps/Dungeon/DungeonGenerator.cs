@@ -1,9 +1,5 @@
-using Microsoft.Win32.SafeHandles;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
 
@@ -11,39 +7,32 @@ public class DungeonGenerator : MonoBehaviour
 {
     public static DungeonGenerator current;
 
+    [SerializeField] private int roomIndex;
+
     [SerializeField] private int roomCount, maxRooms;
 
+    [Header("ROOM GRID")]
+    [SerializeField] private Transform roomsGrid;
+
     [Header("DOOR TILES")]
-    [SerializeField] private TileBase doorDownLeft;
-    [SerializeField] private TileBase doorDownRight;
-    [SerializeField] private TileBase doorUpLeft;
-    [SerializeField] private TileBase doorUpRight;
-    TileBase[] doorTiles;
+    [SerializeField] private TileBase[] doorTiles = new TileBase[4];
 
     [Header("WALL TILES")]
     [SerializeField] private Tile wallUp;
     [SerializeField] private Tile wallDown;
 
     [Header("ROOM POOL")]
-    [SerializeField] private List<RoomData> roomPool = new List<RoomData>();
+    [SerializeField] private List<GameObject> roomPool = new List<GameObject>();
 
     [Header("CURRENT DUNGEON ROOMS")]
     [SerializeField] List<GameObject> rooms = new List<GameObject>();
 
-    private string[] directions = new string[4]
-    {
-        "Right",
-        "Left",
-        "Up",
-        "Down"
-    };
-
-    private GameObject currentRoom, otherRoom;
+    private GameObject currentRoom, newRoom;
+    private Room currentRoomData, newRoomData;
 
     private void Awake()
     {
         current = this;
-        doorTiles = new TileBase[4] { doorDownLeft, doorDownRight, doorUpLeft, doorUpRight };
     }
 
     private void Update()
@@ -57,54 +46,111 @@ public class DungeonGenerator : MonoBehaviour
     [ContextMenu("Define Rooms")]
     private void DefineRooms()
     {
-        currentRoom = rooms[0];
-        otherRoom = rooms[1];
+        if (roomIndex == maxRooms) return;
+
+        if (roomIndex == 0) //START ROOM
+        {
+            rooms.Add(roomPool[Random.Range(0, roomPool.Count)]);
+            currentRoom = rooms[0];
+        }
+        else
+        {
+            currentRoom = newRoom;
+        }
+
+        rooms.Add(roomPool[Random.Range(0, roomPool.Count)]);
+
+        newRoom = rooms[roomIndex + 1];
+
+        currentRoomData = currentRoom.GetComponent<Room>();
+        newRoomData = newRoom.GetComponent<Room>();
+
+        print(currentRoom);
+        print(newRoom);
+
+        SpawnRoom();
+    }
+
+    private void SpawnRoom()
+    {
+        if (roomIndex == 0) //START ROOM
+        {
+            currentRoom = Instantiate(currentRoom, Vector2.zero, Quaternion.identity, roomsGrid);
+        }
+
+        newRoom = Instantiate(newRoom, currentRoom.transform.position, Quaternion.identity, roomsGrid);
+
+        print(currentRoom);
+        print(newRoom);
 
         Snap();
     }
-
+        
     private void Snap()
     {
-        string direction = directions[Random.Range(0, 4)];
-        Transform snapPointFrom = otherRoom.transform.Find("SnapPoints").Find("SnapPoint" + direction);
-        Transform snapPointTo = currentRoom.transform.Find("SnapPoints").Find("SnapPoint" + InvertDirection(direction));
+        List<string> availableDirections = currentRoomData.GetDirections();
+        print(availableDirections.Count);
 
-        Transform tm = otherRoom.transform.Find("Tilemap");
-        tm.parent = snapPointFrom;
+        string direction = availableDirections[Random.Range(0, availableDirections.Count)];
+
+        currentRoomData.RemoveDirection(direction);
+        newRoomData.RemoveDirection(InvertDirection(direction));
+
+        print(direction);
+
+        Transform snapPointTo, snapPointFrom;
+
+        snapPointTo = FindChildAll(currentRoom, "SnapPoint" + direction);
+        snapPointFrom = FindChildAll(newRoom, "SnapPoint" + InvertDirection(direction));
+
+        //REARRANJAR HIERARQUIA DA SALA NOVA
+
+        snapPointFrom.parent = newRoom.transform;
+
+        Transform newTM = newRoom.transform.Find("Tilemap");
+        newTM.parent = snapPointFrom;
+
+        Transform snapPoints = newRoom.transform.Find("SnapPoints");
+        snapPoints.parent = snapPointFrom;
+
+        //SNAP PARA PONTO CORRETO
 
         snapPointFrom.Translate(snapPointTo.position - snapPointFrom.position);
 
-        OpenDoors(direction, tm);
+        OpenDoors(direction, newTM);
     }
 
     private void OpenDoors(string direction,Transform tm)
     {
-        Tilemap currentTileMap = currentRoom.transform.Find("Tilemap").GetComponent<Tilemap>();
-        Tilemap otherTileMap = tm.GetComponent<Tilemap>();
+        Tilemap currentTileMap = FindChildAll(currentRoom, "Tilemap").GetComponent<Tilemap>();
+        Tilemap newTileMap = tm.GetComponent<Tilemap>();
 
-        RoomData currentRoomData = currentRoom.GetComponent<Room>().data;
-        RoomData otherRoomData = otherRoom.GetComponent<Room>().data;
+        Room currentRoomData = currentRoom.GetComponent<Room>();
+        Room newRoomData = newRoom.GetComponent<Room>();
 
-        if (direction == "Down")
+        switch (direction)
         {
-            currentTileMap.SetTilesBlock(currentRoomData.boundsUp, doorTiles);
-            otherTileMap.SetTilesBlock(otherRoomData.boundsDown, doorTiles);
+            case "Down":
+                currentTileMap.SetTilesBlock(currentRoomData.boundsDown, doorTiles);
+                newTileMap.SetTilesBlock(newRoomData.boundsUp, doorTiles);
+                break;
+            case "Left":
+                currentTileMap.SetTilesBlock(currentRoomData.boundsLeft, new TileBase[2]);
+                newTileMap.SetTilesBlock(newRoomData.boundsRight, new TileBase[2]);
+                break;
+            case "Up":
+                currentTileMap.SetTilesBlock(currentRoomData.boundsUp, doorTiles);
+                newTileMap.SetTilesBlock(newRoomData.boundsDown, doorTiles);
+                break;
+            case "Right":
+                currentTileMap.SetTilesBlock(currentRoomData.boundsRight, new TileBase[2]);
+                newTileMap.SetTilesBlock(newRoomData.boundsLeft, new TileBase[2]);
+                break;
         }
-        if (direction == "Left")
-        {
-            currentTileMap.SetTilesBlock(currentRoomData.boundsRight, doorTiles);
-            otherTileMap.SetTilesBlock(otherRoomData.boundsLeft, doorTiles);
-        }
-        if (direction == "Up")
-        {
-            currentTileMap.SetTilesBlock(currentRoomData.boundsDown, doorTiles);
-            otherTileMap.SetTilesBlock(otherRoomData.boundsUp, doorTiles);
-        }
-        if (direction == "Right")
-        {
-            currentTileMap.SetTilesBlock(currentRoomData.boundsLeft, doorTiles);
-            otherTileMap.SetTilesBlock(otherRoomData.boundsRight, doorTiles);
-        }
+
+        roomIndex++;
+
+        //DefineRooms();
     }
 
     private string InvertDirection(string dir)
@@ -129,6 +175,21 @@ public class DungeonGenerator : MonoBehaviour
         {
             return "Incorrect direction";
         }
+    }
+
+    private Transform FindChildAll(GameObject obj, string name)
+    {
+        Transform found = default;
+        Transform[] children = obj.transform.GetComponentsInChildren<Transform>();
+        foreach (Transform child in children)
+        {
+            if (child.name == name)
+            {
+                found = child;
+            }
+        }
+
+        return found;
     }
 
 
