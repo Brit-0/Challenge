@@ -18,8 +18,12 @@ public class InventoryUIManager : MonoBehaviour
         current = this;
     }
 
-    //ATUALIZAÇÃO DAS LABELS
-    private void Update()
+    private void Start()
+    {
+        //UpdateLabels();
+    }
+
+    public void UpdateLabels()
     {
         pedraLbl.text = "Pedras: " + PlayerInventory.current.ownedMaterials[0];
         madeiraLbl.text = "Madeiras: " + PlayerInventory.current.ownedMaterials[1];

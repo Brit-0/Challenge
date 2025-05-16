@@ -66,14 +66,14 @@ public class PlayerInventory : MonoBehaviour
     //SISTEMA DE CRAFTING
     public void Craft(TowerData tower)
     {
-        //Checar se possui as partes necessárias
+        //CHECAR SE POSSUI AS PARTES NECESSÁRIAS
         if (!CheckParts(tower.recipe)) 
         {
             craftingFB.text = "Não possui as partes necessárias";
             return;
         }
 
-        //Remover partes do inventário
+        //REMOVER PARTES DO INVENTÁRIO
         int index = 0;
 
         foreach (char number in tower.recipe)
@@ -81,14 +81,15 @@ public class PlayerInventory : MonoBehaviour
             int needed = number - '0';
 
             ownedMaterials[index] -= needed;
+            InventoryUIManager.current.UpdateLabels();
 
             index++;
         }
 
-        //Adicionar torre ao inventário
+        //ADICIONAR TORRE AO INVENTÁRIO
         current.AddTower(tower);
 
-        //Feedback de Sucesso
+        //FEEDBACK DE SUCESSO
         craftingFB.text = tower.towerName + " criada com sucesso!";
 
     }

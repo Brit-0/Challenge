@@ -26,19 +26,19 @@ public class TowerManager : MonoBehaviour
     {
         if (placeMode)
         {
-            SetCanPlace(); //Definir se pode colocar
+            SetCanPlace(); //DEFINIR SE PODE COLOCAR
 
-            if (Input.GetMouseButtonDown(0) && canPlace) //Colocar a torre
+            if (Input.GetMouseButtonDown(0) && canPlace) //COLOCAR A TORRE
             {
                 PlaceTower(mPos);  
             }
-            else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) //Sair do modo de preview
+            else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) //SAIR DO MODO DE PREVIEW
             {
                 ExitPlaceMode();
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) && selected != null) //Desselecionar todas as torres
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) && selected != null) //DESSELECIONAR TODAS AS TORRES
         {
             selected.ToggleMenu();
             selected = null;
@@ -48,12 +48,12 @@ public class TowerManager : MonoBehaviour
     private void SetCanPlace()
     {
         mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        preview.transform.position = ValidateWorldGridPosition(mPos); //Snap para o grid
+        preview.transform.position = ValidateWorldGridPosition(mPos); //SNAP PARA O GRID
 
-        isOnGrid = grid.GetValue(preview.transform.position) != -1; //Define se está no grid
-        hasTower = grid.GetValue(preview.transform.position) == 1; //Define se tem torre na posição
+        isOnGrid = grid.GetValue(preview.transform.position) != -1; //DEFINE SE ESTÁ NO GRID
+        hasTower = grid.GetValue(preview.transform.position) == 1; //DEFINE SE TEM TORRE NA POSIÇÃO
 
-        if (!isOnGrid || isColliding || hasTower || UIHandler.isTabOpened) // Não está no grid, nem está colidindo ou já possui uma torre no local
+        if (!isOnGrid || isColliding || hasTower || UIHandler.isTabOpened) // NÃO ESTÁ NO GRID, NEM ESTÁ COLIDINDO OU JÁ POSSUI UMA TORRE NO LOCAL
         {
             canPlace = false;
             preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
@@ -97,10 +97,10 @@ public class TowerManager : MonoBehaviour
     {
         placeMode = false;
         canPlace = false;
-        PlayerInventory.current.RemoveTower(previewData); //Remover torre do inventário
-        preview.GetComponent<TowerLogic>().StartCoroutine("SetActive"); //Inicializar torre
+        PlayerInventory.current.RemoveTower(previewData); //REMOVER TORRE DO INVENTARIO
+        preview.GetComponent<TowerLogic>().StartCoroutine("SetActive"); //INICIALIZAR TORRE
 
-        grid.SetValue(mPos, 1); //Definir no grid que existe torre nesse quadrado
+        grid.SetValue(mPos, 1); //DEFINIR NO GRID QUE EXISE UMA TORRE NESSE QUADRADO
     }
 
 

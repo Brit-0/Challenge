@@ -36,7 +36,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
-        //Set references
+        //SET REFERENCES
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -94,21 +94,21 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator SetActive()
     {
-        //Travar posição e ativar colisão
+        //TRAVAR POSICÃO E ATIVAR A COLISÃO
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         GetComponent<Collider2D>().isTrigger = false;
 
-        //Arrumar Shader
+        //ARRUMAR SHADER
         sr.material.SetFloat("_PlaceAlpha", 1);
         sr.material.SetColor("_PlaceColor", Color.black);
 
-        //Animação de Colocar
+        //ANIMAÇÃO DE COLOCAR
         animator.SetTrigger("Click");
 
         yield return new WaitForSeconds(.1f);
 
         active = true;
-        StartCoroutine("ActiveLoop"); //Começar loop ativo da torre
+        StartCoroutine("ActiveLoop"); //COMEÇAR LOOP ATIVO DA TORRE
     }
 
     protected virtual IEnumerator ActiveLoop()
@@ -145,11 +145,11 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         {
             if (TowerManager.selected != null)
             {
-                TowerManager.selected.ToggleMenu(); //Fechar menu da outra torre selecionada
+                TowerManager.selected.ToggleMenu(); //FECHAR MENU DA TORRE SELECIONADA
             }
             animator.SetTrigger("Click");
             menu.SetActive(true);
-            TowerManager.selected = this; //Definir essa como a torre selecionada
+            TowerManager.selected = this; //DEFINIR ESSA COMO A TORRE SELECIONADA
         }
         else
         {
