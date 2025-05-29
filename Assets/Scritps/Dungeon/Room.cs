@@ -21,32 +21,33 @@ public class Room : MonoBehaviour
     public BoundsInt boundsRight;
 
     [SerializeField] private List<string> availableDirections = new List<string>();
-    private bool alreadySet = false;
 
     public List<string> GetDirections()
     {
-        if (alreadySet)
+        if (availableDirections.Count == 0)
         {
-            return availableDirections;
+            ResetDirections();
         }
-        else
-        {
-            print("setou");
-            availableDirections.Clear();
-            availableDirections.Add("Down");
-            availableDirections.Add("Left");
-            availableDirections.Add("Up");
-            availableDirections.Add("Right");
 
-            alreadySet = true;
-
-            return availableDirections;
-        }
-        
+        return availableDirections;
     }
 
     public void RemoveDirection(string dir)
     {
+        if (availableDirections.Count == 0)
+        {
+            ResetDirections();
+        }
+
         availableDirections.Remove(dir);
+    }
+
+    private void ResetDirections()
+    {
+        availableDirections.Clear();
+        availableDirections.Add("Down");
+        availableDirections.Add("Left");
+        availableDirections.Add("Up");
+        availableDirections.Add("Right");
     }
 }

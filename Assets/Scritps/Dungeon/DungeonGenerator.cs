@@ -1,4 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -27,8 +30,11 @@ public class DungeonGenerator : MonoBehaviour
     [Header("CURRENT DUNGEON ROOMS")]
     [SerializeField] List<GameObject> rooms = new List<GameObject>();
 
-    private GameObject currentRoom, newRoom;
+    private GameObject currentRoomRef, newRoomRef, currentRoomInst, newRoomInst;
     private Room currentRoomData, newRoomData;
+    private List<string> availableDirections;
+
+    [SerializeField] bool nextRoom;
 
     private void Awake()
     {
@@ -43,30 +49,26 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-    [ContextMenu("Define Rooms")]
+    [ContextMenu("Generate")]
     private void DefineRooms()
     {
-        if (roomIndex == maxRooms) return;
+        if (roomIndex == maxRooms - 1) return;
 
         if (roomIndex == 0) //START ROOM
         {
             rooms.Add(roomPool[Random.Range(0, roomPool.Count)]);
-            currentRoom = rooms[0];
-        }
-        else
-        {
-            currentRoom = newRoom;
+            currentRoomRef = rooms[0];
         }
 
+        if (nextRoom)
+        {
+            currentRoomInst = newRoomInst;
+            nextRoom = false;
+        }
+   
         rooms.Add(roomPool[Random.Range(0, roomPool.Count)]);
 
-        newRoom = rooms[roomIndex + 1];
-
-        currentRoomData = currentRoom.GetComponent<Room>();
-        newRoomData = newRoom.GetComponent<Room>();
-
-        print(currentRoom);
-        print(newRoom);
+        newRoomRef = rooms[roomIndex + 1];
 
         SpawnRoom();
     }
@@ -75,21 +77,21 @@ public class DungeonGenerator : MonoBehaviour
     {
         if (roomIndex == 0) //START ROOM
         {
-            currentRoom = Instantiate(currentRoom, Vector2.zero, Quaternion.identity, roomsGrid);
+            currentRoomInst = Instantiate(currentRoomRef, Vector2.zero, Quaternion.identity, roomsGrid);
         }
 
-        newRoom = Instantiate(newRoom, currentRoom.transform.position, Quaternion.identity, roomsGrid);
+        newRoomInst = Instantiate(newRoomRef, currentRoomInst.transform.position, Quaternion.identity, roomsGrid);
 
-        print(currentRoom);
-        print(newRoom);
+        currentRoomData = currentRoomInst.GetComponent<Room>();
+        newRoomData = newRoomInst.GetComponent<Room>();
 
         Snap();
     }
-        
+
+    [ContextMenu("Snap")]
     private void Snap()
     {
-        List<string> availableDirections = currentRoomData.GetDirections();
-        print(availableDirections.Count);
+        availableDirections = currentRoomData.GetDirections();
 
         string direction = availableDirections[Random.Range(0, availableDirections.Count)];
 
@@ -98,35 +100,64 @@ public class DungeonGenerator : MonoBehaviour
 
         print(direction);
 
+
         Transform snapPointTo, snapPointFrom;
 
-        snapPointTo = FindChildAll(currentRoom, "SnapPoint" + direction);
-        snapPointFrom = FindChildAll(newRoom, "SnapPoint" + InvertDirection(direction));
+        snapPointTo = FindChildAll(currentRoomInst, "SnapPoint" + direction);
+        snapPointFrom = FindChildAll(newRoomInst, "SnapPoint" + InvertDirection(direction));
 
         //REARRANJAR HIERARQUIA DA SALA NOVA
 
-        snapPointFrom.parent = newRoom.transform;
+        snapPointFrom.parent = newRoomInst.transform;
 
-        Transform newTM = newRoom.transform.Find("Tilemap");
+        Transform newTM = FindChildAll(newRoomInst, "Tilemap");
         newTM.parent = snapPointFrom;
 
-        Transform snapPoints = newRoom.transform.Find("SnapPoints");
+        Transform snapPoints = FindChildAll(newRoomInst, "SnapPoints"); ;
         snapPoints.parent = snapPointFrom;
 
         //SNAP PARA PONTO CORRETO
 
         snapPointFrom.Translate(snapPointTo.position - snapPointFrom.position);
 
-        OpenDoors(direction, newTM);
+        StartCoroutine(CheckOverlap(direction, availableDirections));
     }
 
-    private void OpenDoors(string direction,Transform tm)
+ 
+    private IEnumerator CheckOverlap(string direction, List<string> availableDirections)
     {
-        Tilemap currentTileMap = FindChildAll(currentRoom, "Tilemap").GetComponent<Tilemap>();
-        Tilemap newTileMap = tm.GetComponent<Tilemap>();
+        yield return new WaitForFixedUpdate();
 
-        Room currentRoomData = currentRoom.GetComponent<Room>();
-        Room newRoomData = newRoom.GetComponent<Room>();
+        Transform overlapChecker = FindChildAll(newRoomInst, "OverlapChecker");
+
+        if (overlapChecker.GetComponent<Collider2D>().IsTouchingLayers(LayerMask.GetMask(new string[] { "Checker" })))
+        {
+            if (availableDirections.Count > 0)
+            {
+                print("Deu overlapping e rodou de novo");
+                Snap();
+                yield break;
+            }
+            else
+            {
+                print("Deu overlapping e não tinha mais direções");
+                print("Geração encerrada");
+                Destroy(newRoomInst);
+                yield break;
+            }
+        }
+        else
+        {
+            Destroy(overlapChecker.GetComponent<Rigidbody2D>());
+        }
+
+        OpenDoors(direction);
+    }
+
+    private void OpenDoors(string direction)
+    {
+        Tilemap currentTileMap = FindChildAll(currentRoomInst, "Tilemap").GetComponent<Tilemap>();
+        Tilemap newTileMap = FindChildAll(newRoomInst, "Tilemap").GetComponent<Tilemap>();
 
         switch (direction)
         {
@@ -141,6 +172,7 @@ public class DungeonGenerator : MonoBehaviour
             case "Up":
                 currentTileMap.SetTilesBlock(currentRoomData.boundsUp, doorTiles);
                 newTileMap.SetTilesBlock(newRoomData.boundsDown, doorTiles);
+                newTileMap.GetComponent<TilemapRenderer>().sortingOrder = currentTileMap.GetComponent<TilemapRenderer>().sortingOrder - 1;
                 break;
             case "Right":
                 currentTileMap.SetTilesBlock(currentRoomData.boundsRight, new TileBase[2]);
@@ -148,9 +180,15 @@ public class DungeonGenerator : MonoBehaviour
                 break;
         }
 
-        roomIndex++;
+        if (Random.Range(1,3) == 1 || availableDirections.Count == 0)
+        {
+            nextRoom = true;
+        }
 
-        //DefineRooms();
+        roomIndex++;
+        print("Next room: " + nextRoom);
+
+        DefineRooms();
     }
 
     private string InvertDirection(string dir)
@@ -191,19 +229,4 @@ public class DungeonGenerator : MonoBehaviour
 
         return found;
     }
-
-
-    /*private void ResetDoors()
-    {
-        if (tm.ContainsTile(doorUpLeft) ||
-            tm.ContainsTile(doorUpRight) ||
-            tm.ContainsTile(doorDownLeft) ||
-            tm.ContainsTile(doorDownRight))
-        {
-            tm.SwapTile(doorUpLeft, wallUp);
-            tm.SwapTile(doorUpRight, wallUp);
-            tm.SwapTile(doorDownLeft, wallDown);
-            tm.SwapTile(doorDownRight, wallDown);
-        }
-    }*/
 }
