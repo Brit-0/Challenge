@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8863966792996208364}
   - component: {fileID: 4664904079090502554}
   - component: {fileID: 8466121984680767255}
+  - component: {fileID: 4579318807805765155}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Projectile
@@ -234,7 +235,7 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0.02714713, b: 0, a: 1}
-      key1: {r: 1, g: 0.9990684, b: 0, a: 0.70980394}
+      key1: {r: 1, g: 0.80423534, b: 0, a: 0.70980394}
       key2: {r: 1, g: 0.8873908, b: 0, a: 1}
       key3: {r: 1, g: 0.8873908, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -285,5 +286,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3db54c0d1c4de4b81bf699b09ba820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 784393614541177874}
-  targetEnemy: {fileID: 0}
+  impactParticlePf: {fileID: 7938987569979041673, guid: 5abb4bd8cba43814d8610c4dca8527aa, type: 3}
+--- !u!114 &4579318807805765155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7611479179195949724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 1
+  m_Color: {r: 1, g: 0.44479153, b: 0, a: 1}
+  m_Intensity: 6.01
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 2.57
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}

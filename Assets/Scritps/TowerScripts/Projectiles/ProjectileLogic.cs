@@ -1,16 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum ProjetileType
 {
     Follow,
-    Area
-};
+    Area,
+    Direct
+}
 
 public enum ProjectileEffect
 {
@@ -26,8 +21,11 @@ public class ProjectileLogic : MonoBehaviour
 
     private TowerData towerData;
     private GameObject targetEnemy;
+    private Vector2 targetDirection;
+    private float directSpeed = 5f;
     private ProjetileType type;
     private ProjectileEffect[] effects;
+    private bool isSkelProj;
 
     private void Start()
     {
@@ -41,6 +39,14 @@ public class ProjectileLogic : MonoBehaviour
         this.targetEnemy = targetEnemy;
         this.type = type;
         this.effects = effects;
+    }
+
+    public void SetDataSkel(Vector2 targetPos)
+    {
+        this.type = ProjetileType.Direct;
+        this.targetDirection = (targetPos - (Vector2)transform.position).normalized;
+        this.effects = new ProjectileEffect[1] { ProjectileEffect.Damage };
+        isSkelProj = true;
     }
 
     private void FixedUpdate()
@@ -68,6 +74,17 @@ public class ProjectileLogic : MonoBehaviour
             case ProjetileType.Area:
 
                 break;
+
+            case ProjetileType.Direct:
+
+                rb.MovePosition(rb.position + targetDirection * directSpeed * Time.fixedDeltaTime);
+
+                /*if (Vector2.Distance(targetPos, rb.position) < .05f)
+                {
+                    Destroy(gameObject);
+                }*/
+
+                break;
         }
     }
 
@@ -79,7 +96,14 @@ public class ProjectileLogic : MonoBehaviour
             {
                 case ProjectileEffect.Damage:
 
-                    enemy.TakeDamage(towerData.damage);
+                    if (isSkelProj)
+                    {
+                        enemy.TakeDamage(10);
+                    }
+                    else
+                    {
+                        enemy.TakeDamage(towerData.damage);
+                    }
 
                     break;
 
@@ -101,7 +125,11 @@ public class ProjectileLogic : MonoBehaviour
         {
             DealEffect(collision.GetComponent<Enemy>());
         }
-
-        Destroy(gameObject);
+        
+        if (!collision.CompareTag("Player"))
+        {
+            EffectsManager.main.CreateParticle(Particle.Impact, transform.position);
+            Destroy(gameObject);
+        }
     }
 }
