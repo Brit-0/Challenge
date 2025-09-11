@@ -100,7 +100,7 @@ public class TowerManager : MonoBehaviour
         PlayerInventory.current.RemoveTower(previewData); //REMOVER TORRE DO INVENTARIO
         preview.GetComponent<TowerLogic>().StartCoroutine("SetActive"); //INICIALIZAR TORRE
 
-        grid.SetValue(mPos, 1); //DEFINIR NO GRID QUE EXISE UMA TORRE NESSE QUADRADO
+        grid.SetValue(mPos, 1); //DEFINIR NO GRID QUE EXISTE UMA TORRE NESSE QUADRADO
     }
 
 

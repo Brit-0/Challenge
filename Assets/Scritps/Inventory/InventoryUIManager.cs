@@ -47,6 +47,7 @@ public class InventoryUIManager : MonoBehaviour
             AddTowerSlot(tower);
         }
     }
+
     private void AddTowerSlot(InventoryTower tower)
     {
         GameObject slot = Instantiate(slotPf);

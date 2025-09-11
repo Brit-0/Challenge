@@ -467,6 +467,9 @@ MonoBehaviour:
   proximityDetector: 0.7
   canInteract: 0
   skillCheck: {fileID: 3747672671097676351}
+  materialPrefabs:
+  - {fileID: 1119393606267124759, guid: 50fbd147f2ae77b47826bd29ea234617, type: 3}
+  - {fileID: 3369744085380006415, guid: a024af33db80e2d4d9ec657ea9231e5f, type: 3}
   animator: {fileID: 0}
 --- !u!1 &5813081266929421009
 GameObject:

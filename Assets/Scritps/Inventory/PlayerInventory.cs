@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEditor;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -18,6 +13,7 @@ public class PlayerInventory : MonoBehaviour
     public List<InventoryTower> ownedTowers { get; private set; }
 
     [SerializeField] private TextMeshProUGUI craftingFB;
+    [SerializeField] private LayerMask itemsLayer;
 
     private void Awake()
     {
@@ -25,6 +21,44 @@ public class PlayerInventory : MonoBehaviour
         ownedTowers = new List<InventoryTower>();
         towerDictionary = new Dictionary<TowerData, InventoryTower>();
     }
+
+    private void Update()
+    {
+        CheckForPickup();
+    }
+
+    #region MATERIALS
+
+    public void AddMaterial(int index, int amount)
+    {
+        ownedMaterials[index] += amount;
+        InventoryUIManager.current.UpdateLabels();
+    }
+
+    public void RemoveMaterial(int index, int amount)
+    {
+        ownedMaterials[index] -= amount;
+        InventoryUIManager.current.UpdateLabels();
+    }
+
+    #endregion
+
+    #region CHECK FOR ITEMS
+
+    private void CheckForPickup()
+    {
+        Collider2D[] nearbyItems = Physics2D.OverlapCircleAll(transform.position, .8f, itemsLayer);
+
+        foreach (Collider2D item in nearbyItems)
+        {
+            if (item.GetComponent<Pickable>().hasBeenPickedUp) continue;
+            item.GetComponent<Pickable>().Pickup(transform);
+        }
+    }
+
+    #endregion
+
+    #region TOWERS
 
     public void AddTower(TowerData referenceData)
     {
@@ -62,8 +96,10 @@ public class PlayerInventory : MonoBehaviour
         InventoryUIManager.current.UpdateInventory();
     }
 
+    #endregion
 
-    //SISTEMA DE CRAFTING
+    #region CRAFTING
+
     public void Craft(TowerData tower)
     {
         //CHECAR SE POSSUI AS PARTES NECESSÁRIAS
@@ -80,8 +116,7 @@ public class PlayerInventory : MonoBehaviour
         {
             int needed = number - '0';
 
-            ownedMaterials[index] -= needed;
-            InventoryUIManager.current.UpdateLabels();
+            RemoveMaterial(index, needed);
 
             index++;
         }
@@ -123,5 +158,5 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-
+    #endregion
 }

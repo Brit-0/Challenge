@@ -1,35 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-
+using UnityEngine.InputSystem.Processors;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public Rigidbody2D rb;
-    public float moveSpeed = 5f;
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+    [SerializeField] private float moveSpeed = 3f;
     public Animator animator;
-    public static bool canMove = true;
-    [SerializeField] private Vector2 movement;
+    public static bool canMove = true, isIdle;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+    }
 
     void Update()
     {
         if (canMove)
         {
-            movement.x = Input.GetAxisRaw("Horizontal"); //A & D
-            movement.y = Input.GetAxisRaw("Vertical"); //W & S
+            Vector2 movement = Vector2.zero;
 
-            animator.SetFloat("Horizontal", movement.x);
-            animator.SetFloat("Vertical", movement.y);
-            animator.SetFloat("Speed", movement.sqrMagnitude);
+            if (Input.GetKey(KeyCode.W))
+            {
+                movement.y = +1f;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                movement.x = -1f;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                movement.y = -1f;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                movement.x = +1f;
+            }
+
+            movement = movement.normalized;
+
+            isIdle = movement.x == 0 && movement.y == 0;
+
+            if (canMove && !isIdle)
+            {
+                rb.velocity = movement * moveSpeed;
+                animator.SetFloat("Horizontal", movement.x);
+                animator.SetFloat("Vertical", movement.y);
+                animator.SetBool("IsMoving", true);
+            }
+            else if (isIdle)
+            {
+                rb.velocity = Vector2.zero;
+                animator.SetBool("IsMoving", false);
+            }
+
+            if (movement.x >= 0)
+            {
+                sr.flipX = false;
+            }
+            else
+            {
+                sr.flipX = true;
+            }
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (canMove)
-        {
-            rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
-        }
-    }
+
 }

@@ -13,7 +13,7 @@ public class CraftingTabUIManager : UIHandler
     public void OnClick()
     {
         uiTweener = GetComponent<UITweener>();
-        ToggleTab(gameObject, true, 1, uiTweener, true);
+        ToggleTab(gameObject, true, 1, uiTweener, false);
     }
     
     protected override bool ToggleTab(GameObject obj, bool hasPopUp = false, float scale = 0, UITweener uITweener = null, bool blockMovement = false)

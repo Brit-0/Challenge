@@ -64,33 +64,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void GetEnemiesInRange()
-    {
-        enemiesInRange = Physics2D.OverlapCircleAll(transform.position, towerData.detectionRadius, enemyLayer);
-
-        if (closestEnemy != null)
-        {
-            closestDistance = Vector2.Distance(transform.position, closestEnemy.transform.position);
-        }
-
-        if (enemiesInRange.Length > 0)
-        {
-            foreach (Collider2D enemy in enemiesInRange)
-            {
-                distance = Vector2.Distance(transform.position, enemy.transform.position);
-
-                if (closestEnemy == null || distance < closestDistance)
-                {
-                    closestEnemy = enemy.gameObject;
-                }
-            }
-        }
-        else
-        {
-            closestEnemy = null;
-            closestDistance = 0;
-        }
-    }
+    #region ACTIVE
 
     public IEnumerator SetActive()
     {
@@ -124,11 +98,42 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    private void GetEnemiesInRange()
+    {
+        enemiesInRange = Physics2D.OverlapCircleAll(transform.position, towerData.detectionRadius, enemyLayer);
+
+        if (closestEnemy != null)
+        {
+            closestDistance = Vector2.Distance(transform.position, closestEnemy.transform.position);
+        }
+
+        if (enemiesInRange.Length > 0)
+        {
+            foreach (Collider2D enemy in enemiesInRange)
+            {
+                distance = Vector2.Distance(transform.position, enemy.transform.position);
+
+                if (closestEnemy == null || distance < closestDistance)
+                {
+                    closestEnemy = enemy.gameObject;
+                }
+            }
+        }
+        else
+        {
+            closestEnemy = null;
+            closestDistance = 0;
+        }
+    }
+
     protected virtual void Shoot()
     {
         
     }
 
+    #endregion
+
+    #region INTERACTIONS
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
@@ -174,6 +179,10 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    #endregion
+
+    #region COSMETICS
+
     public void SetRandomSkin()
     {
         float randomH = Random.Range(1, 361) / 360f;
@@ -182,6 +191,11 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         //print("H: " + randomH + " S: " + randomS + " V: " + randomV);
         sr.material.SetColor("_SkinColor", Color.HSVToRGB(randomH, randomS, randomV));
     }
+
+    #endregion
+
+    #region SETUP
+
     private void SetCircleSize()
     {
         detectionCircle.transform.localScale = new Vector3(towerData.detectionRadius, towerData.detectionRadius, towerData.detectionRadius) * 20;
@@ -203,4 +217,8 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
             TowerManager.isColliding = false;
         }
     }
+
+    #endregion
 }
+
+
