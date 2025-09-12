@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cbe669a76143f4bb11798f78704cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  proximityDetector: 0.7
+  proximityDistance: 0.7
   canInteract: 0
   skillCheck: {fileID: 3747672671097676351}
   materialPrefabs:

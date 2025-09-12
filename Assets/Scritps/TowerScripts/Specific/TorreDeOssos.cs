@@ -15,5 +15,7 @@ public class TorreDeOssos : TowerLogic
             GameObject projectile = Instantiate(towerData.projectilePf, point.position, Quaternion.identity);
             projectile.GetComponent<ProjectileLogic>().SetData(towerData, closestEnemy, towerData.projType, towerData.projEffects);
         }
+
+        AudioManager.main.PlaySound(AudioManager.main.shoot);
     }
 }

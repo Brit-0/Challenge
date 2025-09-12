@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TowerManager : MonoBehaviour
@@ -56,21 +57,22 @@ public class TowerManager : MonoBehaviour
         if (!isOnGrid || isColliding || hasTower || UIHandler.isTabOpened) // NÃO ESTÁ NO GRID, NEM ESTÁ COLIDINDO OU JÁ POSSUI UMA TORRE NO LOCAL
         {
             canPlace = false;
-            preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.red);
+            preview.GetComponent<SpriteRenderer>().color = Color.red.WithAlpha(.5f);
         }
         else
         {
             canPlace = true;
-            preview.GetComponent<SpriteRenderer>().material.SetColor("_PlaceColor", Color.black);
+            preview.GetComponent<SpriteRenderer>().color = Color.white.WithAlpha(.5f);
         }
 
         if (hasTower)
         {
-            preview.GetComponent<SpriteRenderer>().material.SetFloat("_PlaceAlpha", 1f);
+            preview.GetComponent<SpriteRenderer>().color = Color.red;
+            preview.GetComponent<SpriteRenderer>().sortingOrder = 1;
         }
         else
         {
-            preview.GetComponent<SpriteRenderer>().material.SetFloat("_PlaceAlpha", .3f);
+            preview.GetComponent<SpriteRenderer>().sortingOrder = 0;
         }
     }
 
@@ -98,6 +100,7 @@ public class TowerManager : MonoBehaviour
         placeMode = false;
         canPlace = false;
         PlayerInventory.current.RemoveTower(previewData); //REMOVER TORRE DO INVENTARIO
+        preview.GetComponent<SpriteRenderer>().color = Color.white;
         preview.GetComponent<TowerLogic>().StartCoroutine("SetActive"); //INICIALIZAR TORRE
 
         grid.SetValue(mPos, 1); //DEFINIR NO GRID QUE EXISTE UMA TORRE NESSE QUADRADO

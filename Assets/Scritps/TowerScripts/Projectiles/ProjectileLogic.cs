@@ -119,16 +119,26 @@ public class ProjectileLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Tower") || collision.CompareTag("Projectile")) return;
-        
+        bool isEnemy = false;
+
+        if (!isSkelProj)
+        {
+            if (collision.CompareTag("Tower") || collision.CompareTag("Projectile")) return;
+        }
+
         if (collision.CompareTag("Enemy"))
         {
             DealEffect(collision.GetComponent<Enemy>());
+            isEnemy = true;
         }
         
         if (!collision.CompareTag("Player"))
         {
-            EffectsManager.main.CreateParticle(Particle.Impact, transform.position);
+            if (!isEnemy)
+            {
+                EffectsManager.main.CreateParticle(Particle.Impact, transform.position);
+            }
+            
             Destroy(gameObject);
         }
     }

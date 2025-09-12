@@ -286,7 +286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3db54c0d1c4de4b81bf699b09ba820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactParticlePf: {fileID: 7938987569979041673, guid: 5abb4bd8cba43814d8610c4dca8527aa, type: 3}
 --- !u!114 &4579318807805765155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +325,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 2.57
+  m_PointLightOuterRadius: 3.5
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

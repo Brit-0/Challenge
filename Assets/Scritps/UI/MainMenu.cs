@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject optionsTab;
     [SerializeField] private TMP_Dropdown resDropdown;
+    [SerializeField] private Transform mouseLight;
     private Resolution[] resolutions;
     private UITweener uiTweener;
 
@@ -18,6 +19,13 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         SetResDropdown();
+    }
+
+    private void Update()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        mouseLight.position = mousePos;
     }
 
     private void SetResDropdown()
@@ -67,6 +75,17 @@ public class MainMenu : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadScene("Cena DEV");
+        PlayerMovement.canMove = true;
+    }
+
+    public void SelectDoor()
+    {
+        AudioManager.main.PlaySound(AudioManager.main.doorOpen);
+    }
+
+    public void UnselectDoor()
+    {
+        AudioManager.main.PlaySound(AudioManager.main.doorClose);
     }
 
     public void Quit()

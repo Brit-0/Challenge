@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class PauseMenu : UIHandler
 {
-    [SerializeField] private Button resumeBtn, optionsBtn, mainMenuBtn, quitBtn;
     private UITweener uiTweener;
 
 

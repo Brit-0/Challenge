@@ -57,16 +57,26 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsMoving", false);
             }
 
-            if (movement.x >= 0)
+            if (movement.x > 0)
             {
                 sr.flipX = false;
             }
-            else
+            else if (movement.x < 0)
             {
                 sr.flipX = true;
             }
         }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetBool("IsMoving", false);
+        }
     }
 
+    public void PlayStepSound()
+    {
+        int randomStep = Random.Range(0, 3);
+        AudioManager.main.PlaySound(AudioManager.main.footsteps[randomStep]);
+    }
 
 }

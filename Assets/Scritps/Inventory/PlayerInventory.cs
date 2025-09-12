@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI craftingFB;
     [SerializeField] private LayerMask itemsLayer;
+    private bool isFlashingFB;
 
     private void Awake()
     {
@@ -105,7 +107,7 @@ public class PlayerInventory : MonoBehaviour
         //CHECAR SE POSSUI AS PARTES NECESSÁRIAS
         if (!CheckParts(tower.recipe)) 
         {
-            craftingFB.text = "Não possui as partes necessárias";
+            StartCoroutine(FlashFeedback("Não possui as partes necessárias"));
             return;
         }
 
@@ -125,7 +127,7 @@ public class PlayerInventory : MonoBehaviour
         current.AddTower(tower);
 
         //FEEDBACK DE SUCESSO
-        craftingFB.text = tower.towerName + " criada com sucesso!";
+        StartCoroutine(FlashFeedback(tower.towerName + " criada com sucesso!"));
 
     }
 
@@ -156,6 +158,23 @@ public class PlayerInventory : MonoBehaviour
         {
             return false;
         }
+    }
+
+    #endregion
+
+    #region FEEDBACK
+
+    private IEnumerator FlashFeedback(string message)
+    {
+        if (isFlashingFB) yield break;
+
+        craftingFB.text = message;
+        isFlashingFB = true;
+
+        yield return new WaitForSeconds(2f);
+
+        craftingFB.text = "";
+        isFlashingFB = false;
     }
 
     #endregion

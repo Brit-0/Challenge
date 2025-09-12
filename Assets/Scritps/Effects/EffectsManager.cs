@@ -25,6 +25,7 @@ public class EffectsManager : MonoBehaviour
         {
             case Particle.Impact:
                 prefab = impactPf;
+                AudioManager.main.PlaySound(AudioManager.main.impact, .2f);
 
                 break;
         }
