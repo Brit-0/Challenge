@@ -1,15 +1,12 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ChestScript : MonoBehaviour
+public class ChestScript : Interactable
 {
 
     [Header("VARIABLES")]
-    [SerializeField] private float proximityDistance;
-    [SerializeField] private bool canInteract;
     [SerializeField] private GameObject skillCheck;
-    private bool isOpened, isChecking;
+    private bool isOpened;
 
     private int[] materialsLoot = new int[3];
 
@@ -20,36 +17,24 @@ public class ChestScript : MonoBehaviour
     public Animator animator;
     public static ChestScript currentChest;
 
-    void Update()
+    protected override void Interact()
     {
-        if (Physics2D.OverlapCircle(transform.position, proximityDistance).gameObject.CompareTag("Player"))
-        {
-            canInteract = true;
-            if (!isChecking)
-            {
-                TipsUIManager.current.setTip("Aperte \"E\" para interagir com o baú");
-            }
-        }
-        else
-        {
-            canInteract = false;
-            if (!isChecking)
-            {
-                TipsUIManager.current.disableTip();
-            }
-        }
+        StartCheck();
+    }
 
-        if (canInteract && !isOpened && Input.GetKeyDown(KeyCode.E))
+    protected override void Update()
+    {
+        if (!isOpened)
         {
-            StartCheck();
+            base.Update();
         }
     }
 
     void StartCheck()
     {
-        isChecking = true;
+        //isChecking = true;
         skillCheck.SetActive(true);
-        TipsUIManager.current.setTip("Aperte \"E\" quando o indicador estiver na seção verde");
+        TipsUIManager.current.SetTip("Aperte \"E\" quando o indicador estiver na seção verde");
         PlayerMovement.canMove = false;
         currentChest = this;
     }
@@ -95,11 +80,5 @@ public class ChestScript : MonoBehaviour
         {
             materialsLoot[1] = Random.Range(0, 3);
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(0, 0, 255, .3f);
-        Gizmos.DrawSphere(transform.position, proximityDistance);
     }
 }

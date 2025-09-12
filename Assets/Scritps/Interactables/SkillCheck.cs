@@ -62,7 +62,7 @@ public class SkillCheck : MonoBehaviour
             yield return new WaitForSecondsRealtime(.5f);
 
             ChestScript.currentChest.Open();
-            TipsUIManager.current.disableTip();
+            TipsUIManager.current.DisableTip();
             PlayerMovement.canMove = true;
 
             Destroy(skillCheck);

@@ -1,10 +1,6 @@
-using Microsoft.Win32.SafeHandles;
-using System.Collections;
-using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TipsUIManager : MonoBehaviour
 {
@@ -17,16 +13,16 @@ public class TipsUIManager : MonoBehaviour
         current = this;
     }
 
-    public void setTip(string text)
+    public void SetTip(string text)
     {
-        //tipsPanel.GetComponent<Image>().color.WithAlpha(.6f);
+        print("SET");
         tipsLbl.text = text;
         tipsLbl.gameObject.SetActive(true);
     }
 
-    public void disableTip()
+    public void DisableTip()
     {
-        //tipsPanel.GetComponent<Image>().color.WithAlpha(0f);
+        print("UNSET"); 
         tipsLbl.gameObject.SetActive(false);
     }
 }
