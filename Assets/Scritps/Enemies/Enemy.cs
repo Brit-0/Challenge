@@ -1,6 +1,5 @@
 using System.Collections;
 using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +11,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected int currentHealth;
     [SerializeField] protected int maxHealth;
     protected float ogSpeed;
-    [SerializeField] protected float dashForce = 3f;
+    protected float dashForce = 3f;
+    protected float normalSpeed = 1f;
+    protected float dashSpeed = 3f;
     [Header("COMPONENTS")]
     protected Animator animator;
     protected SpriteRenderer sr;
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float detectionRadius = 2.5f;
     [SerializeField] private float attackRadius = 1f;
     private Vector2 randomPoint;
+    private Vector2 pointToMove;
 
     private enum EnemyState
     {
@@ -65,7 +67,8 @@ public class Enemy : MonoBehaviour
             switch (currentState)
             {
                 case EnemyState.Idle:
-                    movePoint = (Vector2)transform.position + randomPoint;
+                    movePoint = pointToMove;
+                    navAgent.speed = .7f;
                     print("Idle");
                     Move();
 
@@ -78,21 +81,20 @@ public class Enemy : MonoBehaviour
 
                 case EnemyState.Following:
                     movePoint = playerTransform.position;
+                    navAgent.speed = 1f;
                     print("Following");
                     Move();
 
                     if (Physics2D.OverlapCircle(transform.position, attackRadius, LayerMask.GetMask("Player"))){
+                        navAgent.enabled = false;
+                        StartCoroutine(Attack());
                         currentState = EnemyState.Attacking;
                     }
-
 
                     break;
 
                 case EnemyState.Attacking:
-                    navAgent.isStopped = true;
-                    print("Attacking");
-                    StartCoroutine(Attack());
-
+                    
                     break;
             }
         }
@@ -107,20 +109,25 @@ public class Enemy : MonoBehaviour
 
     protected virtual IEnumerator Attack()
     {
-        yield return new WaitForSeconds(1.5f);
-        print("DASHED");
-
         Vector2 dashDirection = (playerTransform.position - transform.position).normalized;
-        rb.AddForce(dashDirection * dashForce);
 
+        yield return new WaitForSeconds(1.5f);
+
+        rb.velocity = dashDirection * dashForce;
+
+        yield return new WaitForSeconds(0.5f);
+
+        rb.velocity = Vector2.zero;
+        navAgent.enabled = true;
         currentState = EnemyState.Idle;
     }
 
     private IEnumerator SetRandomOffset()
     {
-        randomPoint = Random.onUnitSphere;
+        randomPoint = Random.insideUnitCircle * 1.5f;
+        pointToMove = (Vector2)transform.position + randomPoint;     
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
         StartCoroutine(SetRandomOffset());
     }
