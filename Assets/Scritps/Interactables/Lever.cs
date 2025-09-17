@@ -3,14 +3,16 @@ using UnityEngine;
 public class Lever : Interactable
 {
     [SerializeField] private GameObject linkedDoor;
+    private Animator animator;
 
-    protected override void Update()
+    private void Awake()
     {
-        base.Update();
+        animator = GetComponent<Animator>();
     }
 
     protected override void Interact()
     {
-        linkedDoor.GetComponent<Animator>().SetTrigger("Open");
+        linkedDoor.GetComponent<Animator>().SetBool("isOpen", true);
+        animator.SetBool("isDown", true);
     }
 }

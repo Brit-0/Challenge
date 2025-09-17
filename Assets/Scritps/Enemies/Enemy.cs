@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
     {
         Vector2 dashDirection = (playerTransform.position - transform.position).normalized;
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
         rb.velocity = dashDirection * dashForce;
 
