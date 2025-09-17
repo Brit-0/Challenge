@@ -14,8 +14,13 @@ public class ChestScript : Interactable
     [SerializeField] private GameObject[] materialPrefabs = new GameObject[2];
 
     [Header("REFERECNCES")]
-    public Animator animator;
+    private Animator animator;
     public static ChestScript currentChest;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     protected override void Interact()
     {
@@ -43,7 +48,7 @@ public class ChestScript : Interactable
     {
         isOpened = true;
         SetLoot();
-        //animator.SetTrigger("Open");
+        animator.SetTrigger("Open");
 
         for (int materialIndex = 0; materialIndex < 2; materialIndex++)
         {
