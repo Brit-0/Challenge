@@ -138,6 +138,11 @@ public class ProjectileLogic : MonoBehaviour
             {
                 EffectsManager.main.CreateParticle(Particle.Impact, transform.position);
             }
+
+            if (collision.CompareTag("Torch"))
+            {
+                collision.gameObject.GetComponent<Animator>().SetBool("isOn", true);
+            }
             
             Destroy(gameObject);
         }
