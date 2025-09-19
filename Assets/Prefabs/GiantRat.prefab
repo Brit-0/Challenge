@@ -59,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3a16245f8e3bf3418b1f2aeb3e63288, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,8 +150,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00808731, y: -0.01617569}
-  m_Size: {x: 0.8364527, y: 0.6153918}
+  m_Offset: {x: 0.01, y: -0.03}
+  m_Size: {x: 0.0001, y: 0.47}
   m_Direction: 1
 --- !u!114 &-887690526091979919
 MonoBehaviour:
@@ -186,7 +186,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 560553846922836414}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.38
   m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
@@ -195,8 +195,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.9
-  m_BaseOffset: 0.5
+  m_Height: 0.76
+  m_BaseOffset: 0.39
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!95 &531589735450523982

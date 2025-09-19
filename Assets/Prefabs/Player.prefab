@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 1243559495122281548}
   - component: {fileID: 4904413768883403377}
   - component: {fileID: 3435710196346408261}
+  - component: {fileID: 6743061639217685486}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -376,6 +377,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!81 &6743061639217685486
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561493077725016898}
+  m_Enabled: 1
 --- !u!1 &8994906354191719336
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +437,7 @@ MonoBehaviour:
   m_Intensity: 1.15
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 8b3400492d39b2ac00000000
+  m_ApplyToSortingLayers: 8b3400492d39b2ac00000000517b6634
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

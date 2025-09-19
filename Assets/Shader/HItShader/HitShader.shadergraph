@@ -249,6 +249,12 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalSpriteCustomLitSubTarget",
+    "m_ObjectId": "22ed6988b15d4bafb540a36acdde6829"
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.NormalMaterialSlot",
     "m_ObjectId": "24b529463cd74cb1a025984a86423467",
     "m_Id": 0,
@@ -421,10 +427,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -701.0,
-            "y": 54.0,
-            "width": 207.99996948242188,
-            "height": 435.0000305175781
+            "x": -832.0000610351563,
+            "y": -46.000003814697269,
+            "width": 208.0,
+            "height": 434.9999694824219
         }
     },
     "m_Slots": [
@@ -770,9 +776,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -518.9999389648438,
-            "y": 770.0,
-            "width": 142.99996948242188,
+            "x": -610.0,
+            "y": 433.0,
+            "width": 143.00003051757813,
             "height": 34.0
         }
     },
@@ -849,10 +855,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -960.9999389648438,
-            "y": 112.0,
-            "width": 150.0,
-            "height": 34.00001525878906
+            "x": -982.0,
+            "y": 111.99999237060547,
+            "width": 129.0,
+            "height": 34.00000762939453
         }
     },
     "m_Slots": [
@@ -1013,12 +1019,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalSpriteLitSubTarget",
-    "m_ObjectId": "bef55eaa0e0245748c68993730aac874"
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "ce64e16ab076431eb0cf44aa0ac395d0",
     "m_Group": {
@@ -1029,8 +1029,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -658.9999389648438,
-            "y": 560.0,
+            "x": -631.0000610351563,
+            "y": 378.0,
             "width": 133.0,
             "height": 34.0
         }
@@ -1169,7 +1169,7 @@
     "m_ObjectId": "e0b238002afc49d7a8a581bfce756d1d",
     "m_Datas": [],
     "m_ActiveSubTarget": {
-        "m_Id": "bef55eaa0e0245748c68993730aac874"
+        "m_Id": "22ed6988b15d4bafb540a36acdde6829"
     },
     "m_AllowMaterialOverride": false,
     "m_SurfaceType": 0,
