@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 6985637557405186620}
   - component: {fileID: 1243559495122281548}
   - component: {fileID: 4904413768883403377}
+  - component: {fileID: 3435710196346408261}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -351,6 +352,30 @@ MonoBehaviour:
   itemsLayer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &3435710196346408261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561493077725016898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9786469ba255754aa957baf0fcf5484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodVignete: {fileID: 0}
+  maxHearts: 5
+  currentHearts: 0
+  fullHeart: {fileID: 1023609154, guid: 4e16d61182ddba14786fda306d4fc0e7, type: 3}
+  halfHeart: {fileID: 1736929402, guid: 4e16d61182ddba14786fda306d4fc0e7, type: 3}
+  emptyHeart: {fileID: 1891144530, guid: 4e16d61182ddba14786fda306d4fc0e7, type: 3}
+  hearts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &8994906354191719336
 GameObject:
   m_ObjectHideFlags: 0

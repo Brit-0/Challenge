@@ -7,7 +7,7 @@ public class Interactable : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Physics2D.OverlapCircle(transform.position, interactDistance).gameObject.CompareTag("Player"))
+        if (Physics2D.OverlapCircle(transform.position, interactDistance, LayerMask.GetMask("Player")))
         {
             if (!canInteract)
             {

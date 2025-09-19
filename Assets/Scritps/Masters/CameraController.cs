@@ -1,33 +1,43 @@
-using System.Collections;
+using Cinemachine;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController main;
+    private CinemachineVirtualCamera cinemachineVirtualCamera;
+    private float shakeTimer;
+
+    private void Awake()
+    {
+        main = this;
+        cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+    }
+
+    private void Update()
+    {
+        if (shakeTimer > 0)
+        {
+            shakeTimer -= Time.deltaTime;
+            if (shakeTimer <= 0f)
+            {
+                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
+            }
+        }
+    }
+
     #region CAMERA SHAKE
 
-    public IEnumerator CameraShake(float strength, float time)
+    public void CameraShake(float intensity, float time)
     {
-        Vector3 preShakeAngle = transform.localEulerAngles;
-        float strengthVelocity = 0f;
+        CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-        float elapsedTime = 0f;
-
-        while (elapsedTime < time)
-        {
-            elapsedTime += Time.deltaTime;
-
-            strength = Mathf.SmoothDamp(strength, 0f, ref strengthVelocity, time);
-
-            float randomX = Random.value - 0.5f;
-            float randomY = Random.value - 0.5f;
-
-            transform.localEulerAngles = new Vector3(randomX, randomY, 0) * strength;
-
-            yield return null;
-        }
-
-        transform.localEulerAngles = preShakeAngle;
+        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        shakeTimer = time;
     }
+
+
 
     #endregion
 }

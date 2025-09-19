@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -49,7 +50,10 @@ public class ChestScript : Interactable
         isOpened = true;
         SetLoot();
         animator.SetTrigger("Open");
+    }
 
+    public void SpawnMaterials()
+    {
         for (int materialIndex = 0; materialIndex < 2; materialIndex++)
         {
             for (int i = 0; i < materialsLoot[materialIndex]; i++)

@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.InputSystem.Processors;
+
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
             isIdle = movement.x == 0 && movement.y == 0;
 
-            if (canMove && !isIdle)
+            if (!isIdle)
             {
                 rb.velocity = movement * moveSpeed;
                 animator.SetFloat("Horizontal", movement.x);
@@ -68,9 +68,20 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.velocity = Vector2.zero;
+            //rb.velocity = Vector2.zero;
             animator.SetBool("IsMoving", false);
         }
+    }
+
+    public IEnumerator Knockback(Vector2 direction, float force)
+    {
+        canMove = false;
+        rb.velocity = direction * force;
+
+        yield return new WaitForSeconds(.5f);
+
+        canMove = true;
+        rb.velocity = Vector2.zero;
     }
 
     public void PlayStepSound()

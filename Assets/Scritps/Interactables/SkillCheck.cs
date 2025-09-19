@@ -58,10 +58,9 @@ public class SkillCheck : MonoBehaviour
         if (successCounter == successNeeded)
         {
             AudioManager.main.PlaySound(AudioManager.main.chestOpen, .8f);
+            ChestScript.currentChest.Open();
 
             yield return new WaitForSecondsRealtime(.5f);
-
-            ChestScript.currentChest.Open();
             TipsUIManager.current.DisableTip();
             PlayerMovement.canMove = true;
 

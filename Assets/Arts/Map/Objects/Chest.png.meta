@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6dec894c7b3c3874b829c5bdc521c8cf
+guid: d2c5d127766c5154e8c7d9445e780887
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -119,6 +119,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -131,14 +144,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21fab03efe85c624ca4942d737bfc4c8
-      internalID: -142873222
+      spriteID: c8b35d0486a61824da3b6bcce9674faf
+      internalID: -2028154453
       vertices: []
       indices: 
       edges: []
@@ -152,14 +165,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 085cdfb756fe82b4f82cda68df7b1bc1
-      internalID: 1276908843
+      spriteID: 26276dafc64d3fa45bdf49b9bbebcf9e
+      internalID: 899999764
       vertices: []
       indices: 
       edges: []
@@ -173,14 +186,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 072f20946b24dfc4cb7882989187f8c6
-      internalID: 526608467
+      spriteID: d3db3b7499cf4aa42836caa86cec67ba
+      internalID: -1975317668
       vertices: []
       indices: 
       edges: []
@@ -194,14 +207,56 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd567e4ac1b15f24d8c7444a3818af72
-      internalID: -1482265894
+      spriteID: 446c4f69a972cbd49ab35760c954c383
+      internalID: -1608851537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99228c49e4e47974a8be5ae166beca18
+      internalID: 1044225063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chest_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78f7db5b367ca414d830753c6ffe582a
+      internalID: 819496487
       vertices: []
       indices: 
       edges: []
@@ -210,19 +265,21 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures:
-    - texture: {fileID: 2800000, guid: 992a63434c309df458e1130f06d418b0, type: 3}
+    - texture: {fileID: 2800000, guid: fd22e24ad97030b4ba607a4a0b812b34, type: 3}
       name: _NormalMap
     nameFileIdTable:
-      Chest_0: -142873222
-      Chest_1: 1276908843
-      Chest_2: 526608467
-      Chest_3: -1482265894
+      Chest_0: -2028154453
+      Chest_1: 899999764
+      Chest_2: -1975317668
+      Chest_3: -1608851537
+      Chest_4: 1044225063
+      Chest_5: 819496487
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6947344939683883689}
   - component: {fileID: 7383738256658693354}
   - component: {fileID: 8158201409407356440}
+  - component: {fileID: 5831143867239316204}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.128, y: -6.437, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.28, y: 1.28, z: 1.28}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -119,6 +120,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8658eb75a548704fa38d1bb3d97f25f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDistance: 0.8
+  interactDistance: 0.5
   canInteract: 0
   linkedDoor: {fileID: 0}
+  type: 0
+--- !u!114 &5831143867239316204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8591469978954756245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ShapePath:
+  - {x: -0.010121018, y: -0.056993827, z: 0}
+  - {x: -0.00874266, y: 0.062509015, z: 0}
+  - {x: 0.010121465, y: 0.061130658, z: 0}
+  - {x: 0.011499822, y: -0.05423674, z: 0}
+  m_ShapePathHash: 186236589
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -1350
+  m_LocalBounds:
+    m_Center: {x: 0.0006894022, y: 0.002757594, z: 0}
+    m_Extent: {x: 0.01081042, y: 0.05975142, z: 0}

@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     protected float dashForce = 3f;
     protected float normalSpeed = 1f;
     protected float dashSpeed = 3f;
+    [SerializeField] protected float attackDamage = .5f;
     [Header("COMPONENTS")]
     protected Animator animator;
     protected SpriteRenderer sr;
@@ -29,6 +30,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackRadius = 1f;
     private Vector2 randomPoint;
     private Vector2 pointToMove;
+    [Header("COMBAT")]
+    [SerializeField] private Transform hitPos;
+    [SerializeField] private float damageRadius = .8f;
+    [SerializeField] private float attackCooldown = 1.5f;
+    private float nextAttackTime;
+    private bool isDamaging, alreadyDamaged;
 
     private enum EnemyState
     {
@@ -50,6 +57,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.updateRotation = false;
         navAgent.updateUpAxis = false;
@@ -69,7 +77,6 @@ public class Enemy : MonoBehaviour
                 case EnemyState.Idle:
                     movePoint = pointToMove;
                     navAgent.speed = .7f;
-                    print("Idle");
                     Move();
 
                     if (Physics2D.OverlapCircle(transform.position, detectionRadius, LayerMask.GetMask("Player")))
@@ -82,18 +89,29 @@ public class Enemy : MonoBehaviour
                 case EnemyState.Following:
                     movePoint = playerTransform.position;
                     navAgent.speed = 1f;
-                    print("Following");
                     Move();
 
                     if (Physics2D.OverlapCircle(transform.position, attackRadius, LayerMask.GetMask("Player"))){
-                        navAgent.enabled = false;
-                        StartCoroutine(Attack());
-                        currentState = EnemyState.Attacking;
+                        if (Time.time >= nextAttackTime)
+                        {
+                            navAgent.enabled = false;
+                            StartCoroutine(Attack());
+                            nextAttackTime = Time.time + attackCooldown;
+                            
+                            currentState = EnemyState.Attacking;
+                        }
                     }
 
                     break;
 
                 case EnemyState.Attacking:
+                    if (!isDamaging || alreadyDamaged) return;
+
+                    if (Physics2D.OverlapCircle(hitPos.position, damageRadius, LayerMask.GetMask("Player")))
+                    {
+                        playerTransform.gameObject.GetComponent<PlayerCombat>().TakeDamage(attackDamage);
+                        alreadyDamaged = true;
+                    }
                     
                     break;
             }
@@ -103,21 +121,36 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Move()
     {
-        //rb.MovePosition(Vector2.MoveTowards(rb.position, movePoint, moveSpeed * Time.fixedDeltaTime));
         navAgent.SetDestination(movePoint);
+        animator.SetFloat("Speed", navAgent.velocity.magnitude);
+
+        if (navAgent.velocity.x > 0)
+        {
+            sr.flipX = true;
+        }
+        else if (navAgent.velocity.x < 0)
+        {
+            sr.flipX = false;
+        }
     }
 
     protected virtual IEnumerator Attack()
     {
         Vector2 dashDirection = (playerTransform.position - transform.position).normalized;
+        //hitPos.position = (Vector2)transform.position + dashDirection;
+        alreadyDamaged = false;
+        animator.SetTrigger("Attack");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.8f);
 
         rb.velocity = dashDirection * dashForce;
+        isDamaging = true;
+        AudioManager.main.PlayerSpatialSound(AudioManager.main.giantRatAttack, gameObject, 1f);
 
         yield return new WaitForSeconds(0.5f);
 
         rb.velocity = Vector2.zero;
+        isDamaging = false;
         navAgent.enabled = true;
         currentState = EnemyState.Idle;
     }
@@ -144,7 +177,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        StartCoroutine("DamageFlash");
+        StartCoroutine(DamageFlash());
  
         currentHealth -= damage;
         
@@ -206,7 +239,10 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawSphere(transform.position, attackRadius);
 
         Gizmos.color = Color.blue.WithAlpha(.3f);
-        Gizmos.DrawSphere (transform.position, detectionRadius);
+        Gizmos.DrawSphere(transform.position, detectionRadius);
+
+        Gizmos.color = Color.yellow.WithAlpha(.3f);
+        Gizmos.DrawSphere(hitPos.position, damageRadius);
     }
 
     #endregion

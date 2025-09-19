@@ -16,6 +16,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip chestOpen;
     public AudioClip doorOpen;
     public AudioClip doorClose;
+    public AudioClip gate;
+    public AudioClip lever;
+    //RAT
+    public AudioClip giantRatAttack;
+    public AudioClip giantRatIdle;
 
     [Header("AMBIENCE")]
     public AudioClip dungeon;
@@ -29,17 +34,27 @@ public class AudioManager : MonoBehaviour
         //source = GetComponent<AudioSource>();
     }
 
-    public void PlaySound(AudioClip clip, float volume = .5f, bool overlap = false)
+    public void PlaySound(AudioClip clip, float volume = .5f)
     {
         AudioSource source = gameObject.AddComponent<AudioSource>();
 
-        if (overlap)
-        {
-            source.PlayOneShot(clip, volume);
-        }
+        source.clip = clip;
+        source.volume = volume;
+        source.Play();
+
+        Destroy(source, clip.length);
+    }
+
+    public void PlayerSpatialSound(AudioClip clip, GameObject gameObj, float volume = .5f,float minDistance = 1, float maxDistance = 5000, AudioRolloffMode rollofMode = AudioRolloffMode.Logarithmic)
+    {
+        AudioSource source = gameObj.AddComponent<AudioSource>();
 
         source.clip = clip;
         source.volume = volume;
+        source.spatialBlend = 1f;
+        source.minDistance = minDistance;
+        source.maxDistance = maxDistance;
+        source.rolloffMode = rollofMode;
         source.Play();
 
         Destroy(source, clip.length);

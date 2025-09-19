@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 463735356618461050}
   - component: {fileID: 4377184309462541582}
   - component: {fileID: 6043449884516696888}
+  - component: {fileID: 7706972807458071749}
   m_Layer: 0
   m_Name: Shelf
   m_TagString: Untagged
@@ -130,3 +131,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7034758, y: 0.58856297}
   m_EdgeRadius: 0
+--- !u!114 &7706972807458071749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704409654335469052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ShapePath:
+  - {x: -0.8208277, y: -0.2783643, z: 0}
+  - {x: -0.9172752, y: 0.016715515, z: 0}
+  - {x: 0.92598325, y: -0.0050542164, z: 0}
+  - {x: 0.8087982, y: -0.29539436, z: 0}
+  m_ShapePathHash: 1493314708
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 30714
+  m_LocalBounds:
+    m_Center: {x: 0.004354, y: -0.13933942, z: 0}
+    m_Extent: {x: 0.9216292, y: 0.15605494, z: 0}
