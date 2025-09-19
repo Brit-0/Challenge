@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -177,7 +178,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        StartCoroutine(DamageFlash());
+        //StartCoroutine(DamageFlash());
+        sr.DOColor(Color.red, .1f).SetLoops(2, LoopType.Yoyo);
  
         currentHealth -= damage;
         
