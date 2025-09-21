@@ -4,7 +4,6 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager main;
 
-    //private static AudioSource source;
     [SerializeField] private AudioSource musicSource;
 
     [Header("SOUND EFFECTS")]
@@ -28,7 +27,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip dungeon;
 
     [Header("SOUNDTRACK")]
-    public AudioClip music1;
+    public AudioClip rockSoundtrack;
 
     [Header("UI")]
     public AudioClip uIImpact;
@@ -64,5 +63,12 @@ public class AudioManager : MonoBehaviour
         source.Play();
 
         Destroy(source, clip.length);
+    }
+
+    public void PlayMusic(AudioClip clip, float volume = 1f)
+    {
+        musicSource.clip = clip;
+        musicSource.volume = volume;  
+        musicSource.Play();
     }
 }

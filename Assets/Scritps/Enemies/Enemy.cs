@@ -6,8 +6,14 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    protected Rigidbody2D rb;
+    public enum EnemyType
+    {
+        Small,
+        Giant
+    }
 
+    [Header("GENERIC")]
+    [SerializeField] private EnemyType type;
     [Header("STATS")]
     [SerializeField] protected int currentHealth;
     [SerializeField] protected int maxHealth;
@@ -19,6 +25,7 @@ public class Enemy : MonoBehaviour
     [Header("COMPONENTS")]
     protected Animator animator;
     protected SpriteRenderer sr;
+    protected Rigidbody2D rb;
     [Header("FEEDBACK")]
     [SerializeField] protected float flashTime;
     protected bool isFlashing = true;
@@ -91,6 +98,8 @@ public class Enemy : MonoBehaviour
                     movePoint = playerTransform.position;
                     navAgent.speed = 1f;
                     Move();
+
+                    if (type == EnemyType.Small) return;
 
                     if (Physics2D.OverlapCircle(transform.position, attackRadius, LayerMask.GetMask("Player"))){
                         if (Time.time >= nextAttackTime)
@@ -180,6 +189,17 @@ public class Enemy : MonoBehaviour
 
     #region COMBAT
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerCombat>().TakeDamage(.5f);
+            Vector2 direction = (collision.transform.position - transform.position).normalized;
+            StartCoroutine(collision.gameObject.GetComponent<PlayerMovement>().Knockback(direction, 3.5f, .2f));
+        }
+    }
+
+
     public void TakeDamage(int damage)
     {
         //StartCoroutine(DamageFlash());
@@ -189,15 +209,18 @@ public class Enemy : MonoBehaviour
         currentHealth -= damage;
         
         if (currentHealth <= 0)
-        {
-            animator.SetTrigger("Die");
+        { 
             Die();
         }
     }
 
     protected void Die()
     {
-        Destroy(gameObject, .5f);
+        animator.SetTrigger("Die");
+        Destroy(GetComponent<Collider2D>());
+        Destroy(rb);
+        Destroy(navAgent);
+        Destroy(this);
     }
 
     #endregion

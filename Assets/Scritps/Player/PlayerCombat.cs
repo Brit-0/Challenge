@@ -24,8 +24,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        print("Damage");
-        CameraController.main.CameraShake(3f, .3f);
+        CameraController.main.CameraShake(3f, .2f);
         currentHearts -= amount;
         bloodVignete.DOFade((-25 * currentHearts + 125) * 0.01f, .2f);
 

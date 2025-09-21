@@ -73,12 +73,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public IEnumerator Knockback(Vector2 direction, float force)
+    public IEnumerator Knockback(Vector2 direction, float force, float disableTime = .5f)
     {
         canMove = false;
         rb.velocity = direction * force;
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(disableTime);
 
         canMove = true;
         rb.velocity = Vector2.zero;

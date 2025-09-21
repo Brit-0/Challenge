@@ -27,13 +27,17 @@ public class GameManager : MonoBehaviour
 
     public static Action ChangeGamePhase;
 
+    [Header("UI REFERENCES")]
     [SerializeField] private Image here;
     [SerializeField] private Image they;
     [SerializeField] private Image are;
-
     [SerializeField] private Canvas effectsCanvas;
 
+    [Header("PREFABS")]
     [SerializeField] private GameObject breakParticle;
+
+    [Header("REFERENCES")]
+    [SerializeField] private Transform torches;
 
     private void Awake()
     {
@@ -58,7 +62,7 @@ public class GameManager : MonoBehaviour
         effectsCanvas.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1f);
-        here.rectTransform.DOAnchorPos(new Vector3(0, 400, 0), .2f).SetEase(Ease.OutBounce);
+        here.rectTransform.DOAnchorPos(new Vector3(0, 420, 0), .2f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(0.08f);
         HitFeedback(1);
         yield return new WaitForSeconds(.8f);
@@ -66,12 +70,24 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.08f);
         HitFeedback(2);
         yield return new WaitForSeconds(.8f);
-        are.rectTransform.DOAnchorPos(new Vector3(0, -420, 0), .2f).SetEase(Ease.OutBounce);
+        are.rectTransform.DOAnchorPos(new Vector3(0, -446, 0), .2f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(0.08f);
         HitFeedback(3);
 
         yield return new WaitForSeconds(1f);
+        IgniteTorches();
+        AudioManager.main.PlayMusic(AudioManager.main.rockSoundtrack, .2f);
         effectsCanvas.GetComponent<CanvasGroup>().DOFade(0, 3f);
+    }
+
+    private void IgniteTorches()
+    {
+        AudioManager.main.PlaySound(AudioManager.main.torchIgnite, 1f);
+
+        foreach (Transform torch in torches)
+        {
+            torch.GetComponent<Animator>().SetBool("isOn", true);
+        }
     }
 
     private void HitFeedback(int number)
