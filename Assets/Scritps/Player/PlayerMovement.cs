@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     public void PlayStepSound()
     {
         int randomStep = Random.Range(0, 3);
-        AudioManager.main.PlaySound(AudioManager.main.footsteps[randomStep]);
+        AudioManager.main.PlaySound(AudioManager.main.footsteps[randomStep], 0.2f);
     }
 
 }

@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HordeSpawner : MonoBehaviour
@@ -9,14 +7,14 @@ public class HordeSpawner : MonoBehaviour
     [SerializeField] private GameObject[] enemiesPfs;
     [SerializeField] private int currentHordeIndex;
     [SerializeField] private Horde currentHorde;
-    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private List<Transform> spawners;
     public static HordeSpawner current;
     private bool isSpawning;
 
     [System.Serializable]
     private struct Horde
     {
-        public int numOfEnemies; 
+        public int numOfEnemies;
         public float spawnDelay;
     }
 
@@ -25,11 +23,15 @@ public class HordeSpawner : MonoBehaviour
     private void Awake()
     {
         current = this;
-        spawnPoint = transform.GetChild(0).gameObject;
     }
 
     private void Start()
     {
+        foreach (Transform spawner in transform)
+        {
+            spawners.Add(spawner);
+        }
+
         currentHordeIndex = 0;
     }
 
@@ -37,12 +39,15 @@ public class HordeSpawner : MonoBehaviour
     {
         if (isSpawning) yield break;
 
+        print("Starting horde: " + (currentHordeIndex + 1));
+
         isSpawning = true;
         currentHorde = enemyHordes[currentHordeIndex];
+        Vector2 hordeSpawnPoint = (Vector2)spawners[Random.Range(0, spawners.Count)].position + Vector2.down;
 
         for (int i = 0; i < currentHorde.numOfEnemies; i++)
         {
-            Instantiate(enemiesPfs[0], spawnPoint.transform.position, Quaternion.identity);
+            Instantiate(enemiesPfs[0], hordeSpawnPoint, Quaternion.identity);
             yield return new WaitForSecondsRealtime(currentHorde.spawnDelay);
         }
 

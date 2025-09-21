@@ -142,6 +142,7 @@ public class ProjectileLogic : MonoBehaviour
             if (collision.CompareTag("Torch"))
             {
                 collision.gameObject.GetComponent<Animator>().SetBool("isOn", true);
+                AudioManager.main.PlayerSpatialSound(AudioManager.main.torchIgnite, collision.gameObject);
             }
             
             Destroy(gameObject);

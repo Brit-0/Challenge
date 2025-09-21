@@ -117,6 +117,10 @@ public class Enemy : MonoBehaviour
                     break;
             }
         }
+        else
+        {
+            Move();
+        }
     }
 
 
@@ -125,11 +129,11 @@ public class Enemy : MonoBehaviour
         navAgent.SetDestination(movePoint);
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
 
-        if (navAgent.velocity.x > 0)
+        if (navAgent.velocity.x > 0.1)
         {
             sr.flipX = true;
         }
-        else if (navAgent.velocity.x < 0)
+        else if (navAgent.velocity.x < -0.1)
         {
             sr.flipX = false;
         }
@@ -146,7 +150,7 @@ public class Enemy : MonoBehaviour
 
         rb.velocity = dashDirection * dashForce;
         isDamaging = true;
-        AudioManager.main.PlayerSpatialSound(AudioManager.main.giantRatAttack, gameObject, 1f);
+        AudioManager.main.PlayerSpatialSound(AudioManager.main.giantRatAttack, gameObject);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -180,18 +184,20 @@ public class Enemy : MonoBehaviour
     {
         //StartCoroutine(DamageFlash());
         sr.DOColor(Color.red, .1f).SetLoops(2, LoopType.Yoyo);
- 
+        AudioManager.main.PlayerSpatialSound(AudioManager.main.fleshImpact, gameObject, .5f);
+
         currentHealth -= damage;
         
         if (currentHealth <= 0)
         {
             animator.SetTrigger("Die");
+            Die();
         }
     }
 
     protected void Die()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, .5f);
     }
 
     #endregion

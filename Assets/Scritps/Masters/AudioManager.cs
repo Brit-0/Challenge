@@ -18,6 +18,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip doorClose;
     public AudioClip gate;
     public AudioClip lever;
+    public AudioClip fleshImpact;
+    public AudioClip torchIgnite;
     //RAT
     public AudioClip giantRatAttack;
     public AudioClip giantRatIdle;
@@ -27,6 +29,10 @@ public class AudioManager : MonoBehaviour
 
     [Header("SOUNDTRACK")]
     public AudioClip music1;
+
+    [Header("UI")]
+    public AudioClip uIImpact;
+    public AudioClip uIBoom;
 
     private void Awake()
     {
