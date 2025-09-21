@@ -38,10 +38,17 @@ public class GameManager : MonoBehaviour
 
     [Header("REFERENCES")]
     [SerializeField] private Transform torches;
+    [SerializeField] private Material fogMAT;
+    [SerializeField] private ParticleSystem dustPs;
 
     private void Awake()
     {
         main = this;
+    }
+
+    private void Start()
+    {
+        fogMAT.SetColor("_FogColor", new Color(0, 0, .8f, .3f));
     }
 
     [ContextMenu("START DEFENSE")]
@@ -62,22 +69,24 @@ public class GameManager : MonoBehaviour
         effectsCanvas.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1f);
-        here.rectTransform.DOAnchorPos(new Vector3(0, 420, 0), .2f).SetEase(Ease.OutBounce);
+        here.rectTransform.DOAnchorPos(new Vector3(0, 242, 0), .2f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(0.08f);
         HitFeedback(1);
         yield return new WaitForSeconds(.8f);
-        they.rectTransform.DOAnchorPos(new Vector3(0, 0, 0), .2f).SetEase(Ease.OutBounce);
+        they.rectTransform.DOAnchorPos(new Vector3(88.50001f, -42.19996f, 0), .2f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(0.08f);
         HitFeedback(2);
         yield return new WaitForSeconds(.8f);
-        are.rectTransform.DOAnchorPos(new Vector3(0, -446, 0), .2f).SetEase(Ease.OutBounce);
+        are.rectTransform.DOAnchorPos(new Vector3(-6.19999f, -183.5999f, 0), .2f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(0.08f);
         HitFeedback(3);
 
         yield return new WaitForSeconds(1f);
+
         IgniteTorches();
+        fogMAT.SetColor("_FogColor", new Color(1, 0, 0, .3f));
+        AudioManager.main.PlayMusic(AudioManager.main.rockSoundtrack, .1f);
         StartCoroutine(HordeSpawner.main.SpawnHorde());
-        AudioManager.main.PlayMusic(AudioManager.main.rockSoundtrack, .2f);
         effectsCanvas.GetComponent<CanvasGroup>().DOFade(0, 3f);
 
         yield return new WaitForSeconds(3f);

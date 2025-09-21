@@ -218,6 +218,8 @@ public class Enemy : MonoBehaviour
     protected void Die()
     {
         animator.SetTrigger("Die");
+        sr.sortingLayerName = "Background";
+        sr.sortingOrder = 1;
         Destroy(GetComponent<Collider2D>());
         Destroy(rb);
         Destroy(navAgent);

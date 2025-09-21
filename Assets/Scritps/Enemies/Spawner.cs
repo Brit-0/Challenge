@@ -9,6 +9,7 @@ public class Spawner : Interactable
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        tip = "Aperte \"E\" para bloquear a saída";
     }
 
     protected override void Update()

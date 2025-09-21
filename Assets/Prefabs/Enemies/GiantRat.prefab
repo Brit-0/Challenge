@@ -167,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   currentHealth: 0
-  maxHealth: 50
+  maxHealth: 30
   attackDamage: 0.5
   flashTime: 0.25
   flashElapsedTime: 0

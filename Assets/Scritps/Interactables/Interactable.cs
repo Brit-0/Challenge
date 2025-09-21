@@ -5,6 +5,8 @@ public class Interactable : MonoBehaviour
     [SerializeField] protected float interactDistance;
     [SerializeField] protected bool canInteract;
 
+    protected string tip = "Aperte \"E\" para interagir";
+
     protected virtual void Update()
     {
         if (Physics2D.OverlapCircle(transform.position, interactDistance, LayerMask.GetMask("Player")))
@@ -12,7 +14,7 @@ public class Interactable : MonoBehaviour
             if (!canInteract)
             {
                 canInteract = true;
-                TipsUIManager.current.SetTip("Aperte \"E\" para interagir");
+                TipsUIManager.current.SetTip(tip);
             }
         }
         else
