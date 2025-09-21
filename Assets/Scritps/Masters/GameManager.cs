@@ -79,6 +79,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(HordeSpawner.main.SpawnHorde());
         AudioManager.main.PlayMusic(AudioManager.main.rockSoundtrack, .2f);
         effectsCanvas.GetComponent<CanvasGroup>().DOFade(0, 3f);
+
+        yield return new WaitForSeconds(3f);
+
+        effectsCanvas.enabled = false;
     }
 
     private void IgniteTorches()

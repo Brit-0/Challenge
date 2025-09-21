@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : Interactable
 {
-    private bool isOpen = true, isActive = false;
+    [SerializeField] private bool isOpen = true;
+    public bool isActive;
     private Animator animator;
 
     private void Awake()

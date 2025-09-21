@@ -43,7 +43,9 @@ public class HordeSpawner : MonoBehaviour
 
         isSpawning = true;
         currentHorde = enemyHordes[currentHordeIndex];
-        Vector2 hordeSpawnPoint = (Vector2)spawners[Random.Range(0, spawners.Count)].position + Vector2.down;
+        Transform selectedSpawner = spawners[Random.Range(0, spawners.Count)];
+        selectedSpawner.GetComponent<Spawner>().isActive = true;
+        Vector2 hordeSpawnPoint = (Vector2)selectedSpawner.position + Vector2.down;
 
         for (int i = 0; i < currentHorde.numOfEnemies; i++)
         {
