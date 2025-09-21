@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip lever;
     public AudioClip fleshImpact;
     public AudioClip torchIgnite;
+    public AudioClip barricade;
     //RAT
     public AudioClip giantRatAttack;
     public AudioClip giantRatIdle;
