@@ -8,7 +8,7 @@ public class HordeSpawner : MonoBehaviour
     [SerializeField] private int currentHordeIndex;
     [SerializeField] private Horde currentHorde;
     [SerializeField] private List<Transform> spawners;
-    public static HordeSpawner current;
+    public static HordeSpawner main;
     private bool isSpawning;
 
     [System.Serializable]
@@ -22,7 +22,7 @@ public class HordeSpawner : MonoBehaviour
 
     private void Awake()
     {
-        current = this;
+        main = this;
     }
 
     private void Start()

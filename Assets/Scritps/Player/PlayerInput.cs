@@ -27,7 +27,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space)) //SPAWNAR INIMIGOS
         {
-            HordeSpawner.current.StartCoroutine("SpawnHorde");
+            GameManager.main.StartCoroutine(GameManager.main.StartDefensePhase());
         }
     }
 

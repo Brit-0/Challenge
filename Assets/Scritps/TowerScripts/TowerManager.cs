@@ -1,5 +1,7 @@
+using NavMeshPlus.Components;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TowerManager : MonoBehaviour
 {
@@ -14,20 +16,24 @@ public class TowerManager : MonoBehaviour
     public Grid grid;
     private Vector2 mPos;
     [SerializeField] private float cellSize;
+    [SerializeField] private Transform gridStartingTransform;
+    [SerializeField] private Tilemap floorTilemap;
+    [SerializeField] private NavMeshSurface navMesh;
 
     public static bool canPlace = true, isColliding, isOnGrid, hasTower;
 
     void Awake()
     { 
         current = this;
-        grid = new Grid(13, 9, cellSize, new Vector2(-8, -4));
+        //grid = new Grid(50, 50, cellSize, gridStartingTransform.position);
     }
 
     void Update()
     {
         if (placeMode)
         {
-            SetCanPlace(); //DEFINIR SE PODE COLOCAR
+            //SetCanPlace(); //DEFINIR SE PODE COLOCAR
+            SetTilemapCanPlace();
 
             if (Input.GetMouseButtonDown(0) && canPlace) //COLOCAR A TORRE
             {
@@ -57,12 +63,12 @@ public class TowerManager : MonoBehaviour
         if (!isOnGrid || isColliding || hasTower || UIHandler.isTabOpened) // NÃO ESTÁ NO GRID, NEM ESTÁ COLIDINDO OU JÁ POSSUI UMA TORRE NO LOCAL
         {
             canPlace = false;
-            preview.GetComponent<SpriteRenderer>().color = Color.red.WithAlpha(.5f);
+            preview.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, .5f);
         }
         else
         {
             canPlace = true;
-            preview.GetComponent<SpriteRenderer>().color = Color.white.WithAlpha(.5f);
+            preview.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
         }
 
         if (hasTower)
@@ -73,6 +79,50 @@ public class TowerManager : MonoBehaviour
         else
         {
             preview.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        }
+    }
+
+    private void SetTilemapCanPlace()
+    {
+        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+
+        Vector3Int cellPosition = floorTilemap.LocalToCell(hit.point);
+        preview.transform.position = floorTilemap.GetCellCenterLocal(cellPosition);*/
+
+        preview.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (isColliding || hasTower || UIHandler.isTabOpened) // NÃO ESTÁ NO GRID, NEM ESTÁ COLIDINDO OU JÁ POSSUI UMA TORRE NO LOCAL
+        {
+            canPlace = false;
+            preview.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, .75f);
+        }
+        else
+        {
+            canPlace = true;
+            preview.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .75f);
+        }
+
+        if (hasTower)
+        {
+            preview.GetComponent<SpriteRenderer>().color = Color.red;
+            preview.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        }
+        else
+        {
+            preview.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        }
+    }
+
+    private bool CheckForPlacementSpace()
+    {
+        if (Physics2D.OverlapCircle(transform.position, 2f))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 
@@ -102,8 +152,8 @@ public class TowerManager : MonoBehaviour
         PlayerInventory.current.RemoveTower(previewData); //REMOVER TORRE DO INVENTARIO
         preview.GetComponent<SpriteRenderer>().color = Color.white;
         preview.GetComponent<TowerLogic>().StartCoroutine("SetActive"); //INICIALIZAR TORRE
-
-        grid.SetValue(mPos, 1); //DEFINIR NO GRID QUE EXISTE UMA TORRE NESSE QUADRADO
+        Destroy(preview.GetComponent<CapsuleCollider2D>());
+        //navMesh.BuildNavMesh();
     }
 
 

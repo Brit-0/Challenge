@@ -58,7 +58,6 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
-
         GameManager.ChangeGamePhase += SetNewMovePoint; 
     }
 
@@ -72,6 +71,8 @@ public class Enemy : MonoBehaviour
 
         ogSpeed = navAgent.speed;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        movePoint = RoomController.main.finalRoomPos;
 
         StartCoroutine(SetRandomOffset());
     }
@@ -266,13 +267,13 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red.WithAlpha(.3f);
+        Gizmos.color = new Color(1, 0, 0, .3f);
         Gizmos.DrawSphere(transform.position, attackRadius);
 
-        Gizmos.color = Color.blue.WithAlpha(.3f);
+        Gizmos.color = new Color(0, 0, 1, .3f);
         Gizmos.DrawSphere(transform.position, detectionRadius);
 
-        Gizmos.color = Color.yellow.WithAlpha(.3f);
+        Gizmos.color = new Color(0, 1, 1, .3f);
         Gizmos.DrawSphere(hitPos.position, damageRadius);
     }
 

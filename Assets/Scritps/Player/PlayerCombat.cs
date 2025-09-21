@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class PlayerCombat : MonoBehaviour
         CameraController.main.CameraShake(3f, .2f);
         currentHearts -= amount;
         bloodVignete.DOFade((-25 * currentHearts + 125) * 0.01f, .2f);
+        //StartCoroutine(ImpactHit());
 
         if (currentHearts % 1 == 0)
         {
@@ -48,5 +50,12 @@ public class PlayerCombat : MonoBehaviour
 
         lastHeartIndex = Mathf.CeilToInt(currentHearts);
         print(lastHeartIndex);
+    }
+
+    public IEnumerator ImpactHit()
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(.2f);
+        Time.timeScale = 1;
     }
 }

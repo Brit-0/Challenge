@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
-public class TowerLogic : MonoBehaviour, IPointerClickHandler
+public class TowerLogic : MonoBehaviour
 {
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -27,6 +27,9 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     [Header("SHOOT POINTS")]
     [SerializeField] private Transform[] shootPoints = new Transform[3];
     [SerializeField] protected List<Transform> activeShootPoints;
+
+    [Header("REFERENCES")]
+    [SerializeField] private GameObject placementArea;
 
     private int towerLvl = 1;
     private Collider2D[] enemiesInRange;
@@ -68,9 +71,13 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator SetActive()
     {
+        //RETIRAR CIRCULO DE AREA
+        placementArea.SetActive(false);
+        GetComponent<Light2D>().enabled = true;
+
         //TRAVAR POSICÃO E ATIVAR A COLISÃO
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-        GetComponent<Collider2D>().isTrigger = false;
+        GetComponent<BoxCollider2D>().enabled = true;
 
         //ARRUMAR SHADER
         sr.material.SetFloat("_PlaceAlpha", 1);
@@ -89,7 +96,7 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     {
         while (active)
         {
-            yield return new WaitForSecondsRealtime(towerData.shootCooldown);
+            yield return new WaitForSeconds(towerData.shootCooldown);
 
             if (closestEnemy)
             {
@@ -134,13 +141,6 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
     #endregion
 
     #region INTERACTIONS
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            ToggleMenu();
-        }
-    }
 
     public void ToggleMenu()
     {
@@ -202,17 +202,25 @@ public class TowerLogic : MonoBehaviour, IPointerClickHandler
         circleMask.transform.localScale = (new Vector3(towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f, towerData.detectionRadius * 20 - .5f));
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Tower") && !active) //Se não for outra torre e não estiver ativo
+        if (!collision.gameObject.CompareTag("Player") && !active) //Se não for outra torre e não estiver ativo
         {
             TowerManager.isColliding = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Tower") && !active) //Se não for outra torre e não estiver ativo
+        {
+            TowerManager.isColliding = true;
+        }
+    }*/
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Player") && !active) //Se não for outra torre e não estiver ativo
         {
             TowerManager.isColliding = false;
         }

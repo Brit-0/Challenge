@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartDefensePhase());
     }
 
-    private IEnumerator StartDefensePhase()
+    public IEnumerator StartDefensePhase()
     {
         currentGamePhase = GamePhase.Defense;
         ChangeGamePhase.Invoke();
@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         IgniteTorches();
+        StartCoroutine(HordeSpawner.main.SpawnHorde());
         AudioManager.main.PlayMusic(AudioManager.main.rockSoundtrack, .2f);
         effectsCanvas.GetComponent<CanvasGroup>().DOFade(0, 3f);
     }

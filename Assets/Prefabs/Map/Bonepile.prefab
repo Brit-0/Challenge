@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 546614189112680350}
   - component: {fileID: 5870964115161673501}
   - component: {fileID: 7299921984933623878}
+  - component: {fileID: 1866757941856455983}
   m_Layer: 0
   m_Name: Bonepile
   m_TagString: Untagged
@@ -158,7 +159,23 @@ MonoBehaviour:
   - {x: 0.0025195677, y: -0.32636252, z: 0}
   m_ShapePathHash: -1579838303
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1560
+  m_InstanceId: 151966
   m_LocalBounds:
     m_Center: {x: 0.014102101, y: -0.19809675, z: 0}
     m_Extent: {x: 0.42226171, y: 0.12826577, z: 0}
+--- !u!208 &1866757941856455983
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8460355577437740982}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.26, y: 0.16, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

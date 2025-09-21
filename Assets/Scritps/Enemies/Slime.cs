@@ -15,7 +15,6 @@ public class Slime : Interactable
 
     private void ShowQuest()
     {
-        questBaloon.GetComponent<SpriteShapeRenderer>().color = baloonColor.WithAlpha(0f); ; 
-        LeanTween.color(questBaloon, baloonColor.WithAlpha(1f), 1f);
+        
     }
 }

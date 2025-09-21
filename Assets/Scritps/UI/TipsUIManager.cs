@@ -15,14 +15,12 @@ public class TipsUIManager : MonoBehaviour
 
     public void SetTip(string text)
     {
-        print("SET");
         tipsLbl.text = text;
         tipsLbl.gameObject.SetActive(true);
     }
 
     public void DisableTip()
     {
-        print("UNSET"); 
         tipsLbl.gameObject.SetActive(false);
     }
 }

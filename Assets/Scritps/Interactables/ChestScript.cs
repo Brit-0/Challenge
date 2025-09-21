@@ -1,5 +1,7 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class ChestScript : Interactable
@@ -17,10 +19,16 @@ public class ChestScript : Interactable
     [Header("REFERECNCES")]
     private Animator animator;
     public static ChestScript currentChest;
+    private Tilemap floorTilemap;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        floorTilemap = GameObject.Find("Walkable").GetComponent<Tilemap>();
     }
 
     protected override void Interact()
@@ -58,20 +66,21 @@ public class ChestScript : Interactable
         {
             for (int i = 0; i < materialsLoot[materialIndex]; i++)
             {
-                GameObject newMaterial = Instantiate(materialPrefabs[materialIndex], GetRandomPos(), Quaternion.identity);
+                GameObject newMaterial = Instantiate(materialPrefabs[materialIndex], transform.position, Quaternion.identity);
+                Vector2 pos = GetRandomSpawn();
+                Vector2 middlePoint = (pos - (Vector2)transform.position) / 2;
+                newMaterial.transform.DOMove(pos, .5f).SetEase(Ease.OutSine);
             }
         }
     }
 
-    private Vector2 GetRandomPos()
+    private Vector2 GetRandomSpawn()
     {
-        Vector2 randomPoint = Random.insideUnitCircle;
-        Vector2 randomPos = transform.position + new Vector3(randomPoint.x, randomPoint.y, 0) * 1.3f;
+        Vector2 randomPos = (Vector2)transform.position + Random.insideUnitCircle * 0.8f;
 
-        while (Physics2D.OverlapPoint(randomPoint))
+        while (!floorTilemap.HasTile(floorTilemap.WorldToCell(randomPos)))
         {
-            randomPoint = Random.insideUnitCircle;
-            randomPos = transform.position + new Vector3(randomPoint.x, randomPoint.y, 0) * 1.3f;
+            randomPos = (Vector2)transform.position + Random.insideUnitCircle * 0.8f;
         }
 
         return randomPos;
@@ -79,15 +88,15 @@ public class ChestScript : Interactable
 
     private void SetLoot()
     {
-        materialsLoot[0] = Random.Range(0, 4);
+        materialsLoot[0] = Random.Range(0, 7);
 
         if (materialsLoot[0] == 0)
         {
-            materialsLoot[1] = Random.Range(1, 3);
+            materialsLoot[1] = Random.Range(1, 5);
         }
         else
         {
-            materialsLoot[1] = Random.Range(0, 3);
+            materialsLoot[1] = Random.Range(0, 5);
         }
     }
 }
