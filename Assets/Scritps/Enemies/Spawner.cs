@@ -14,7 +14,7 @@ public class Spawner : Interactable
 
     protected override void Update()
     {
-        if (isActive && isOpen)
+        if (isOpen && GameManager.currentGamePhase == GamePhase.Defense)
         {
             base.Update();
         }
@@ -22,8 +22,10 @@ public class Spawner : Interactable
 
     protected override void Interact()
     {
-        animator.SetBool("isOpen", false);
+        TipsUIManager.current.DisableTip();
+        transform.GetChild(0).gameObject.SetActive(true);
         AudioManager.main.PlaySound(AudioManager.main.barricade);
         isOpen = false;
+        print(isOpen);
     }
 }

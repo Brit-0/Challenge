@@ -62,7 +62,7 @@ public class ChestScript : Interactable
 
     public void SpawnMaterials()
     {
-        for (int materialIndex = 0; materialIndex < 2; materialIndex++)
+        for (int materialIndex = 0; materialIndex < 3; materialIndex++)
         {
             for (int i = 0; i < materialsLoot[materialIndex]; i++)
             {
@@ -88,15 +88,16 @@ public class ChestScript : Interactable
 
     private void SetLoot()
     {
-        materialsLoot[0] = Random.Range(0, 7);
+        materialsLoot[0] = Random.Range(0, 5);
+        materialsLoot[1] = Random.Range(0, 5);
 
-        if (materialsLoot[0] == 0)
+        if (materialsLoot[0] == 0 || materialsLoot[1] == 0)
         {
-            materialsLoot[1] = Random.Range(1, 5);
+            materialsLoot[2] = Random.Range(2, 5);
         }
         else
         {
-            materialsLoot[1] = Random.Range(0, 5);
+            materialsLoot[2] = Random.Range(0, 5);
         }
     }
 }

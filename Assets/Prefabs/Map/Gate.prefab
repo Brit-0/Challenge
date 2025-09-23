@@ -50,7 +50,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.5033704, y: -1.0049754, z: 0}
   - {x: -0.5051517, y: 0.64528877, z: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
   - {x: -0.49167734, y: -1.0000404, z: 0}
   m_ShapePathHash: -10703615
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1610
+  m_InstanceId: 77310
   m_LocalBounds:
     m_Center: {x: -0.49841452, y: -0.17820084, z: 0}
     m_Extent: {x: 0.0067371726, y: 0.8267746, z: 0}
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.50071573, y: -1.0023197, z: 0}
   - {x: -0.5131121, y: 0.6735624, z: 0}
@@ -197,7 +197,7 @@ MonoBehaviour:
   - {x: -0.48902074, y: -1.0000404, z: 0}
   m_ShapePathHash: -1636799535
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1616
+  m_InstanceId: 77284
   m_LocalBounds:
     m_Center: {x: -0.50106645, y: -0.16157186, z: 0}
     m_Extent: {x: 0.012045696, y: 0.84074783, z: 0}
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.506026, y: -0.99701023, z: 0}
   - {x: -0.50547475, y: 0.49856558, z: 0}
@@ -498,7 +498,7 @@ MonoBehaviour:
   - {x: -0.48902345, y: -1.0000404, z: 0}
   m_ShapePathHash: 317920003
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1598
+  m_InstanceId: 77282
   m_LocalBounds:
     m_Center: {x: -0.4965543, y: -0.24776709, z: 0}
     m_Extent: {x: 0.009471744, y: 0.7522733, z: 0}
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.5033694, y: -0.99435544, z: 0}
   - {x: -0.5034721, y: 0.58939457, z: 0}
@@ -560,7 +560,7 @@ MonoBehaviour:
   - {x: -0.49167636, y: -0.9973838, z: 0}
   m_ShapePathHash: -288558946
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1604
+  m_InstanceId: 77316
   m_LocalBounds:
     m_Center: {x: -0.49660376, y: -0.19753027, z: 0}
     m_Extent: {x: 0.0068683326, y: 0.7998535, z: 0}
@@ -647,7 +647,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.50868005, y: -0.9970088, z: 0}
   - {x: -0.5051518, y: 0.6762176, z: 0}
@@ -655,7 +655,7 @@ MonoBehaviour:
   - {x: -0.48636797, y: -1.000039, z: 0}
   m_ShapePathHash: -1636799535
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1622
+  m_InstanceId: 77248
   m_LocalBounds:
     m_Center: {x: -0.49671608, y: -0.1617586, z: 0}
     m_Extent: {x: 0.0119639635, y: 0.8382804, z: 0}
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.5007164, y: -0.9970088, z: 0}
   - {x: -0.510459, y: 0.62400466, z: 0}
@@ -717,7 +717,7 @@ MonoBehaviour:
   - {x: -0.4863676, y: -1.000039, z: 0}
   m_ShapePathHash: 1152964183
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1634
+  m_InstanceId: 77286
   m_LocalBounds:
     m_Center: {x: -0.49841332, y: -0.18801713, z: 0}
     m_Extent: {x: 0.012045696, y: 0.81202185, z: 0}
@@ -746,7 +746,7 @@ Transform:
   m_GameObject: {fileID: 7542165847428053019}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.203, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -810,7 +810,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.5007168, y: -1.0023197, z: 0}
   - {x: -0.50780565, y: 0.6502732, z: 0}
@@ -818,7 +818,7 @@ MonoBehaviour:
   - {x: -0.48371422, y: -1.0000404, z: 0}
   m_ShapePathHash: 554350246
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1628
+  m_InstanceId: 77296
   m_LocalBounds:
     m_Center: {x: -0.49575993, y: -0.17602324, z: 0}
     m_Extent: {x: 0.012045711, y: 0.82629645, z: 0}
@@ -872,7 +872,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 8b340049000000002d39b2ac
+  m_ApplyToSortingLayers: 8b340049
   m_ShapePath:
   - {x: -0.49806356, y: -0.9917012, z: 0}
   - {x: -0.5024948, y: 0.5358286, z: 0}
@@ -880,7 +880,7 @@ MonoBehaviour:
   - {x: -0.4837129, y: -0.9973852, z: 0}
   m_ShapePathHash: -1950025438
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1640
+  m_InstanceId: 77252
   m_LocalBounds:
     m_Center: {x: -0.49310386, y: -0.23077828, z: 0}
     m_Extent: {x: 0.00939095, y: 0.7666069, z: 0}

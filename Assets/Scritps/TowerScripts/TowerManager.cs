@@ -90,9 +90,13 @@ public class TowerManager : MonoBehaviour
         Vector3Int cellPosition = floorTilemap.LocalToCell(hit.point);
         preview.transform.position = floorTilemap.GetCellCenterLocal(cellPosition);*/
 
-        preview.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        preview.transform.position = mPos;
 
-        if (isColliding || hasTower || UIHandler.isTabOpened) // NÃO ESTÁ NO GRID, NEM ESTÁ COLIDINDO OU JÁ POSSUI UMA TORRE NO LOCAL
+        isOnGrid = floorTilemap.HasTile(floorTilemap.WorldToCell(mPos));
+        
+
+        if (isColliding || hasTower || !isOnGrid || UIHandler.isTabOpened) // NÃO ESTÁ NO GRID, NEM ESTÁ COLIDINDO OU JÁ POSSUI UMA TORRE NO LOCAL
         {
             canPlace = false;
             preview.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, .75f);

@@ -60,7 +60,7 @@ public class ProjectileLogic : MonoBehaviour
         {
             case ProjetileType.Follow:
 
-                if (targetEnemy)
+                if (targetEnemy.GetComponent<Enemy>())
                 {
                     rb.MovePosition(rb.position + ((Vector2)targetEnemy.transform.position - rb.position).normalized * towerData.projectileSpeed * Time.fixedDeltaTime);
                 }

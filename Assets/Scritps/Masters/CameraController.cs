@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -25,6 +26,12 @@ public class CameraController : MonoBehaviour
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
             }
         }
+    }
+
+    public void LoadScene()
+    {
+        SceneManager.LoadScene("Gameplay");
+        PlayerMovement.canMove = true;
     }
 
     #region CAMERA SHAKE

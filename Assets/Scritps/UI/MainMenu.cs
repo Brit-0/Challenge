@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,12 +10,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private TMP_Dropdown resDropdown;
     [SerializeField] private Transform mouseLight;
     private Resolution[] resolutions;
-    private UITweener uiTweener;
 
-    private void Awake()
-    {
-        uiTweener = optionsTab.GetComponent<UITweener>();
-    }
 
     private void Start()
     {
@@ -27,6 +23,8 @@ public class MainMenu : MonoBehaviour
         mousePos.z = 0;
         mouseLight.position = mousePos;
     }
+
+    #region SETTINGS
 
     private void SetResDropdown()
     {
@@ -72,11 +70,17 @@ public class MainMenu : MonoBehaviour
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
     }
 
+    #endregion
+
+
+    [ContextMenu("PLAY")]
     public void Play()
     {
-        SceneManager.LoadScene("Cena DEV");
-        PlayerMovement.canMove = true;
+        Camera.main.GetComponent<Animator>().enabled = true;
+        Camera.main.GetComponent<Animator>().SetTrigger("Play");
     }
+
+   
 
     public void SelectDoor()
     {

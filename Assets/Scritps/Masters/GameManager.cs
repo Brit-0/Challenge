@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image they;
     [SerializeField] private Image are;
     [SerializeField] private Canvas effectsCanvas;
+    [SerializeField] private Image shadow;
 
     [Header("PREFABS")]
     [SerializeField] private GameObject breakParticle;
@@ -67,8 +68,9 @@ public class GameManager : MonoBehaviour
         are.rectTransform.position += Vector3.up * 50;*/
 
         effectsCanvas.gameObject.SetActive(true);
+        shadow.DOFade(1f, 4f);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.8f);
         here.rectTransform.DOAnchorPos(new Vector3(0, 242, 0), .2f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(0.08f);
         HitFeedback(1);

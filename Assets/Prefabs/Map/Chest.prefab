@@ -640,6 +640,7 @@ MonoBehaviour:
   materialPrefabs:
   - {fileID: 1119393606267124759, guid: 50fbd147f2ae77b47826bd29ea234617, type: 3}
   - {fileID: 3369744085380006415, guid: a024af33db80e2d4d9ec657ea9231e5f, type: 3}
+  - {fileID: 1119393606267124759, guid: 29c729e671cc16c4dbbecf6527a3c655, type: 3}
 --- !u!114 &8827254975766589604
 MonoBehaviour:
   m_ObjectHideFlags: 0
