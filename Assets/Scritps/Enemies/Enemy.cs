@@ -200,6 +200,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerCombat>().TakeDamage(.5f);
+            Vector2 direction = (collision.transform.position - transform.position).normalized;
+            StartCoroutine(collision.gameObject.GetComponent<PlayerMovement>().Knockback(direction, 3.5f, .2f));
+        }
+    }
+
 
     public void TakeDamage(int damage)
     {

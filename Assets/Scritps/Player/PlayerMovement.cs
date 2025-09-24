@@ -3,15 +3,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement main;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     [SerializeField] private float moveSpeed = 3f;
     public Animator animator;
     public static bool canMove = true, isIdle;
+    private Vector2 movement;
 
     private void Awake()
     {
+        main = this;
+
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
     }
@@ -20,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
-            Vector2 movement = Vector2.zero;
+            movement = Vector2.zero;
 
             if (Input.GetKey(KeyCode.W))
             {
@@ -87,6 +91,12 @@ public class PlayerMovement : MonoBehaviour
     {
         int randomStep = Random.Range(0, 3);
         AudioManager.main.PlaySound(AudioManager.main.footsteps[randomStep], 0.2f);
+    }
+
+    public void BlockMovement()
+    {
+        canMove = false;
+        rb.velocity = Vector2.zero;
     }
 
 }

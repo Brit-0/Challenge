@@ -32,7 +32,18 @@ public class HordeSpawner : MonoBehaviour
             spawners.Add(spawner);
         }
 
+        GameManager.ChangeGamePhase += OpenSpawners;
+
         currentHordeIndex = 0;
+    }
+    
+    private void OpenSpawners()
+    {
+        foreach (Transform spawner in spawners)
+        {
+            spawner.GetComponent<Animator>().SetBool("isOpen", true);
+            spawner.GetComponent<Spawner>().isOpen = true;
+        }
     }
 
     public IEnumerator SpawnHorde()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Spawner : Interactable
 {
-    [SerializeField] private bool isOpen = true;
+    public bool isOpen;
     public bool isActive;
     private Animator animator;
 
@@ -24,7 +24,7 @@ public class Spawner : Interactable
     {
         TipsUIManager.current.DisableTip();
         transform.GetChild(0).gameObject.SetActive(true);
-        AudioManager.main.PlaySound(AudioManager.main.barricade);
+        AudioManager.main.PlaySound(AudioManager.main.barricade, .2f);
         isOpen = false;
         print(isOpen);
     }

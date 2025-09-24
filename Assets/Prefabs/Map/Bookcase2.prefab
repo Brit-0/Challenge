@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4054999203768492154}
   - component: {fileID: 5460859908410683438}
   - component: {fileID: 7688744535864298103}
+  - component: {fileID: 8731882049773672930}
   m_Layer: 0
   m_Name: Bookcase2
   m_TagString: Untagged
@@ -119,6 +120,22 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: -0.034560204, y: -0.2999854, z: 0}
     m_Extent: {x: 0.376956, y: 0.15067434, z: 0}
+--- !u!114 &8731882049773672930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7264814085187446936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2dd19a7bc6ea245a5c978ed22d034d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactDistance: 0.5
+  canInteract: 0
+  alreadySearched: 0
+  bandagePf: {fileID: 2701643879697279687, guid: 5125f32371e4d4045968fc0a7cbfb6c0, type: 3}
 --- !u!1001 &7863274825210403421
 PrefabInstance:
   m_ObjectHideFlags: 0

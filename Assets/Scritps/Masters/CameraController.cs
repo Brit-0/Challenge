@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneManager.LoadScene("Gameplay");
+        SceneManager.LoadScene("Tutorial");
         PlayerMovement.canMove = true;
     }
 

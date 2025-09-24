@@ -1,20 +1,17 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.U2D;
+
 
 public class Slime : Interactable
 {
-    [SerializeField] private GameObject questBaloon;
-    [SerializeField] private SpriteRenderer item;
-    [SerializeField] private Color baloonColor;
+
+    private void Awake()
+    {
+        tip = "Aperte \"E\" para deixar a slime te morder";
+    }
 
     protected override void Interact()
     {
-        ShowQuest();
-    }
-
-    private void ShowQuest()
-    {
-        
+        PlayerCombat.main.TakeDamage(1);
+        AudioManager.main.PlaySound(AudioManager.main.slimeAttack);
     }
 }

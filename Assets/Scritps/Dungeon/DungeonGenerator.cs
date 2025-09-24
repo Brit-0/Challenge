@@ -43,10 +43,6 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            DefineRooms();
-        }
     }
 
     [ContextMenu("Generate")]

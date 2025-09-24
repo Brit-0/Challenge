@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4377184309462541582}
   - component: {fileID: 6043449884516696888}
   - component: {fileID: 7706972807458071749}
+  - component: {fileID: -2079327815130703202}
   m_Layer: 0
   m_Name: Shelf
   m_TagString: Untagged
@@ -161,3 +162,18 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0.004354, y: -0.13933942, z: 0}
     m_Extent: {x: 0.9216292, y: 0.15605494, z: 0}
+--- !u!114 &-2079327815130703202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704409654335469052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2dd19a7bc6ea245a5c978ed22d034d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactDistance: 0.5
+  canInteract: 0
+  bandagePf: {fileID: 2701643879697279687, guid: 5125f32371e4d4045968fc0a7cbfb6c0, type: 3}

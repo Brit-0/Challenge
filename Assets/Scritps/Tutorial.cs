@@ -1,7 +1,5 @@
 using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,13 +21,18 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject torch;
     [SerializeField] private GameObject gate;
     [SerializeField] private GameObject lever;
+    [SerializeField] private GameObject tower;
+    [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject shelves;
+    [SerializeField] private GameObject bandage;
 
     private List<int> awaitingIndexes = new()
     {
         2,
         8,
         13,
-        18
+        17,
+        21
     };
 
     private List<string> tips = new()
@@ -49,6 +52,9 @@ public class Tutorial : MonoBehaviour
         "A masmorra pode ser confusa e escura de atravessar, portanto atirar nas tochas apagadas pode ser uma boa ideia",
         "Agora tente você mesmo",
         "Essa também é uma boa forma de marcar o caminho que já percorreu",
+        "Durante a exploração, você provavelmente irá se ferir, mas isso não é motivo para desespero", //15
+        "Você pode encontrar bandagens nesses móveis, cheios de entulhos e antiguidades",
+        "Pegue uma e se cure segurando a tecla \"Q\"",
         "Por fim, a masmorra é cheia de salas bloqueadas por grandes portões como esses",
         "Para abrí-los, basta puxar a alavanca correspondente, apenas não me pergunte onde elas ficam",
         "Por agora, eu te digo: a deste portão é aquela",
@@ -58,6 +64,12 @@ public class Tutorial : MonoBehaviour
     };
 
     private int currentTipIndex;
+
+    private void Awake()
+    {
+        blackout.color = new Color(0f, 0f, 0f, 1f);
+        blackout.DOFade(0f, 4f);
+    }
 
     private void Start()
     {
@@ -72,7 +84,7 @@ public class Tutorial : MonoBehaviour
 
         if (!isAwaiting)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
             {
                 AdvanceTip();
             }   
@@ -92,6 +104,8 @@ public class Tutorial : MonoBehaviour
                 case 8:
                     if (Input.GetKeyDown(KeyCode.E))
                     {
+                        spawner.transform.GetChild(0).gameObject.SetActive(true);
+                        AudioManager.main.PlaySound(AudioManager.main.barricade, .2f);
                         AdvanceTip();
                     }
 
@@ -105,7 +119,15 @@ public class Tutorial : MonoBehaviour
 
                     break;
 
-                case 18:
+                case 17:
+                    if (PlayerCombat.main.GetHearts() == 5)
+                    {
+                        AdvanceTip();
+                    }
+
+                    break;
+
+                case 21:
                     if (lever.GetComponent<Animator>().GetBool("isDown"))
                     {
                         AdvanceTip();
@@ -133,38 +155,76 @@ public class Tutorial : MonoBehaviour
         switch (currentTipIndex)
         {
             case 6:
-                ShowObject(spawner, true);
+                ShowObject(spawner);
+                spawner.GetComponent<Animator>().SetBool("isOpen", true);
+
+                break;
+
+            case 10:
+                Destroy(spawner);
+                ShowObject(tower);
+
+                break;
+
+            case 11:
+                ShowObject(enemy);
+                StartCoroutine(tower.GetComponent<TorreDeOssos>().SetActive());
 
                 break;
 
             case 12:
                 ShowObject(torch);
+                Destroy(tower);
+                Destroy(enemy);
+
+                GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
+
+                foreach (GameObject projectile in projectiles)
+                {
+                    Destroy(projectile);
+                }
 
                 break;
 
             case 15:
                 Destroy(torch);
-                ShowObject(gate);
+
+                break;
+
+            case 16:
+                ShowObject(shelves);
 
                 break;
 
             case 17:
-                ShowObject(lever);
+                PlayerCombat.main.TakeDamage(1);
+                ShowObject(bandage);
+                Destroy(shelves);
 
                 break;
 
             case 18:
+                ShowObject(gate);
+
+                break;
+
+            case 20:
+                ShowObject(lever);
+
+                break;
+
+            case 21:
                 PlayerMovement.canMove = true;
 
                 break;
 
-            case 19:
+            case 22:
                 TipsUIManager.current.tipsLbl.gameObject.SetActive(true);
                 PlayerMovement.canMove = false;
 
                 break;
 
-            case 20:
+            case 23:
                 blackout.DOFade(1f, 5f).OnComplete(StartGame);
 
                 break;

@@ -6,6 +6,7 @@ public class Pickable : MonoBehaviour
     [SerializeField] private int index;
     public bool hasBeenPickedUp;
     private bool canBePickedUp;
+    [SerializeField] private bool isBandage;
 
     private void Start()
     {
@@ -27,7 +28,15 @@ public class Pickable : MonoBehaviour
         var seq = LeanTween.sequence();
         seq.append(LeanTween.move(gameObject, playerTransform, .3f).setEaseInBack());
         seq.append(() => { Destroy(gameObject); });
-        seq.append(() => { PlayerInventory.current.AddMaterial(index, 1); });
+
+        if (isBandage)
+        {
+            PlayerInventory.current.bandages++;
+        }
+        else
+        {
+            seq.append(() => { PlayerInventory.current.AddMaterial(index, 1); });
+        }            
     }
 
 }

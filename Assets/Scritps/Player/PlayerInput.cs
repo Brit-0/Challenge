@@ -1,11 +1,12 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] private GameObject swordPivot;
     [SerializeField] private PauseMenu pauseMenu;
 
     private float shootCooldown = 1.5f, nextReadyTime;
+    public static bool isHealing;
 
     public bool blockInput;
 
@@ -21,13 +22,26 @@ public class PlayerInput : MonoBehaviour
                 nextReadyTime = Time.time + shootCooldown;
             }
         }
-        else if (Input.GetButtonDown("Cancel")) //PAUSE
+        
+        if (Input.GetButtonDown("Cancel")) //PAUSE
         {
             pauseMenu.OnClick();
         }
-        else if (Input.GetKeyDown(KeyCode.Space)) //SPAWNAR INIMIGOS
+        
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Space)) //SPAWNAR INIMIGOS
         {
             GameManager.main.StartCoroutine(GameManager.main.StartDefensePhase());
+        }
+        //HEAL
+        if (Input.GetKeyDown(KeyCode.Q) && PlayerInventory.current.bandages > 0)
+        {
+            PlayerCombat.main.healingCoroutine = PlayerCombat.main.StartCoroutine(PlayerCombat.main.StartHealing());
+            isHealing = true;
+        }
+
+        if (isHealing && Input.GetKeyUp(KeyCode.Q))
+        {
+            PlayerCombat.main.ResetHealing();
         }
     }
 

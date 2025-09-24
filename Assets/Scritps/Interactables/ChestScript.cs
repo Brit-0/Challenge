@@ -68,7 +68,6 @@ public class ChestScript : Interactable
             {
                 GameObject newMaterial = Instantiate(materialPrefabs[materialIndex], transform.position, Quaternion.identity);
                 Vector2 pos = GetRandomSpawn();
-                Vector2 middlePoint = (pos - (Vector2)transform.position) / 2;
                 newMaterial.transform.DOMove(pos, .5f).SetEase(Ease.OutSine);
             }
         }

@@ -17,6 +17,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private LayerMask itemsLayer;
     private bool isFlashingFB;
 
+    public int bandages;
+
     private void Awake()
     {
         current = this;

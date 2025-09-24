@@ -1,13 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager main;
 
-    [SerializeField] private AudioSource musicSource;
+    public AudioSource musicSource;
 
     [Header("SOUND EFFECTS")]
-    public AudioClip click;
     public AudioClip shoot;
     public AudioClip[] footsteps;
     public AudioClip lockpick;
@@ -20,9 +20,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip fleshImpact;
     public AudioClip torchIgnite;
     public AudioClip barricade;
-    //RAT
+
+    [Header("ENEMIES")]
     public AudioClip giantRatAttack;
     public AudioClip giantRatIdle;
+    public AudioClip slimeAttack;
 
     [Header("AMBIENCE")]
     public AudioClip dungeon;
@@ -33,11 +35,12 @@ public class AudioManager : MonoBehaviour
     [Header("UI")]
     public AudioClip uIImpact;
     public AudioClip uIBoom;
+    public AudioClip select;
+    public AudioClip click;
 
     private void Awake()
     {
         main = this;
-        //source = GetComponent<AudioSource>();
     }
 
     public void PlaySound(AudioClip clip, float volume = .5f)
@@ -71,5 +74,29 @@ public class AudioManager : MonoBehaviour
         musicSource.clip = clip;
         musicSource.volume = volume;  
         musicSource.Play();
+    }
+
+    public void PlaySoundOneShot(AudioClip clip, float volume = .5f)
+    {
+        AudioSource source = gameObject.AddComponent<AudioSource>();
+
+        source.PlayOneShot(clip, volume);
+
+        Destroy(source, clip.length);
+    }
+
+    public static IEnumerator FadeOut(AudioSource audioSource, float fadeTime)
+    {
+        float startVolume = audioSource.volume;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
+
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;
     }
 }
