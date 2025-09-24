@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +41,7 @@ public class Searchable : Interactable
 
     private IEnumerator StartSearching()
     {
+        PlayerInput.blockInput = true;
         isSearching = true;
         PlayerMovement.main.BlockMovement();
 
@@ -59,6 +59,7 @@ public class Searchable : Interactable
 
     private void ResetSearch()
     {
+        PlayerInput.blockInput = false;
         currentSearchTime = 0f;
         actionSlider.fillAmount = 0f;
         PlayerMovement.canMove = true;

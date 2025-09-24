@@ -29,6 +29,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private GameObject healIcon;
     public Coroutine healingCoroutine;
     [SerializeField] private Image healBlocker;
+    public Image healItemBG;
 
     private int lastHeartIndex = 5;
 
@@ -46,6 +47,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (Time.time < nextTimeToTakeDamage) return;
 
+        FinalScreen.damageTaken += amount;
         nextTimeToTakeDamage = Time.time + takeDamageCooldown;
 
         CameraController.main.CameraShake(3f, .2f);
@@ -91,6 +93,8 @@ public class PlayerCombat : MonoBehaviour
 
     public IEnumerator StartHealing()
     {
+        PlayerInput.blockInput = true;
+        healItemBG.color = new Color32(150, 150, 150, 90);
         PlayerMovement.main.BlockMovement();
         healIcon.SetActive(true);
 
@@ -108,6 +112,8 @@ public class PlayerCombat : MonoBehaviour
 
     public void ResetHealing()
     {
+        PlayerInput.blockInput = false;
+        healItemBG.color = new Color32(50, 50, 50, 90);
         healIcon.SetActive(false);
         currentHealTime = 0f;
         healSlider.fillAmount = 0f;

@@ -9,7 +9,7 @@ public class TowerLogic : MonoBehaviour
 {
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    private Animator animator;
+    protected Animator animator;
 
     [Header("STATUS")]
     public bool active;

@@ -25,6 +25,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameObject shelves;
     [SerializeField] private GameObject bandage;
+    [SerializeField] private CanvasGroup itemsUI;
 
     private List<int> awaitingIndexes = new()
     {
@@ -199,6 +200,7 @@ public class Tutorial : MonoBehaviour
             case 17:
                 PlayerCombat.main.TakeDamage(1);
                 ShowObject(bandage);
+                itemsUI.DOFade(1f, 1.5f);
                 Destroy(shelves);
 
                 break;
@@ -244,6 +246,7 @@ public class Tutorial : MonoBehaviour
     private void StartGame()
     {
         SceneManager.LoadScene("Gameplay");
+        MainMenu.hasAlreadyDoneTutorial = true;
         PlayerMovement.canMove = true;
     }
 }

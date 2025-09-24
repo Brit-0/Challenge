@@ -33,7 +33,7 @@ public class TowerCard : MonoBehaviour
     {
         if (!TowerManager.placeMode)
         {
-            TowerManager.current.EnterPlaceMode(cardTower, gameObject);
+            TowerManager.current.EnterPlaceMode(cardTower);
         }
         else
         {

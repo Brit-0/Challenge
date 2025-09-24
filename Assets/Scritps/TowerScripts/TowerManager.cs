@@ -1,5 +1,4 @@
 using NavMeshPlus.Components;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -130,10 +129,11 @@ public class TowerManager : MonoBehaviour
         }
     }
 
-    public void EnterPlaceMode(InventoryTower tower, GameObject card)
+    public void EnterPlaceMode(InventoryTower tower)
     {
         if (placeMode) return;
 
+        PlayerInventory.current.towerItemBG.color = new Color32(150, 150, 150, 90);
         preview = Instantiate(tower.data.towerPf);
         previewData = tower.data;
 
@@ -144,6 +144,7 @@ public class TowerManager : MonoBehaviour
     {
         if (!placeMode) return;
 
+        PlayerInventory.current.towerItemBG.color = new Color32(50, 50, 50, 90);
         Destroy(preview);
 
         placeMode = false;
@@ -151,8 +152,10 @@ public class TowerManager : MonoBehaviour
 
     void PlaceTower(Vector2 constructionPoint)
     {
+        FinalScreen.builtTowers++;
         placeMode = false;
         canPlace = false;
+        PlayerInventory.current.towerItemBG.color = new Color32(50, 50, 50, 90);
         PlayerInventory.current.RemoveTower(previewData); //REMOVER TORRE DO INVENTARIO
         preview.GetComponent<SpriteRenderer>().color = Color.white;
         preview.GetComponent<TowerLogic>().StartCoroutine("SetActive"); //INICIALIZAR TORRE

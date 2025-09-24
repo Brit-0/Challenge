@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
 
         source.PlayOneShot(clip, volume);
 
-        Destroy(source, clip.length);
+        Destroy(source, clip.length + .1f);
     }
 
     public static IEnumerator FadeOut(AudioSource audioSource, float fadeTime)

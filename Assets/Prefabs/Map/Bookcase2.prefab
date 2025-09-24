@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2dd19a7bc6ea245a5c978ed22d034d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactDistance: 0.5
+  interactDistance: 0.2
   canInteract: 0
   alreadySearched: 0
   bandagePf: {fileID: 2701643879697279687, guid: 5125f32371e4d4045968fc0a7cbfb6c0, type: 3}

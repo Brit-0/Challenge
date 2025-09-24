@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Transform optionsBtn;
     [SerializeField] private Transform creditsBtn;
     [SerializeField] private Transform quitBtn;
+    private Dictionary<int, Transform> buttonsOrder = new();
+
+    [SerializeField] private int selectedIndex;
 
     [SerializeField] private Transform creditsBackButton;
 
@@ -28,16 +32,60 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private CanvasGroup credits;
 
-    private bool isTransitioning;
+    [Header("VARIABLES")]
+    [SerializeField] private bool isTransitioning;
+    
+    private enum MenuTab
+    {
+        Main,
+        Options,
+        Credits
+    }
 
+    private MenuTab currentMenuTab;
     
     private Vector3 titlePositionMenu = new Vector3(3.2f, 1.4f, 0f), titlePositionCredits = new Vector3(0f, 1.4f, 0f);
 
+    public static bool hasAlreadyDoneTutorial;
     private Transform selectedButton;
+
+    private void Awake()
+    {
+        buttonsOrder[0] = playBtn;
+        buttonsOrder[1] = optionsBtn;
+        buttonsOrder[2] = creditsBtn;
+        buttonsOrder[3] = quitBtn;
+    }
 
     private void Start()
     {
         SetResDropdown();
+
+        if (hasAlreadyDoneTutorial)
+        {
+            playBtn.GetComponentInChildren<TMP_Text>().text = "Jogar";
+        }
+        else
+        {
+            playBtn.GetComponentInChildren<TMP_Text>().text = "Tutorial";
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            SelectManual(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            SelectManual(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            selectedButton.GetComponent<Button>().onClick.Invoke();
+        }
     }
 
 
@@ -88,21 +136,69 @@ public class MainMenu : MonoBehaviour
     }
 
     #endregion
+
+    #region SELECT
+
     public void SelectButton(Transform selected)
     {
-        if (isTransitioning) return;
+        if (isTransitioning ) return;
 
-        if (selectedButton == selected && !selector.gameObject.activeInHierarchy)
+        if (!selector.gameObject.activeInHierarchy)
         {
+            selector.position = selected.position + Vector3.left * .7f + Vector3.down * .11f;
             selector.gameObject.SetActive(true);
-            AudioManager.main.PlaySoundOneShot(AudioManager.main.select);
-            return;
+
+            if (selectedButton == selected)
+            {
+                AudioManager.main.PlaySoundOneShot(AudioManager.main.select);
+                return;
+            }
         }
 
+        if (selectedButton == selected) return;
+
+        selectedIndex = GetKeyFromValue(selected);
         selectedButton = selected;
         selector.DOMove(selected.position + Vector3.left * .7f + Vector3.down * .11f, .2f);
         AudioManager.main.PlaySoundOneShot(AudioManager.main.select);
     }
+
+    private void SelectManual(bool next)
+    {
+        if (isTransitioning) return;
+
+        switch (currentMenuTab)
+        {
+            case MenuTab.Main:
+                if (next)
+                {
+                    selectedIndex++;
+                    if (selectedIndex > 3)
+                    {
+                        selectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    selectedIndex--;
+                    if (selectedIndex < 0)
+                    {
+                        selectedIndex = 3;
+                    }
+                }
+
+                SelectButton(buttonsOrder[selectedIndex]);
+
+                break;
+
+            case MenuTab.Credits:
+                SelectButton(creditsBackButton);
+
+                break;
+        }
+    }
+
+    #endregion
 
     public void Play()
     {
@@ -125,8 +221,7 @@ public class MainMenu : MonoBehaviour
 
     public void Credits()
     {
-        SelectButton(creditsBackButton);
-
+        currentMenuTab = MenuTab.Credits;
         isTransitioning = true;
         selector.gameObject.SetActive(false);
         AudioManager.main.PlaySound(AudioManager.main.click);
@@ -142,17 +237,18 @@ public class MainMenu : MonoBehaviour
         creditsPanel.GetComponent<CanvasGroup>().DOFade(1f, 2f);
         var seq = DOTween.Sequence();
         seq.Append(title.DOMove(titlePositionCredits, 2f));
-        seq.Append(credits.DOFade(1f, 2f));
-        seq.Append(creditsBackButton.GetComponent<CanvasGroup>().DOFade(1f, 1f)).OnComplete(() => { isTransitioning = false; });
+        seq.Append(credits.DOFade(1f, 2f).OnComplete(() => { creditsBackButton.gameObject.SetActive(true); isTransitioning = false; }));
+        seq.Append(creditsBackButton.GetComponent<CanvasGroup>().DOFade(1f, 1f));
     }
 
     public void CloseCredits()
     {
-        SelectButton(playBtn);
+        currentMenuTab = MenuTab.Main;
+        isTransitioning = true;
         selector.gameObject.SetActive(false);
 
         creditsBackButton.DOScale(1.5f, 1.5f).SetLoops(2, LoopType.Yoyo);
-        creditsBackButton.GetComponent<CanvasGroup>().DOFade(0f, 1.5f);
+        creditsBackButton.GetComponent<CanvasGroup>().DOFade(0f, 1.5f).OnComplete(() => { creditsBackButton.gameObject.SetActive(false); });
         AudioManager.main.PlaySound(AudioManager.main.click);
 
         var seq = DOTween.Sequence();
@@ -164,7 +260,7 @@ public class MainMenu : MonoBehaviour
         playBtn.GetComponent<CanvasGroup>().DOFade(1f, 2f);
         quitBtn.GetComponent<CanvasGroup>().DOFade(1f, 2f);
 
-        title.DOMove(titlePositionMenu, 2f);
+        title.DOMove(titlePositionMenu, 2f).OnComplete(() => { isTransitioning = false; });
     }
 
     public void Quit()
@@ -190,4 +286,15 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public int GetKeyFromValue(Transform valueVar)
+    {
+        foreach (int keyVar in buttonsOrder.Keys)
+        {
+            if (buttonsOrder[keyVar] == valueVar)
+            {
+                return keyVar;
+            }
+        }
+        return 0;
+    }
 }

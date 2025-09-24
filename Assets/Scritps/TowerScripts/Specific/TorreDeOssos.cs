@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TorreDeOssos : TowerLogic
 {
+
     protected override IEnumerator ActiveLoop()
     {
         return base.ActiveLoop();
@@ -16,6 +17,7 @@ public class TorreDeOssos : TowerLogic
             projectile.GetComponent<ProjectileLogic>().SetData(towerData, closestEnemy, towerData.projType, towerData.projEffects);
         }
 
+        animator.SetTrigger("Shoot");
         AudioManager.main.PlaySound(AudioManager.main.shoot);
     }
 }

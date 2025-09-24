@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI craftingFB;
     [SerializeField] private LayerMask itemsLayer;
     [SerializeField] private TMP_Text bandagesLbl;
+    [SerializeField] private TMP_Text towersLbl;
+    public Image towerItemBG;
     private bool isFlashingFB;
 
     public int bandages;
@@ -43,13 +46,11 @@ public class PlayerInventory : MonoBehaviour
     public void AddMaterial(int index, int amount)
     {
         ownedMaterials[index] += amount;
-        InventoryUIManager.current.UpdateLabels();
     }
 
     public void RemoveMaterial(int index, int amount)
     {
         ownedMaterials[index] -= amount;
-        InventoryUIManager.current.UpdateLabels();
     }
 
     #endregion
@@ -88,7 +89,7 @@ public class PlayerInventory : MonoBehaviour
             //print("Agora possui a torre " + referenceData.towerName + "!");
         }
 
-        InventoryUIManager.current.UpdateInventory();
+        towersLbl.text = ownedTowers.Count.ToString();
     }
 
     public void RemoveTower(TowerData referenceData)
@@ -104,7 +105,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
 
-        InventoryUIManager.current.UpdateInventory();
+        towersLbl.text = ownedTowers.Count.ToString();
     }
 
     #endregion

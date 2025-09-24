@@ -227,6 +227,7 @@ public class Enemy : MonoBehaviour
 
     protected void Die()
     {
+        FinalScreen.killedEnemies++;
         animator.SetTrigger("Die");
         sr.sortingLayerName = "Background";
         sr.sortingOrder = 1;

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public enum GamePhase
 {
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         fogMAT.SetColor("_FogColor", new Color(0, 0, .8f, .3f));
+        FinalScreen.playStartTime = Time.time;
     }
 
     [ContextMenu("START DEFENSE")]
@@ -135,6 +137,7 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
+        FinalScreen.playEndTime = Time.time;
         blackout.DOFade(1f, 3f).OnComplete(() => { SceneManager.LoadScene("Final Screen"); });
         StartCoroutine(AudioManager.FadeOut(AudioManager.main.musicSource, 3f));
     }
