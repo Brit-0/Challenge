@@ -117,7 +117,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Heal()
     {
-        PlayerInventory.current.bandages--;
+        PlayerInventory.current.ChangeBandages(-1);
         healBlocker.DOFade(.1f, .15f).SetLoops(2, LoopType.Yoyo);
         currentHearts += 1;
         currentHearts = Mathf.Clamp(currentHearts, 0, 5);

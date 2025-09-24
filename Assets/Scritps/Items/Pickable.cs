@@ -31,7 +31,7 @@ public class Pickable : MonoBehaviour
 
         if (isBandage)
         {
-            PlayerInventory.current.bandages++;
+            PlayerInventory.current.ChangeBandages(1);
         }
         else
         {

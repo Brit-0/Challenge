@@ -15,6 +15,7 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI craftingFB;
     [SerializeField] private LayerMask itemsLayer;
+    [SerializeField] private TMP_Text bandagesLbl;
     private bool isFlashingFB;
 
     public int bandages;
@@ -29,6 +30,12 @@ public class PlayerInventory : MonoBehaviour
     private void Update()
     {
         CheckForPickup();
+    }
+
+    public void ChangeBandages(int amount)
+    {
+        bandages += amount;
+        bandagesLbl.text = bandages.ToString();
     }
 
     #region MATERIALS

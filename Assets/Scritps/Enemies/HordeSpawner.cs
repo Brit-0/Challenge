@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class HordeSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject[] enemiesPfs;
-    [SerializeField] private int currentHordeIndex;
-    [SerializeField] private Horde currentHorde;
-    [SerializeField] private List<Transform> spawners;
+    [SerializeField] private GameObject giantRat;
+    [SerializeField] private GameObject smallRat;
+    private Horde currentHorde;
+
+    private float delayBetweenHordes = 10f;
+    private List<Transform> spawners = new();
+    public List<Transform> activeSpawners = new();
     public static HordeSpawner main;
     private bool isSpawning;
 
@@ -15,6 +18,7 @@ public class HordeSpawner : MonoBehaviour
     private struct Horde
     {
         public int numOfEnemies;
+        public List<GameObject> enemies;
         public float spawnDelay;
     }
 
@@ -32,9 +36,9 @@ public class HordeSpawner : MonoBehaviour
             spawners.Add(spawner);
         }
 
-        GameManager.ChangeGamePhase += OpenSpawners;
+        activeSpawners = spawners;
 
-        currentHordeIndex = 0;
+        GameManager.ChangeGamePhase += OpenSpawners;
     }
     
     private void OpenSpawners()
@@ -50,27 +54,49 @@ public class HordeSpawner : MonoBehaviour
     {
         if (isSpawning) yield break;
 
-        print("Starting horde: " + (currentHordeIndex + 1));
-
         isSpawning = true;
-        currentHorde = enemyHordes[currentHordeIndex];
-        Transform selectedSpawner = spawners[Random.Range(0, spawners.Count)];
+        currentHorde = CreateRandomHorde();
+        Transform selectedSpawner = activeSpawners[Random.Range(0, activeSpawners.Count)];
         selectedSpawner.GetComponent<Spawner>().isActive = true;
         Vector2 hordeSpawnPoint = (Vector2)selectedSpawner.position + Vector2.down;
 
         for (int i = 0; i < currentHorde.numOfEnemies; i++)
         {
-            Instantiate(enemiesPfs[0], hordeSpawnPoint, Quaternion.identity);
-            yield return new WaitForSecondsRealtime(currentHorde.spawnDelay);
-        }
-
-        currentHordeIndex++;
-
-        if (currentHordeIndex == enemyHordes.Count)
-        {
-            currentHordeIndex = 0;
+            Instantiate(currentHorde.enemies[i], hordeSpawnPoint, Quaternion.identity);
+            yield return new WaitForSeconds(currentHorde.spawnDelay);
         }
 
         isSpawning = false;
+
+        yield return new WaitForSeconds(delayBetweenHordes);
+
+        StartCoroutine(SpawnHorde());
+    }
+
+    private Horde CreateRandomHorde()
+    {
+        Horde newHorde = new() { spawnDelay = 2f, numOfEnemies = Random.Range(4, 15), enemies = new() { } };
+        
+        for (int i = 0; i < newHorde.numOfEnemies; i++)
+        {
+            if (Random.Range(1, 11) > 3)
+            {
+                newHorde.enemies.Add(smallRat);
+            }
+            else
+            {
+                newHorde.enemies.Add(giantRat);
+            }
+        }
+
+        return newHorde;
+    }
+
+    public void CheckForWin()
+    {
+        if (activeSpawners.Count == 0)
+        {
+            GameManager.main.WinGame();
+        }
     }
 }

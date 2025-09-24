@@ -90,11 +90,13 @@ public class MainMenu : MonoBehaviour
     #endregion
     public void SelectButton(Transform selected)
     {
-        if (isTransitioning || selectedButton == selected) return;
+        if (isTransitioning) return;
 
-        if (!selector.gameObject.activeInHierarchy)
+        if (selectedButton == selected && !selector.gameObject.activeInHierarchy)
         {
             selector.gameObject.SetActive(true);
+            AudioManager.main.PlaySoundOneShot(AudioManager.main.select);
+            return;
         }
 
         selectedButton = selected;
@@ -123,6 +125,9 @@ public class MainMenu : MonoBehaviour
 
     public void Credits()
     {
+        SelectButton(creditsBackButton);
+
+        isTransitioning = true;
         selector.gameObject.SetActive(false);
         AudioManager.main.PlaySound(AudioManager.main.click);
 
@@ -138,12 +143,13 @@ public class MainMenu : MonoBehaviour
         var seq = DOTween.Sequence();
         seq.Append(title.DOMove(titlePositionCredits, 2f));
         seq.Append(credits.DOFade(1f, 2f));
-        seq.Append(creditsBackButton.GetComponent<CanvasGroup>().DOFade(1f, 1f));
+        seq.Append(creditsBackButton.GetComponent<CanvasGroup>().DOFade(1f, 1f)).OnComplete(() => { isTransitioning = false; });
     }
 
     public void CloseCredits()
     {
         SelectButton(playBtn);
+        selector.gameObject.SetActive(false);
 
         creditsBackButton.DOScale(1.5f, 1.5f).SetLoops(2, LoopType.Yoyo);
         creditsBackButton.GetComponent<CanvasGroup>().DOFade(0f, 1.5f);

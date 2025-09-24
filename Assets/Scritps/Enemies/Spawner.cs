@@ -26,6 +26,8 @@ public class Spawner : Interactable
         transform.GetChild(0).gameObject.SetActive(true);
         AudioManager.main.PlaySound(AudioManager.main.barricade, .2f);
         isOpen = false;
-        print(isOpen);
+
+        HordeSpawner.main.activeSpawners.Remove(transform);
+        HordeSpawner.main.CheckForWin();
     }
 }

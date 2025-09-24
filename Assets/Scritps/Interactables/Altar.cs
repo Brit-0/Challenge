@@ -4,7 +4,7 @@ public class Altar : Interactable
 {
     private void Awake()
     {
-        tip = "Aperte \"E\" para roubar a relíquia";
+        tip = "Aperte \"E\" para ativar a relíquia";
     }
 
     protected override void Update()

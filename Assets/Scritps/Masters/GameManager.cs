@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public enum GamePhase
 {
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image are;
     [SerializeField] private Canvas effectsCanvas;
     [SerializeField] private Image shadow;
+    [SerializeField] private Image blackout;
 
     [Header("PREFABS")]
     [SerializeField] private GameObject breakParticle;
@@ -129,5 +131,11 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.main.PlaySound(AudioManager.main.uIBoom, 1f);
         }
+    }
+
+    public void WinGame()
+    {
+        blackout.DOFade(1f, 3f).OnComplete(() => { SceneManager.LoadScene("Final Screen"); });
+        StartCoroutine(AudioManager.FadeOut(AudioManager.main.musicSource, 3f));
     }
 }
