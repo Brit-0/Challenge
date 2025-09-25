@@ -30,7 +30,5 @@ public class FinalScreen : MonoBehaviour
         finalCanvasGroup = GetComponent<CanvasGroup>();
         finalCanvasGroup.alpha = 0f;
         finalCanvasGroup.DOFade(1f, 5f);
-
-
     }
 }

@@ -168,7 +168,7 @@ MonoBehaviour:
   type: 1
   currentHealth: 0
   maxHealth: 30
-  attackDamage: 0.5
+  attackDamage: 1
   flashTime: 0.25
   flashElapsedTime: 0
   slowElapsedTime: 0

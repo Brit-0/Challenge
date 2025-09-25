@@ -245,8 +245,8 @@ public class Tutorial : MonoBehaviour
 
     private void StartGame()
     {
+        StaticReset.ResetAll();
         SceneManager.LoadScene("Gameplay");
         MainMenu.hasAlreadyDoneTutorial = true;
-        PlayerMovement.canMove = true;
     }
 }

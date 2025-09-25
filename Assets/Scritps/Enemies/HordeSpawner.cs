@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class HordeSpawner : MonoBehaviour
 {
+    public static HordeSpawner main;
+
     [SerializeField] private GameObject giantRat;
     [SerializeField] private GameObject smallRat;
     private Horde currentHorde;
 
     private float delayBetweenHordes = 10f;
-    private List<Transform> spawners = new();
     public List<Transform> activeSpawners = new();
-    public static HordeSpawner main;
     private bool isSpawning;
 
     [System.Serializable]
@@ -22,8 +22,6 @@ public class HordeSpawner : MonoBehaviour
         public float spawnDelay;
     }
 
-    [SerializeField] private List<Horde> enemyHordes;
-
     private void Awake()
     {
         main = this;
@@ -33,17 +31,15 @@ public class HordeSpawner : MonoBehaviour
     {
         foreach (Transform spawner in transform)
         {
-            spawners.Add(spawner);
+            activeSpawners.Add(spawner);
         }
-
-        activeSpawners = spawners;
 
         GameManager.ChangeGamePhase += OpenSpawners;
     }
     
     private void OpenSpawners()
     {
-        foreach (Transform spawner in spawners)
+        foreach (Transform spawner in activeSpawners)
         {
             spawner.GetComponent<Animator>().SetBool("isOpen", true);
             spawner.GetComponent<Spawner>().isOpen = true;

@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviour
 
     public void LoadScene()
     {
+        StaticReset.ResetAll();
+
         if (MainMenu.hasAlreadyDoneTutorial)
         {
             SceneManager.LoadScene("Gameplay");
@@ -38,8 +40,6 @@ public class CameraController : MonoBehaviour
         {
             SceneManager.LoadScene("Tutorial");
         }
-
-        PlayerMovement.canMove = true;
     }
 
     #region CAMERA SHAKE

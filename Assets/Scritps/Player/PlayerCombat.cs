@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private GameObject healIcon;
     public Coroutine healingCoroutine;
     [SerializeField] private Image healBlocker;
+    [SerializeField] private Image blackout;
     public Image healItemBG;
 
     private int lastHeartIndex = 5;
@@ -45,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (Time.time < nextTimeToTakeDamage) return;
+        if (CheckInvulnerability()) return;
 
         FinalScreen.damageTaken += amount;
         nextTimeToTakeDamage = Time.time + takeDamageCooldown;
@@ -58,7 +60,14 @@ public class PlayerCombat : MonoBehaviour
 
         currentHearts -= amount;
         bloodVignete.DOFade((-25 * currentHearts + 125) * 0.01f, .2f);
-        StartCoroutine(ImpactHit());
+        //StartCoroutine(ImpactHit());
+
+        if (currentHearts <= 0)
+        {
+            hearts[lastHeartIndex - 1].sprite = emptyHeart;
+            StartCoroutine(Die());
+            return;
+        }
 
         if (currentHearts % 1 == 0)
         {
@@ -88,6 +97,27 @@ public class PlayerCombat : MonoBehaviour
         yield return new WaitForSecondsRealtime(.05f);
         Time.timeScale = 1;
     }
+
+    public IEnumerator Die()
+    {
+        GetComponent<Animator>().SetTrigger("Die");
+        gameObject.layer = LayerMask.GetMask("Default");
+        gameObject.tag = "Untagged";
+        Destroy(PlayerMovement.main);
+        Destroy(GetComponent<PlayerInput>());
+        Destroy(GetComponent<Rigidbody2D>());
+        Destroy(GetComponent<BoxCollider2D>());
+        Destroy(GetComponent<CapsuleCollider2D>());
+        GameManager.currentGamePhase = GamePhase.Defense;
+        GameManager.ChangeGamePhase.Invoke();   
+        //Destroy(PlayerCombat.main);
+
+        yield return new WaitForSeconds(2.5f);
+
+        StartCoroutine(AudioManager.FadeOut(AudioManager.main.musicSource, 3f));
+        blackout.DOFade(1f, 3f).OnComplete(()=> { SceneManager.LoadScene("Game Over"); });
+    }
+
 
     #region HEAL
 
@@ -150,6 +180,8 @@ public class PlayerCombat : MonoBehaviour
     }
 
     #endregion
+
+    public bool CheckInvulnerability() { return Time.time < nextTimeToTakeDamage; }
 
     public float GetHearts() { return currentHearts; }
 }
