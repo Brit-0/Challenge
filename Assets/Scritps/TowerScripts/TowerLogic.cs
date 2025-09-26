@@ -29,7 +29,7 @@ public class TowerLogic : MonoBehaviour
     [SerializeField] protected List<Transform> activeShootPoints;
 
     [Header("REFERENCES")]
-    [SerializeField] private GameObject placementArea;
+    [SerializeField] private SpriteRenderer placementArea;
 
     private int towerLvl = 1;
     private Collider2D[] enemiesInRange;
@@ -72,7 +72,7 @@ public class TowerLogic : MonoBehaviour
     public IEnumerator SetActive()
     {
         //RETIRAR CIRCULO DE AREA
-        placementArea.SetActive(false);
+        placementArea.gameObject.SetActive(false);
         GetComponent<Light2D>().enabled = true;
 
         //TRAVAR POSICÃO E ATIVAR A COLISÃO
@@ -204,25 +204,30 @@ public class TowerLogic : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("Player") && !active) //Se não for outra torre e não estiver ativo
+        if (!collision.CompareTag("Player") && !active) //Se não for outra torre e não estiver ativo
         {
             TowerManager.isColliding = true;
+            placementArea.color = new Color(1, 0, 0, .4f);
+
+            if (collision.CompareTag("FinalRoom"))
+            {
+                TipsUIManager.current.SetTip("Construa torres fora da sala da relíquia");
+            }
         }
     }
 
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!collision.CompareTag("Tower") && !active) //Se não for outra torre e não estiver ativo
-        {
-            TowerManager.isColliding = true;
-        }
-    }*/
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("Player") && !active) //Se não for outra torre e não estiver ativo
+        if (!collision.CompareTag("Player") && !active) //Se não for outra torre e não estiver ativo
         {
             TowerManager.isColliding = false;
+            placementArea.color = new Color(0, 0, 0, .4f);
+
+            if (collision.CompareTag("FinalRoom"))
+            {
+                TipsUIManager.current.DisableTip();
+            }
         }
     }
 

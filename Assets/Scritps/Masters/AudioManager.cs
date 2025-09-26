@@ -34,6 +34,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip giantRatIdle;
     public AudioClip slimeAttack;
     public AudioClip[] squeaks;
+    public AudioClip slimeExplosion;
 
     [Header("AMBIENCE")]
     public AudioClip dungeon;

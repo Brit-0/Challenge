@@ -14,6 +14,9 @@ public class HordeSpawner : MonoBehaviour
     public List<Transform> activeSpawners = new();
     private bool isSpawning;
 
+    private int minEnemies = 4, maxEnemies = 10;
+    private int chanceOfSmalRat = 3;
+
     [System.Serializable]
     private struct Horde
     {
@@ -44,6 +47,23 @@ public class HordeSpawner : MonoBehaviour
             spawner.GetComponent<Animator>().SetBool("isOpen", true);
             spawner.GetComponent<Spawner>().isOpen = true;
         }
+
+        StartCoroutine(DificultyTimer());
+    }
+
+    public IEnumerator DificultyTimer()
+    {
+        yield return new WaitForSeconds(60f);
+
+        maxEnemies++;
+
+        yield return new WaitForSeconds(60f);
+
+        minEnemies++;
+        maxEnemies++;
+        chanceOfSmalRat++;
+
+        StartCoroutine(DificultyTimer());
     }
 
     public IEnumerator SpawnHorde()
@@ -71,11 +91,11 @@ public class HordeSpawner : MonoBehaviour
 
     private Horde CreateRandomHorde()
     {
-        Horde newHorde = new() { spawnDelay = 2f, numOfEnemies = Random.Range(4, 15), enemies = new() { } };
+        Horde newHorde = new() { spawnDelay = 2f, numOfEnemies = Random.Range(minEnemies, maxEnemies + 1), enemies = new() { } };
         
         for (int i = 0; i < newHorde.numOfEnemies; i++)
         {
-            if (Random.Range(1, 11) > 3)
+            if (Random.Range(1, 11) > chanceOfSmalRat)
             {
                 newHorde.enemies.Add(smallRat);
             }

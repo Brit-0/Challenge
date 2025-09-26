@@ -29,7 +29,6 @@ public class Searchable : Interactable
 
         if (canInteract && Input.GetKeyDown(KeyCode.E))
         {
-            print("coroutine");
             searchCoroutine = StartCoroutine(StartSearching());
         }
 
@@ -41,7 +40,6 @@ public class Searchable : Interactable
 
     private IEnumerator StartSearching()
     {
-        print("startou");
         AudioManager.main.PlaySpatialSound(AudioManager.main.searching, gameObject);
         PlayerInput.blockInput = true;
         PlayerInput.isSearching = true;
@@ -61,7 +59,6 @@ public class Searchable : Interactable
 
     public void ResetSearch()
     {
-        print("reset");
         PlayerInput.isSearching = false;
         Destroy(GetComponent<AudioSource>());
         PlayerInput.blockInput = false;

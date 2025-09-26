@@ -5,7 +5,8 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] private PauseMenu pauseMenu;
 
-    private float shootCooldown = 1.5f, nextReadyTime;
+    public static float shootCooldown = 1.5f;
+    private float nextReadyTime;
     public static bool isHealing, isSearching;
     public static Searchable searchingItem;
 

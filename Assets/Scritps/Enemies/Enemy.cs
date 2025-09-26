@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -46,6 +45,7 @@ public class Enemy : MonoBehaviour
     private bool isDamaging, alreadyDamaged;
     [Header("PREFABS")]
     [SerializeField] private GameObject altarParticle;
+    [SerializeField] private GameObject[] materials;
 
     private enum EnemyState
     {
@@ -254,6 +254,11 @@ public class Enemy : MonoBehaviour
 
     protected void Die()
     {
+        if (Random.Range(1,21) == 20)
+        {
+            Instantiate(materials[Random.Range(0, 3)], transform.position, Quaternion.identity);
+        }
+
         FinalScreen.killedEnemies++;
         animator.SetTrigger("Die");
         sr.sortingLayerName = "Background";

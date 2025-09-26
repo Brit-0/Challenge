@@ -47,7 +47,7 @@ public class Tutorial : MonoBehaviour
         "As criaturas invadem a masmorra através de buracos como esse",
         "Para impedir, você deve bloquear essas entradas com barricadas",
         "Tente bloquear utilizando a tecla de interação \"E\"",
-        "Assim que começar a denfender a relíquia, seu objetivo final é bloquear todas essas entradas, deixando a relíquia segura",
+        "Assim que começar a defender a relíquia, seu objetivo final é bloquear todas essas entradas, deixando a relíquia segura",
         "Para te auxiliar, você pode construir torres de defesa estrategicamente com os recursos que conseguir nos baús", //10
         "Elas atirarão nas criaturas te ajudando a manter a sala final segura",
         "A masmorra pode ser escura e confusa de atravessar, portanto atirar nas tochas apagadas pode ser uma boa ideia",
@@ -174,7 +174,6 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case 12:
-                ShowObject(torch);
                 Destroy(tower);
                 Destroy(enemy);
 
@@ -184,6 +183,11 @@ public class Tutorial : MonoBehaviour
                 {
                     Destroy(projectile);
                 }
+
+                break;
+
+            case 13:
+                ShowObject(torch);
 
                 break;
 

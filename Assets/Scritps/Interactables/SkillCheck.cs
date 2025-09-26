@@ -53,6 +53,7 @@ public class SkillCheck : MonoBehaviour
         else
         {
             animator.SetTrigger("Failure");
+            ChestScript.currentChest.failuresCounter++;
         }
 
         if (successCounter == successNeeded)

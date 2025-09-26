@@ -15,7 +15,6 @@ public class TowerManager : MonoBehaviour
     public Grid grid;
     private Vector2 mPos;
     [SerializeField] private float cellSize;
-    [SerializeField] private Transform gridStartingTransform;
     [SerializeField] private Tilemap floorTilemap;
 
     public static bool canPlace = true, isColliding, isOnGrid, hasTower;
@@ -43,7 +42,7 @@ public class TowerManager : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) && selected != null) //DESSELECIONAR TODAS AS TORRES
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(0)) && selected != null) //DESSELECIONAR TODAS AS TORRES
         {
             selected.ToggleMenu();
             selected = null;

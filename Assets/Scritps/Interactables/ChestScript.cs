@@ -20,6 +20,7 @@ public class ChestScript : Interactable
     private Animator animator;
     public static ChestScript currentChest;
     private Tilemap floorTilemap;
+    public int failuresCounter;
 
     private void Awake()
     {
@@ -87,16 +88,40 @@ public class ChestScript : Interactable
 
     private void SetLoot()
     {
-        materialsLoot[0] = Random.Range(0, 5);
-        materialsLoot[1] = Random.Range(0, 5);
+        int minLoot = 3;
+
+        int maxLoot = 6;
+        maxLoot -= Mathf.RoundToInt(failuresCounter / 1.5f);
+        Mathf.Clamp(maxLoot, 3, 6);
+
+        if (maxLoot < 6)
+        {
+            if (maxLoot == 3)
+            {
+                minLoot = 1;
+            }
+            else
+            {
+                minLoot = 2;
+            }
+        }
+
+        print("MinLoot: " + minLoot + " / MaxLoot: " + maxLoot);
+
+        materialsLoot[0] = Random.Range(0, maxLoot + 1);
+        materialsLoot[1] = Random.Range(0, maxLoot + 1);
 
         if (materialsLoot[0] == 0 || materialsLoot[1] == 0)
         {
-            materialsLoot[2] = Random.Range(2, 5);
+            materialsLoot[2] = Random.Range(minLoot, maxLoot + 1);
         }
         else
         {
-            materialsLoot[2] = Random.Range(0, 5);
+            materialsLoot[2] = Random.Range(0, maxLoot + 1);
         }
+
+        print("Pedras: " + materialsLoot[0]);
+        print("Madeiras: " + materialsLoot[1]);
+        print("Ossos: " + materialsLoot[2]);
     }
 }

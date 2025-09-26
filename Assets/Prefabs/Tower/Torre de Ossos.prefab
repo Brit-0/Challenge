@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2394197989223051930}
   - component: {fileID: 6500963964272350120}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2394197989223051930
 Transform:
   m_ObjectHideFlags: 0
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -1397606099
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
   m_FlipX: 0
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1510774742654860922}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PointLvl2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 8570079062662502205}
   - component: {fileID: 8485228942524799133}
   - component: {fileID: 3720102714443495363}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UpgradeParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5015,7 +5015,7 @@ GameObject:
   - component: {fileID: 4680261208483563246}
   - component: {fileID: 5263955193923070138}
   - component: {fileID: 4568912521815583004}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UpgradeButton
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -5163,6 +5163,90 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &1366658799738304656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2087228607768816609}
+  - component: {fileID: 1986084467405816341}
+  m_Layer: 11
+  m_Name: Circle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2087228607768816609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366658799738304656}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 40.30633, y: 40.30633, z: 40.30633}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 159193359906794811}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1986084467405816341
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366658799738304656}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -1397606099
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 9deac399de7e697448b1a32549376802, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1885702761481289205
 GameObject:
   m_ObjectHideFlags: 0
@@ -5172,7 +5256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7023939270975387922}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5206,13 +5290,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4104334137288144302}
   - component: {fileID: 2569079065243272009}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CircleMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4104334137288144302
 Transform:
   m_ObjectHideFlags: 0
@@ -5271,13 +5355,13 @@ SpriteMask:
   m_SortingOrder: 0
   m_Sprite: {fileID: 8177471321811730583, guid: 87aaca0a643d54397ba969dab4fc8875, type: 3}
   m_MaskAlphaCutoff: 0.2
-  m_FrontSortingLayerID: 0
+  m_FrontSortingLayerID: -1397606099
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 0
+  m_FrontSortingLayer: 2
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 0
   m_BackSortingOrder: 0
-  m_IsCustomRangeActive: 0
+  m_IsCustomRangeActive: 1
   m_SpriteSortPoint: 0
 --- !u!1 &2261526520595657020
 GameObject:
@@ -5291,7 +5375,7 @@ GameObject:
   - component: {fileID: 2952284878788392966}
   - component: {fileID: 604228857181259508}
   - component: {fileID: 6321767264741433196}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SkinButton
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -5448,13 +5532,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7493346797708625313}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Buttons
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7493346797708625313
 Transform:
   m_ObjectHideFlags: 0
@@ -5481,7 +5565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5746221249581965238}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShootPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5515,7 +5599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 626266270639840109}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PointLvl1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5547,7 +5631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4643143855433353173}
   - component: {fileID: 5878170578168237328}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlacementArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5611,7 +5695,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.4}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5630,7 +5714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 159193359906794811}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5652,6 +5736,7 @@ Transform:
   m_Children:
   - {fileID: 2394197989223051930}
   - {fileID: 4104334137288144302}
+  - {fileID: 2087228607768816609}
   m_Father: {fileID: 7023939270975387922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6203383742749496651
@@ -5663,7 +5748,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5202194052191095751}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PointLvl3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5702,7 +5787,7 @@ GameObject:
   - component: {fileID: 2862283519855043323}
   - component: {fileID: 3109539140773645969}
   - component: {fileID: 5711080514067814509}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Torre de Ossos
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -5937,7 +6022,7 @@ MonoBehaviour:
   - {fileID: 1510774742654860922}
   - {fileID: 5202194052191095751}
   activeShootPoints: []
-  placementArea: {fileID: 4867339263582062410}
+  placementArea: {fileID: 5878170578168237328}
 --- !u!208 &3109539140773645969
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -6014,7 +6099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3144544800698205575}
   - component: {fileID: 6340038544934750072}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6099,13 +6184,13 @@ GameObject:
   - component: {fileID: 1308130495724835477}
   - component: {fileID: 2192150682373285307}
   - component: {fileID: 5743331786080115821}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Clickable
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1308130495724835477
 Transform:
   m_ObjectHideFlags: 0

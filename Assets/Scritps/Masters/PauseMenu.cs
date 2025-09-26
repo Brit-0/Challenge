@@ -155,7 +155,7 @@ public class PauseMenu : MonoBehaviour
         mainMenuButton.GetComponent<CanvasGroup>().DOFade(0f, 1f);
         quitButton.GetComponent<CanvasGroup>().DOFade(0f, 1f);
 
-        pauseCanvasGroup.DOFade(0f, 2f).OnComplete(() => { pauseCanvasGroup.gameObject.SetActive(false); isTransitioning = false; });
+        pauseCanvasGroup.DOFade(0f, 2f).OnComplete(() => { pauseCanvasGroup.gameObject.SetActive(false); pauseButton.SetActive(true); isTransitioning = false; });
     }
 
     public void Restart()

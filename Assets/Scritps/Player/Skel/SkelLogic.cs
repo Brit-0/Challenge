@@ -57,7 +57,7 @@ public class SkelLogic : MonoBehaviour
         eye1.intensity = 0;
         eye2.intensity = 0;
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(PlayerInput.shootCooldown);
 
         eye1.intensity = 8;
         eye2.intensity = 8;

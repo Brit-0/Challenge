@@ -2651,6 +2651,7 @@ MonoBehaviour:
   giantRatIdle: {fileID: 8300000, guid: 4508874a298a15949bb0fab2bd6945a3, type: 3}
   slimeAttack: {fileID: 0}
   squeaks: []
+  slimeExplosion: {fileID: 0}
   dungeon: {fileID: 0}
   rockSoundtrack: {fileID: 8300000, guid: 59caf8e1224035d44805e2b62d64af2c, type: 3}
   uIImpact: {fileID: 8300000, guid: 215c8b501356121448fcbdcd4e676cdc, type: 3}
@@ -2729,8 +2730,8 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: -0.20260417
-    y: -0.31203702
+    x: 0
+    y: 0
     width: 1
     height: 1
   near clip plane: 0.3
@@ -7055,7 +7056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8591469978954756245, guid: 72e8391078d45b24a86143403caaa006, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8804,10 +8805,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 15
+  m_fontSize: 6.85
+  m_fontSizeBase: 6.85
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 3
   m_fontSizeMax: 10
   m_fontStyle: 0

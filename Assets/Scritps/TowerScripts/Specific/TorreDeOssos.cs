@@ -18,6 +18,6 @@ public class TorreDeOssos : TowerLogic
         }
 
         animator.SetTrigger("Shoot");
-        AudioManager.main.PlaySound(AudioManager.main.shoot);
+        AudioManager.main.PlaySpatialSound(AudioManager.main.shoot, gameObject);
     }
 }

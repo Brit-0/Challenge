@@ -9,6 +9,8 @@ TagManager:
   - Projectile
   - Item
   - Torch
+  - FinalRoom
+  - Room
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Checker
   - Items
   - Altar
-  - 
+  - Tower
   - 
   - 
   - 
