@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class Slime : Interactable
 {
     private int damageTaken;
@@ -30,6 +29,7 @@ public class Slime : Interactable
 
         if (damageTaken == damageNeeded)
         {
+            TipsUIManager.current.DisableTip();
             skelRenderer.color = Color.green;
             PlayerInput.shootCooldown = .8f;
             AudioManager.main.PlaySound(AudioManager.main.slimeExplosion);

@@ -203,6 +203,8 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
+        if (isTransitioning) return;
+
         isTransitioning = true;
         selector.gameObject.SetActive(false);
         AudioManager.main.PlaySound(AudioManager.main.click);
@@ -222,6 +224,8 @@ public class MainMenu : MonoBehaviour
 
     public void Credits()
     {
+        if (isTransitioning) return;
+
         currentMenuTab = MenuTab.Credits;
         isTransitioning = true;
         selector.gameObject.SetActive(false);
@@ -244,6 +248,8 @@ public class MainMenu : MonoBehaviour
 
     public void CloseCredits()
     {
+        if (isTransitioning) return;
+
         currentMenuTab = MenuTab.Main;
         isTransitioning = true;
         selector.gameObject.SetActive(false);
@@ -266,6 +272,8 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
+        if (isTransitioning) return;
+
         isTransitioning = true;
         selector.gameObject.SetActive(false);
         AudioManager.main.PlaySound(AudioManager.main.click);

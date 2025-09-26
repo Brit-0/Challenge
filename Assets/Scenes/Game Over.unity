@@ -650,6 +650,9 @@ MonoBehaviour:
   darkTransition: {fileID: 8300000, guid: 9250edeacc6aabb46abeb01147345762, type: 3}
   gameOver: {fileID: 8300000, guid: b89c373645f36924eac3e2e729931c51, type: 3}
   searching: {fileID: 8300000, guid: 18f415fa1ce0f1744aa20f868e099d05, type: 3}
+  altarHit: {fileID: 0}
+  stonePlace: {fileID: 0}
+  bandage: {fileID: 0}
   giantRatAttack: {fileID: 8300000, guid: 4c0f84bcc1b6e29498e00c742cd85535, type: 3}
   giantRatIdle: {fileID: 8300000, guid: 4508874a298a15949bb0fab2bd6945a3, type: 3}
   slimeAttack: {fileID: 8300000, guid: e06f583c6dd83d546b0f1758eea13bcc, type: 3}
@@ -658,6 +661,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7f9f3cd4f958f3a4ab62fe5a18106041, type: 3}
   - {fileID: 8300000, guid: b848b1c1d5321be408a28c8e1c32a41a, type: 3}
   - {fileID: 8300000, guid: 208003c1080bacc4e940bd9c23fb3dc8, type: 3}
+  slimeExplosion: {fileID: 0}
   dungeon: {fileID: 0}
   rockSoundtrack: {fileID: 8300000, guid: 59caf8e1224035d44805e2b62d64af2c, type: 3}
   uIImpact: {fileID: 8300000, guid: 215c8b501356121448fcbdcd4e676cdc, type: 3}
@@ -804,10 +808,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

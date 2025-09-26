@@ -4,11 +4,9 @@ public class Spawner : Interactable
 {
     public bool isOpen;
     public bool isActive;
-    private Animator animator;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         tip = "Aperte \"E\" para bloquear a saída";
     }
 

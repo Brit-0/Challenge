@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -147,6 +146,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        if (isTransitioning) return;
+
         isPaused = false;
         isTransitioning = true;
         ButtonClick(resumeButton);
@@ -160,6 +161,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Restart()
     {
+        if (isTransitioning) return;
+
         isTransitioning = true;
         ButtonClick(restartButton);
 
@@ -174,6 +177,8 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
+        if (isTransitioning) return;
+
         isTransitioning = true;
         ButtonClick(mainMenuButton);
 
@@ -188,6 +193,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Quit()
     {
+        if (isTransitioning) return;
+
         isTransitioning = true;
         ButtonClick(quitButton);
 

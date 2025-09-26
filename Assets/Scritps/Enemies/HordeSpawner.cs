@@ -17,6 +17,8 @@ public class HordeSpawner : MonoBehaviour
     private int minEnemies = 4, maxEnemies = 10;
     private int chanceOfSmalRat = 3;
 
+    private int activeSpawnersBeforeCheck = 4;
+
     [System.Serializable]
     private struct Horde
     {
@@ -49,21 +51,38 @@ public class HordeSpawner : MonoBehaviour
         }
 
         StartCoroutine(DificultyTimer());
+        StartCoroutine(FlashObjective());
     }
 
     public IEnumerator DificultyTimer()
     {
+        activeSpawnersBeforeCheck = activeSpawners.Count;  
+
         yield return new WaitForSeconds(60f);
 
         maxEnemies++;
 
         yield return new WaitForSeconds(60f);
+
+        if (activeSpawnersBeforeCheck == activeSpawners.Count)
+        {
+            StartCoroutine(FlashObjective());
+        }
 
         minEnemies++;
         maxEnemies++;
         chanceOfSmalRat++;
 
         StartCoroutine(DificultyTimer());
+    }
+
+    public IEnumerator FlashObjective()
+    {
+        TipsUIManager.current.SetTip("Bloqueie todos os pontos de entrada de criaturas para manter a relíquia segura");
+
+        yield return new WaitForSeconds(7f);
+
+        TipsUIManager.current.DisableTip();
     }
 
     public IEnumerator SpawnHorde()

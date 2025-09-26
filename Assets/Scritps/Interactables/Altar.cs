@@ -90,7 +90,6 @@ public class Altar : Interactable
 
     private IEnumerator Shockwave()
     {
-        print("shocked");
         isShocking = true;
 
         currentShockwave = Instantiate(shockwavePf, transform.position, Quaternion.identity);
