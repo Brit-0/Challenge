@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinalScreen : MonoBehaviour
 {
@@ -30,5 +31,13 @@ public class FinalScreen : MonoBehaviour
         finalCanvasGroup = GetComponent<CanvasGroup>();
         finalCanvasGroup.alpha = 0f;
         finalCanvasGroup.DOFade(1f, 5f);
+    }
+
+    private void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            finalCanvasGroup.DOFade(0f, 3f).OnComplete(() => { SceneManager.LoadScene("Main Menu"); });
+        }
     }
 }

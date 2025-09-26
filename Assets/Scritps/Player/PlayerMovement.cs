@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PlayerCombat.main.CheckInvulnerability()) yield break;
 
-        canMove = false;
+        BlockMovement();
         rb.velocity = direction * force;
 
         yield return new WaitForSeconds(disableTime);

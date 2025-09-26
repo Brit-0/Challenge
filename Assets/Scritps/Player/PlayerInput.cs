@@ -6,10 +6,12 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private PauseMenu pauseMenu;
 
     private float shootCooldown = 1.5f, nextReadyTime;
-    public static bool isHealing;
+    public static bool isHealing, isSearching;
+    public static Searchable searchingItem;
 
     public static bool blockInput;
     private bool isFlickering;
+    [SerializeField] private TowerData towerData;
 
     private void Update()
     {
@@ -33,12 +35,7 @@ public class PlayerInput : MonoBehaviour
         //PAUSE
         if (Input.GetButtonDown("Cancel")) //PAUSE
         {
-            pauseMenu.OnClick();
-        }
-        
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Space)) //SPAWNAR INIMIGOS
-        {
-            GameManager.main.StartCoroutine(GameManager.main.StartDefensePhase());
+            pauseMenu.TogglePause();
         }
 
         //HEAL
@@ -48,7 +45,6 @@ public class PlayerInput : MonoBehaviour
         }
 
         //PLACE TOWER
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             TowerButton();
@@ -77,7 +73,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        if (PlayerInventory.current.ownedTowers.Count > 0)
+        if (PlayerInventory.current.Craft(towerData))
         {
             TowerManager.current.EnterPlaceMode(PlayerInventory.current.ownedTowers[0]);
         }

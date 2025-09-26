@@ -537,6 +537,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7d7d22e40d0c18f4bb3d9c96dab6c77f, type: 3}
   - {fileID: 8300000, guid: b80106b3a341e884ab6007725f99534c, type: 3}
   - {fileID: 8300000, guid: fa00f805cb25dfb4fbbcc454bfaf5e68, type: 3}
+  hurt:
+  - {fileID: 8300000, guid: ab22ce41ad4b79b4faecf91892b1b366, type: 3}
+  - {fileID: 8300000, guid: 68191616c3adfd843b0f65a0cf6216c2, type: 3}
+  - {fileID: 8300000, guid: 5021aef836a9c4641be7e64feaf5086d, type: 3}
+  hit: {fileID: 0}
   lockpick: {fileID: 8300000, guid: 98971eae991beaa48868e281d99509db, type: 3}
   impact: {fileID: 8300000, guid: 8b0227c525fe0f445aeee3f8833df6af, type: 3}
   chestOpen: {fileID: 8300000, guid: 2fd6be4d1f8bfeb4b8fa3a38f25259a0, type: 3}
@@ -547,9 +552,16 @@ MonoBehaviour:
   fleshImpact: {fileID: 0}
   torchIgnite: {fileID: 0}
   barricade: {fileID: 0}
+  darkTransition: {fileID: 0}
+  gameOver: {fileID: 0}
+  searching: {fileID: 0}
+  altarHit: {fileID: 0}
+  stonePlace: {fileID: 0}
+  bandage: {fileID: 0}
   giantRatAttack: {fileID: 0}
   giantRatIdle: {fileID: 0}
   slimeAttack: {fileID: 0}
+  squeaks: []
   dungeon: {fileID: 0}
   rockSoundtrack: {fileID: 0}
   uIImpact: {fileID: 0}
@@ -659,7 +671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.002533, y: -28.17006}
+  m_AnchoredPosition: {x: 0.002533, y: 41.83}
   m_SizeDelta: {x: 233.42, y: 60.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &228785179
@@ -1191,7 +1203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -709, y: -307}
+  m_AnchoredPosition: {x: -709, y: -355}
   m_SizeDelta: {x: 233.42505, y: 324.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &489575490
@@ -1228,7 +1240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -964.3927, y: -541.02344}
+  m_AnchoredPosition: {x: -964.3927, y: -541.2792}
   m_SizeDelta: {x: 51.07, y: 46.14}
   m_Pivot: {x: 0.9999997, y: -0.000000037252903}
 --- !u!114 &489575492
@@ -1730,6 +1742,7 @@ MonoBehaviour:
   optionsBtn: {fileID: 1080757559}
   creditsBtn: {fileID: 228785178}
   quitBtn: {fileID: 1463743741}
+  selectedIndex: 0
   creditsBackButton: {fileID: 1635662859}
   creditsPanel: {fileID: 1234516283}
   credits: {fileID: 203055028}
@@ -2302,7 +2315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1080757559
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3568,7 +3581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.002533, y: -108.17}
+  m_AnchoredPosition: {x: 0.002533, y: -48.17}
   m_SizeDelta: {x: 233.42, y: 60.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1463743742

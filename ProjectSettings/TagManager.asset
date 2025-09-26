@@ -20,7 +20,7 @@ TagManager:
   - Room
   - Checker
   - Items
-  - 
+  - Altar
   - 
   - 
   - 
@@ -57,4 +57,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 2897361197
+    locked: 0
+  - name: CameraSortingLayer
+    uniqueID: 1151218633
     locked: 0

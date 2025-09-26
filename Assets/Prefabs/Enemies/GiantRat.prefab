@@ -178,6 +178,7 @@ MonoBehaviour:
   hitPos: {fileID: 2136100434173504614}
   damageRadius: 0.5
   attackCooldown: 3
+  altarParticle: {fileID: 8475897709913759541, guid: b21a8843389de1f4884853def3bf413c, type: 3}
 --- !u!195 &5192024048383844254
 NavMeshAgent:
   m_ObjectHideFlags: 0

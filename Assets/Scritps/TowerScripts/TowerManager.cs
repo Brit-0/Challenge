@@ -17,7 +17,6 @@ public class TowerManager : MonoBehaviour
     [SerializeField] private float cellSize;
     [SerializeField] private Transform gridStartingTransform;
     [SerializeField] private Tilemap floorTilemap;
-    [SerializeField] private NavMeshSurface navMesh;
 
     public static bool canPlace = true, isColliding, isOnGrid, hasTower;
 
@@ -48,36 +47,6 @@ public class TowerManager : MonoBehaviour
         {
             selected.ToggleMenu();
             selected = null;
-        }
-    }
-
-    private void SetCanPlace()
-    {
-        mPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        preview.transform.position = ValidateWorldGridPosition(mPos); //SNAP PARA O GRID
-
-        isOnGrid = grid.GetValue(preview.transform.position) != -1; //DEFINE SE ESTÁ NO GRID
-        hasTower = grid.GetValue(preview.transform.position) == 1; //DEFINE SE TEM TORRE NA POSIÇÃO
-
-        if (!isOnGrid || isColliding || hasTower || UIHandler.isTabOpened) // NÃO ESTÁ NO GRID, NEM ESTÁ COLIDINDO OU JÁ POSSUI UMA TORRE NO LOCAL
-        {
-            canPlace = false;
-            preview.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, .5f);
-        }
-        else
-        {
-            canPlace = true;
-            preview.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
-        }
-
-        if (hasTower)
-        {
-            preview.GetComponent<SpriteRenderer>().color = Color.red;
-            preview.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        }
-        else
-        {
-            preview.GetComponent<SpriteRenderer>().sortingOrder = 0;
         }
     }
 
@@ -155,6 +124,8 @@ public class TowerManager : MonoBehaviour
         FinalScreen.builtTowers++;
         placeMode = false;
         canPlace = false;
+        AudioManager.main.PlaySound(AudioManager.main.stonePlace);
+        PlayerInventory.current.RemoveMaterials(previewData);
         PlayerInventory.current.towerItemBG.color = new Color32(50, 50, 50, 90);
         PlayerInventory.current.RemoveTower(previewData); //REMOVER TORRE DO INVENTARIO
         preview.GetComponent<SpriteRenderer>().color = Color.white;

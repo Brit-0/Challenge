@@ -21,6 +21,8 @@ public class PlayerInventory : MonoBehaviour
     public Image towerItemBG;
     private bool isFlashingFB;
 
+    [SerializeField] private TMP_Text pedraLbl, madeiraLbl, ossoLbl;
+
     public int bandages;
 
     private void Awake()
@@ -46,11 +48,20 @@ public class PlayerInventory : MonoBehaviour
     public void AddMaterial(int index, int amount)
     {
         ownedMaterials[index] += amount;
+        UpdateLabels();
     }
 
     public void RemoveMaterial(int index, int amount)
     {
         ownedMaterials[index] -= amount;
+        UpdateLabels();
+    }
+
+    public void UpdateLabels()
+    {
+        pedraLbl.text = ownedMaterials[0].ToString();
+        madeiraLbl.text = ownedMaterials[1].ToString();
+        ossoLbl.text = ownedMaterials[2].ToString();
     }
 
     #endregion
@@ -112,33 +123,18 @@ public class PlayerInventory : MonoBehaviour
 
     #region CRAFTING
 
-    public void Craft(TowerData tower)
+    public bool Craft(TowerData tower)
     {
         //CHECAR SE POSSUI AS PARTES NECESSÁRIAS
         if (!CheckParts(tower.recipe)) 
         {
-            StartCoroutine(FlashFeedback("Não possui as partes necessárias"));
-            return;
-        }
-
-        //REMOVER PARTES DO INVENTÁRIO
-        int index = 0;
-
-        foreach (char number in tower.recipe)
-        {
-            int needed = number - '0';
-
-            RemoveMaterial(index, needed);
-
-            index++;
+            return false;
         }
 
         //ADICIONAR TORRE AO INVENTÁRIO
         current.AddTower(tower);
 
-        //FEEDBACK DE SUCESSO
-        StartCoroutine(FlashFeedback(tower.towerName + " criada com sucesso!"));
-
+        return true;
     }
 
     private bool CheckParts(string recipeID)
@@ -167,6 +163,20 @@ public class PlayerInventory : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public void RemoveMaterials(TowerData towerData)
+    {
+        int index = 0;
+
+        foreach (char number in towerData.recipe)
+        {
+            int needed = number - '0';
+
+            RemoveMaterial(index, needed);
+
+            index++;
         }
     }
 

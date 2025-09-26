@@ -52,9 +52,8 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         buttonsOrder[0] = playBtn;
-        buttonsOrder[1] = optionsBtn;
-        buttonsOrder[2] = creditsBtn;
-        buttonsOrder[3] = quitBtn;
+        buttonsOrder[1] = creditsBtn;
+        buttonsOrder[2] = quitBtn;
     }
 
     private void Start()
@@ -173,7 +172,7 @@ public class MainMenu : MonoBehaviour
                 if (next)
                 {
                     selectedIndex++;
-                    if (selectedIndex > 3)
+                    if (selectedIndex > 2)
                     {
                         selectedIndex = 0;
                     }
@@ -183,7 +182,7 @@ public class MainMenu : MonoBehaviour
                     selectedIndex--;
                     if (selectedIndex < 0)
                     {
-                        selectedIndex = 3;
+                        selectedIndex = 2;
                     }
                 }
 
@@ -199,6 +198,8 @@ public class MainMenu : MonoBehaviour
     }
 
     #endregion
+
+    #region ACTIONS
 
     public void Play()
     {
@@ -276,8 +277,12 @@ public class MainMenu : MonoBehaviour
         creditsBtn.GetComponent<CanvasGroup>().DOFade(0f, 1f);
         playBtn.GetComponent<CanvasGroup>().DOFade(0f, 1f);
 
+        StartCoroutine(AudioManager.FadeOut(AudioManager.main.musicSource, 1.5f));
+
         StartCoroutine(Quitting());
     }
+
+    #endregion
 
     private IEnumerator Quitting()
     {

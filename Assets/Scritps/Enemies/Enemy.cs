@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackCooldown = 1.5f;
     private float nextAttackTime;
     private bool isDamaging, alreadyDamaged;
+    [Header("PREFABS")]
+    [SerializeField] private GameObject altarParticle;
 
     private enum EnemyState
     {
@@ -75,6 +77,11 @@ public class Enemy : MonoBehaviour
         movePoint = RoomController.main.finalRoomPos;
 
         StartCoroutine(SetRandomOffset());
+
+        if (type == EnemyType.Small)
+        {
+            StartCoroutine(PlaySqueakSound());
+        }
     }
 
     private void Update()
@@ -130,6 +137,14 @@ public class Enemy : MonoBehaviour
         else
         {
             Move();
+
+            if (Physics2D.OverlapCircle(transform.position, damageRadius, LayerMask.GetMask("Altar")))
+            {
+                GameObject newParticle = Instantiate(altarParticle, transform.position, Quaternion.identity);
+                Destroy(newParticle, 1.5f);
+                Altar.main.TakeDamage(1f);
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -160,7 +175,7 @@ public class Enemy : MonoBehaviour
 
         rb.velocity = dashDirection * dashForce;
         isDamaging = true;
-        AudioManager.main.PlayerSpatialSound(AudioManager.main.giantRatAttack, gameObject);
+        AudioManager.main.PlaySpatialSound(AudioManager.main.giantRatAttack, gameObject);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -178,6 +193,18 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         StartCoroutine(SetRandomOffset());
+    }
+
+    private IEnumerator PlaySqueakSound()
+    {
+        yield return new WaitForSeconds(Random.Range(3, 8));
+
+        if (Random.Range(0,2) == 0)
+        {
+            AudioManager.main.PlaySpatialSound(AudioManager.main.squeaks[Random.Range(0, 4)], gameObject, .3f, 1, 7, AudioRolloffMode.Linear);
+        }  
+
+        StartCoroutine(PlaySqueakSound());
     }
 
     private void SetNewMovePoint()
@@ -215,7 +242,7 @@ public class Enemy : MonoBehaviour
     {
         //StartCoroutine(DamageFlash());
         sr.DOColor(Color.red, .1f).SetLoops(2, LoopType.Yoyo);
-        AudioManager.main.PlayerSpatialSound(AudioManager.main.fleshImpact, gameObject, .5f);
+        AudioManager.main.PlaySpatialSound(AudioManager.main.fleshImpact, gameObject, .5f);
 
         currentHealth -= damage;
         

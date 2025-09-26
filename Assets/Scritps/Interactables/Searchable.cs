@@ -5,10 +5,9 @@ using UnityEngine.UI;
 public class Searchable : Interactable
 {
     [SerializeField] private bool alreadySearched;
-    private float currentSearchTime, timeToSearch = 3f;
+    private float currentSearchTime = 0f, timeToSearch = 3f;
     private Image actionSlider;
     public Coroutine searchCoroutine;
-    private bool isSearching;
 
     [SerializeField] private GameObject bandagePf;
 
@@ -30,10 +29,11 @@ public class Searchable : Interactable
 
         if (canInteract && Input.GetKeyDown(KeyCode.E))
         {
+            print("coroutine");
             searchCoroutine = StartCoroutine(StartSearching());
         }
 
-        if (isSearching && Input.GetKeyUp(KeyCode.E))
+        if (PlayerInput.isSearching && PlayerInput.searchingItem == this && Input.GetKeyUp(KeyCode.E))
         {
             ResetSearch();
         }
@@ -41,8 +41,11 @@ public class Searchable : Interactable
 
     private IEnumerator StartSearching()
     {
+        print("startou");
+        AudioManager.main.PlaySpatialSound(AudioManager.main.searching, gameObject);
         PlayerInput.blockInput = true;
-        isSearching = true;
+        PlayerInput.isSearching = true;
+        PlayerInput.searchingItem = this;
         PlayerMovement.main.BlockMovement();
 
         while (currentSearchTime < timeToSearch)
@@ -53,12 +56,14 @@ public class Searchable : Interactable
         }
 
         Search();
-        isSearching = false;
         ResetSearch();
     }
 
-    private void ResetSearch()
+    public void ResetSearch()
     {
+        print("reset");
+        PlayerInput.isSearching = false;
+        Destroy(GetComponent<AudioSource>());
         PlayerInput.blockInput = false;
         currentSearchTime = 0f;
         actionSlider.fillAmount = 0f;

@@ -33,6 +33,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Image blackout;
     public Image healItemBG;
 
+    [SerializeField] private AudioSource heartbeatSource;
+    private bool isHeartbeating;
+
     private int lastHeartIndex = 5;
 
     private void Awake()
@@ -45,10 +48,24 @@ public class PlayerCombat : MonoBehaviour
         currentHearts = maxHearts;
     }
 
+    #region DAMAGE
+
     public void TakeDamage(float amount)
     {
         if (CheckInvulnerability()) return;
 
+        if (PlayerInput.isHealing)
+        {
+            ResetHealing();
+        }
+
+        if (PlayerInput.isSearching)
+        {
+            PlayerInput.searchingItem.ResetSearch();
+        }
+
+        AudioManager.main.PlaySound(AudioManager.main.hurt[Random.Range(0, 4)], .1f);
+        AudioManager.main.PlaySound(AudioManager.main.hit, .2f);
         FinalScreen.damageTaken += amount;
         nextTimeToTakeDamage = Time.time + takeDamageCooldown;
 
@@ -67,6 +84,11 @@ public class PlayerCombat : MonoBehaviour
             hearts[lastHeartIndex - 1].sprite = emptyHeart;
             StartCoroutine(Die());
             return;
+        }
+        else if (currentHearts <= 2 && !isHeartbeating)
+        {
+            heartbeatSource.Play();
+            isHeartbeating = true;
         }
 
         if (currentHearts % 1 == 0)
@@ -90,16 +112,10 @@ public class PlayerCombat : MonoBehaviour
         lastHeartIndex = Mathf.CeilToInt(currentHearts);
     }
 
-    public IEnumerator ImpactHit()
-    {
-        yield return new WaitForSeconds(.1f);
-        Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(.05f);
-        Time.timeScale = 1;
-    }
-
     public IEnumerator Die()
     {
+        heartbeatSource.Stop();
+        AudioManager.main.PlaySound(AudioManager.main.darkTransition);
         GetComponent<Animator>().SetTrigger("Die");
         gameObject.layer = LayerMask.GetMask("Default");
         gameObject.tag = "Untagged";
@@ -118,11 +134,13 @@ public class PlayerCombat : MonoBehaviour
         blackout.DOFade(1f, 3f).OnComplete(()=> { SceneManager.LoadScene("Game Over"); });
     }
 
+    #endregion
 
     #region HEAL
 
     public IEnumerator StartHealing()
     {
+        AudioManager.main.PlaySpatialSound(AudioManager.main.bandage, gameObject);
         PlayerInput.blockInput = true;
         healItemBG.color = new Color32(150, 150, 150, 90);
         PlayerMovement.main.BlockMovement();
@@ -142,6 +160,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void ResetHealing()
     {
+        Destroy(GetComponent<AudioSource>());
         PlayerInput.blockInput = false;
         healItemBG.color = new Color32(50, 50, 50, 90);
         healIcon.SetActive(false);
@@ -159,6 +178,12 @@ public class PlayerCombat : MonoBehaviour
         currentHearts = Mathf.Clamp(currentHearts, 0, 5);
         bloodVignete.DOFade((-25 * currentHearts + 125) * 0.01f, .2f);
 
+        if (currentHearts > 2 && isHeartbeating)
+        {
+            heartbeatSource.Stop();
+            isHeartbeating = false;
+        }
+        
         if (currentHearts == 5)
         {
             hearts[4].sprite = fullHeart;

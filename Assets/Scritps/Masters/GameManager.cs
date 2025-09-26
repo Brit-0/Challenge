@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     [Header("REFERENCES")]
     [SerializeField] private Transform torches;
     [SerializeField] private Material fogMAT;
-    [SerializeField] private ParticleSystem dustPs;
+    [SerializeField] private CanvasGroup altarCanvasGroup;
 
     private void Awake()
     {
@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         fogMAT.SetColor("_FogColor", new Color(0, 0, .8f, .3f));
+        blackout.color = new Color(0, 0, 0, 1);
+        blackout.DOFade(0f, 3f);
         FinalScreen.playStartTime = Time.time;
     }
 
@@ -90,10 +92,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         IgniteTorches();
+        HordeSpawner.main.OpenSpawners();
+        altarCanvasGroup.DOFade(1f, 1.5f);
         fogMAT.SetColor("_FogColor", new Color(1, 0, 0, .3f));
-        AudioManager.main.PlayMusic(AudioManager.main.rockSoundtrack, .1f);
         StartCoroutine(HordeSpawner.main.SpawnHorde());
         effectsCanvas.GetComponent<CanvasGroup>().DOFade(0, 3f);
+        AudioManager.main.PlayMusic(AudioManager.main.rockSoundtrack, .1f);
 
         yield return new WaitForSeconds(3f);
 

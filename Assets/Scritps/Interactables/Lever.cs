@@ -33,7 +33,7 @@ public class Lever : Interactable
         {
             linkedObject.GetComponent<Animator>().SetBool("isOpen", true);
 
-            AudioManager.main.PlayerSpatialSound(AudioManager.main.gate, linkedObject, 1f);
+            AudioManager.main.PlaySpatialSound(AudioManager.main.gate, linkedObject, 1f);
         }
         else if (type == LeverType.Trap)
         {

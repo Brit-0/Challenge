@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [Header("SOUND EFFECTS")]
     public AudioClip shoot;
     public AudioClip[] footsteps;
+    public AudioClip[] hurt;
+    public AudioClip hit;
     public AudioClip lockpick;
     public AudioClip impact;
     public AudioClip chestOpen;
@@ -20,11 +22,18 @@ public class AudioManager : MonoBehaviour
     public AudioClip fleshImpact;
     public AudioClip torchIgnite;
     public AudioClip barricade;
+    public AudioClip darkTransition;
+    public AudioClip gameOver;
+    public AudioClip searching;
+    public AudioClip altarHit;
+    public AudioClip stonePlace;
+    public AudioClip bandage;
 
     [Header("ENEMIES")]
     public AudioClip giantRatAttack;
     public AudioClip giantRatIdle;
     public AudioClip slimeAttack;
+    public AudioClip[] squeaks;
 
     [Header("AMBIENCE")]
     public AudioClip dungeon;
@@ -54,7 +63,7 @@ public class AudioManager : MonoBehaviour
         Destroy(source, clip.length);
     }
 
-    public void PlayerSpatialSound(AudioClip clip, GameObject gameObj, float volume = .5f,float minDistance = 1, float maxDistance = 5000, AudioRolloffMode rollofMode = AudioRolloffMode.Logarithmic)
+    public void PlaySpatialSound(AudioClip clip, GameObject gameObj, float volume = .5f,float minDistance = 1, float maxDistance = 5000, AudioRolloffMode rollofMode = AudioRolloffMode.Logarithmic)
     {
         AudioSource source = gameObj.AddComponent<AudioSource>();
 

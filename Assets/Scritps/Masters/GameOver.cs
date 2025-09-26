@@ -13,6 +13,11 @@ public class GameOver : MonoBehaviour
         gameOverCanvasGroup.DOFade(1f, 5f);
     }
 
+    private void Start()
+    {
+        AudioManager.main.PlaySound(AudioManager.main.gameOver);
+    }
+
     private void Update()
     {
         if (Input.anyKeyDown)

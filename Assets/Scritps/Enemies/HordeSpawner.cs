@@ -34,10 +34,10 @@ public class HordeSpawner : MonoBehaviour
             activeSpawners.Add(spawner);
         }
 
-        GameManager.ChangeGamePhase += OpenSpawners;
+        //GameManager.ChangeGamePhase += OpenSpawners;
     }
     
-    private void OpenSpawners()
+    public void OpenSpawners()
     {
         foreach (Transform spawner in activeSpawners)
         {
