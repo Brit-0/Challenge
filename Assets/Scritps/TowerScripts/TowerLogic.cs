@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
@@ -73,6 +74,7 @@ public class TowerLogic : MonoBehaviour
     {
         //RETIRAR CIRCULO DE AREA
         placementArea.gameObject.SetActive(false);
+        GetComponent<NavMeshObstacle>().enabled = true;
         GetComponent<Light2D>().enabled = true;
 
         //TRAVAR POSICÃO E ATIVAR A COLISÃO
@@ -221,15 +223,17 @@ public class TowerLogic : MonoBehaviour
     {
         if (!collision.CompareTag("Player") && !active) //Se não for outra torre e não estiver ativo
         {
-            TowerManager.isColliding = false;
-            placementArea.color = new Color(0, 0, 0, .4f);
-
             if (collision.CompareTag("FinalRoom"))
             {
                 TipsUIManager.current.DisableTip();
             }
+
+            TowerManager.isColliding = false;
+            placementArea.color = new Color(0, 0, 0, .4f);
         }
     }
+
+
 
     #endregion
 }

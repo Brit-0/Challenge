@@ -50,7 +50,7 @@ public class ChestScript : Interactable
         //isChecking = true;
         skillCheck.SetActive(true);
         TipsUIManager.current.SetTip("Aperte \"E\" quando o indicador estiver na seção verde");
-        PlayerMovement.canMove = false;
+        PlayerMovement.main.BlockMovement();
         currentChest = this;
     }
 
